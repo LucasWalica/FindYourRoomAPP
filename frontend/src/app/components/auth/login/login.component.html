@@ -1,23 +1,23 @@
 
 <div class="flex justify-center align-middle">
     <div class="mt-28 m-4 p-2 bg-green3 text-green1 rounded-md md:w-1/2">
-        <form class="m-4 text-center">
+        <form [formGroup]="loginForm" (ngSubmit)="enviar($event)" class="m-4 text-center">
             <div class="m-4">
-                <input class="rounded-md text-center" placeholder="email" type="email"/>
+                <input formControlName="username" class="rounded-md text-center" placeholder="username" type="text"/>
             </div>
             <div class="m-4">
-                <input class="rounded-md text-center" placeholder="password" type="password"/>
+                <input formControlName="password" class="rounded-md text-center" placeholder="password" type="password"/>
             </div>
             <div></div>
             <div class="grid grid-cols-2 gap-4">
                 <button class="bg-magenta1 text-green1 
                 rounded-md border-magenta1 border-2 
                 hover:text-green3 hover:bg-magenta2 duration-150
-                text-xl shadow-md shadow-brown" >Go to Register</button>
-                <button class="bg-magenta1 text-green1 
+                text-xl shadow-md shadow-brown" (click)="goToRegister()" >Go to Register</button>
+                <button type="submit" class="bg-magenta1 text-green1 
                 rounded-md border-magenta1 border-2 
                 hover:text-green3 hover:bg-magenta2 duration-150
-                text-xl shadow-md shadow-brown" >Login</button>
+                text-xl shadow-md shadow-brown"> Login</button>
             </div>
         </form>
     </div>  

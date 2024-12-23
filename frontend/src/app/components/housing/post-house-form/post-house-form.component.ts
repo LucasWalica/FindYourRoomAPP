@@ -13,11 +13,10 @@ export class PostHouseFormComponent {
   address: string = ''; // Dirección ingresada por el usuario
   latitude: number | null = null; // Latitud obtenida
   longitude: number | null = null; // Longitud obtenida
-  apiKey: string = 'TU_CLAVE_DE_API'; // Clave API de Google Maps
+  apiKey: string = 'wBHTxDbjWNxX--Fiqe5grHii7og= '; // Clave API de Google Maps
   // add form to normalize data
   // const fullAddress = `${calle}, ${ciudad}, ${codigoPostal}`;
   constructor(private http: HttpClient) {}
-
 
   // crear servicio apartado
   onSubmit() {
@@ -36,5 +35,6 @@ export class PostHouseFormComponent {
     });
   }
 }
+// https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&callback=console.debug&libraries=maps,marker&v=beta
 
 
