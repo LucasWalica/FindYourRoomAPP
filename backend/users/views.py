@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
+
+
 # register
 class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -20,7 +22,6 @@ class UserCreateView(generics.CreateAPIView):
 
         if not user:
             return Response({'error':"invalid credentialds"}, status=401)
-
 
         token, created = Token.objects.get_or_create(user=user)
         return Response({
