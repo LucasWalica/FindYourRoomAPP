@@ -1,0 +1,97 @@
+<div class="m-4 p-2 bg-green3 text-green1 rounded-md">
+    <app-nav-bar/>
+    <form [formGroup]="this.inquilinoForm" (ngSubmit)="enviar($event)" class="flex flex-col justify-center text-center">
+        <div class="flex flex-col justify-center">
+
+            <div class="flex flex-col items-center justify-center">
+                <label>Age:</label>
+                <input class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" type="number" formControlName="age" placeholder="age"/>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center">
+                <label>Occupation:</label>
+                <input class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" type="text" formControlName="occupation"/>
+            </div>
+
+            <div class="flex flex-col items-center justify-center">
+                <label for="gender">Gender:</label>
+                <select class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" formControlName="gender" name="gender" id="gender">
+                    <option *ngFor="let g of this.genders | keyvalue" [value]="g.value">{{ g.value }}</option>
+                </select>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center">
+                <label>Activity schedule: </label>
+                <select class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" formControlName="activity_schedule" name="activity_schedule" id="activity_schedule">
+                    <option *ngFor="let g of this.activitySchedule| keyvalue" [value]="g.value">{{ g.value }}</option>
+                </select>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center">
+                <label>Cleaninless</label>
+                <select class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" formControlName="cleanliness_level" name="cleanliness_level" id="cleanliness_level">
+                    <option *ngFor="let g of this.cleanliness| keyvalue" [value]="g.value">{{ g.value }}</option>
+                </select>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center">
+                <label>Pets:</label>
+                <input class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" formControlName="pets" type="checkbox"/>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center">
+                <label>Do you smoke?</label>
+                <input class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" formControlName="smoker" type="checkbox"/>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center">
+                
+                <label>Visit frequency:</label>
+                <select class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" formControlName="visit_frequency" name="cleanliness_level" id="cleanliness_level">
+                    <option *ngFor="let g of this.visitFrequency| keyvalue" [value]="g.value">{{ g.value }}</option>
+                </select>
+            </div>
+
+            <div class="flex flex-col items-center justify-center">
+                <label>Common space usage:</label>
+                <select class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" formControlName="common_space_usage" name="common_space_usage" id="common_space_usage">
+                    <option *ngFor="let g of this.commonSpaceUsage| keyvalue" [value]="g.value">{{ g.value }}</option>
+                </select>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center">
+                <label>Hobbies: </label>
+                <input class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" formControlName="hobbies" type="text" />
+            </div>
+            
+            
+            <div class="flex flex-col items-center justify-center">
+                <label>Socializing frequency: </label>
+                <select class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" formControlName="socializing_frequency" name="socializing_frequency" id="socializing_frequency">
+                    <option *ngFor="let g of this.socializingFrequency | keyvalue" [value]="g.value">{{ g.value }}</option>
+                </select>
+            </div>
+            
+            
+            <div class="flex flex-col items-center justify-center">
+                <label>Living enviroment:</label>
+                <select class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" formControlName="living_environment" name="living_environment" id="living_environment">
+                    <option *ngFor="let g of this.livingEnviroment | keyvalue" [value]="g.value">{{ g.value }}</option>
+                </select>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center">
+                <label>Presentation: </label>
+                <input class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6" formControlName="presentation" type="text"/>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center m-4">
+                <button type="submit" class="bg-magenta1 text-green1 
+                rounded-md border-magenta1 border-2 
+                hover:text-green3 hover:bg-magenta2 duration-150
+                text-xl shadow-md shadow-brown">Create Profile</button>
+            </div>
+        </div>
+    </form>
+    <app-footer/>
+</div>

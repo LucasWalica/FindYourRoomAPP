@@ -1,5 +1,29 @@
 <div class="m-4 p-2 bg-green3 text-green1 rounded-md">
-    <!--Add input to navbar-->
     <app-nav-bar/>
+        
+    <div class="mt-2 mb-2 rounded-md  m-2 p-2">
+
+        @if (this.inquilinoProfile) {
+        <div>
+            <app-tenant-profile [inquilinoProfile]="this.inquilinoProfile"/>
+           <div class="flex justify-center m-2">
+                <button (click)="this.updateForm()" class="w-1/2 sm:w-1/4  bg-magenta1 text-green1 
+                rounded-md border-magenta1 border-2 
+                hover:text-green3 hover:bg-magenta2 duration-150
+                text-xl shadow-md shadow-brown">Update your Profile?</button>
+           </div>
+        </div>
+        }@else {
+            <div class="m-2 flex flex-col justify-center">
+                <h1>Welcome to your profile, if you want to search for a room you should add some data to your profile:</h1>
+                <div class="flex justify-center m-2">
+                    <button (click)="this.goToForm()" class="w-1/2 bg-magenta1 text-green1 
+                    rounded-md border-magenta1 border-2 
+                    hover:text-green3 hover:bg-magenta2 duration-150
+                    text-xl shadow-md shadow-brown">Proceed</button>
+                </div>
+            </div>
+        }
+    
     <app-footer/>
 </div>

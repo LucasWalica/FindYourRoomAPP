@@ -10,8 +10,6 @@ export class AuthService {
 
   token:string|null = {} as string;
 
-
-  // test and save token into local storage
   register(username:string,email:string, password:string){
     
     const datosUser=JSON.stringify({
@@ -48,36 +46,51 @@ export class AuthService {
   }
 
 
-  // add token
-  login(username:string, password:string){
+  async login(username:string, password:string){
 
     const datosUser=JSON.stringify({
       username:username,
       password:password,
     });
     console.log(datosUser);
-    fetch('http://localhost:8000/api/users/login/', {
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-      },
-      body:datosUser
-    })
-    .then(response => {
-      console.log(response);
-      if(response.ok){
-        this.router.navigate(['home']);
-      }
-    })
-    .then(data=>{
-      console.log(data);
-    })
-    .catch(error=>console.log('Error: ', error));
+    try {
+
+        fetch('http://localhost:8000/api/users/login/', {
+          method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Accept': 'application/json',
+        },
+        body:datosUser
+      })
+      .then(async response => {
+        let responseBody = await response.json();
+        if(response.ok){
+          if(responseBody.token){
+            console.log(responseBody.token);
+            this.setToken(responseBody.token);
+          }
+          if(responseBody.user.username){
+            localStorage.setItem('username', responseBody.user.username);
+          }
+          if(responseBody.inquilino_id){
+            localStorage.setItem('inquilino_id', responseBody.inquilino_id);
+            console.log(localStorage.getItem('inquilino_id'));
+          }
+          this.router.navigate(['home']);
+        }
+      })
+      .catch(error=>console.log('Error: ', error));
+    }catch(error){
+      console.error("error: ",error);
+    }
   }
   
   logout(){
     this.token = null;
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('inquilino_id');
     this.router.navigate(['']);
   }
 
@@ -94,6 +107,7 @@ export class AuthService {
   }
 
 
+
   userIsAuthenticated(): boolean {
     const token = this.getToken();
     if(token === null || token === '' || token === '{}'){
@@ -104,3 +118,4 @@ export class AuthService {
   }
 
 }
+

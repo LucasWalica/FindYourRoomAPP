@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User 
 from enum import Enum
+from .utils import get_coordinates_from_address
+
+
 
 class houseType(Enum):
     APARTMENT = "Apartment"
@@ -18,14 +21,26 @@ class House(models.Model):
     m2 = models.IntegerField()
     house_type = models.CharField(
         max_length=20,
-        choices=[(tag.name, tag.value) for tag in houseType],
-        default=houseType.APARTMENT.name
+        choices=[(tag.value, tag.name) for tag in houseType], 
+        default=houseType.APARTMENT.value 
     )  
     rooms = models.IntegerField()
     ciudad = models.CharField(max_length=40)
-    barrrio = models.CharField(max_length=40)
+    barrio = models.CharField(max_length=40)
     calle = models.CharField(max_length=50)
+    portal = models.IntegerField(blank=False, null=False)
+    direccion = models.CharField(max_length=50)
+    latitud = models.FloatField(null=True, blank=True)
+    longitud = models.FloatField(null=True, blank=True)
     price = models.FloatField()
+
+    def save(self, *args, **kwargs):
+        if self.direccion: 
+            self.latitud, self.longitud = get_coordinates_from_address(self.direccion)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"ID: {self.id} - {self.ciudad} - {self.barrio}"
 
 
 class Room(models.Model):
@@ -35,4 +50,7 @@ class Room(models.Model):
     image = models.ImageField(upload_to='images/')  
     price = models.FloatField()
     isOcupied = models.BooleanField(default=False)
-    occupiedBy = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    occupiedBy = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
+
+    def __str__(self):
+        return f"ID: {self.id} - house PK:{self.fkHouse}"

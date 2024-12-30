@@ -1,0 +1,76 @@
+import { Component } from '@angular/core';
+import { NavBarComponent } from '../../reusable/nav-bar/nav-bar.component';
+import { FooterComponent } from '../../reusable/footer/footer.component';
+import { CommonModule } from '@angular/common';
+import { TenantProfile, ActivitySchedule, CleanlinessLevel, CommonSpaceUsage, Gender, LivingEnvironment, SocializingFrequency, VisitFrequency } from '../../models/tenantProfile.models';
+import {FormControl, ReactiveFormsModule, Validators, FormGroup} from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
+@Component({
+  selector: 'app-update-inquilino-form',
+  standalone: true,
+  imports: [
+    NavBarComponent, 
+    FooterComponent, 
+    ReactiveFormsModule, 
+    CommonModule
+  ],
+  templateUrl: './update-inquilino-form.component.html',
+  styleUrl: './update-inquilino-form.component.css'
+})
+export class UpdateInquilinoFormComponent {
+
+  constructor(private router:Router, private userService:UserService){}
+   // enums 
+   activitySchedule=ActivitySchedule;
+   cleanliness=CleanlinessLevel;
+   commonSpaceUsage=CommonSpaceUsage;
+   genders=Gender;
+   livingEnviroment=LivingEnvironment;
+   socializingFrequency=SocializingFrequency;
+   visitFrequency=VisitFrequency
+
+
+    inquilinoForm = new FormGroup({
+       age: new FormControl('', Validators.required),
+       occupation: new FormControl('', Validators.required),
+       gender: new FormControl('', Validators.required),
+       activity_schedule: new FormControl('', Validators.required),
+       cleanliness_level: new FormControl('', Validators.required),
+       pets: new FormControl(false),
+       smoker: new FormControl(false, Validators.required),
+       visit_frequency: new FormControl('', Validators.required),
+       common_space_usage: new FormControl('', Validators.required),
+       hobbies: new FormControl('', Validators.required),
+       socializing_frequency: new FormControl('', Validators.required),
+       living_environment: new FormControl('', Validators.required),
+       presentation: new FormControl('', Validators.required)
+     });
+
+      
+  async enviar(event:Event){
+    event.preventDefault();
+    const ageValue = this.inquilinoForm.get('age')?.value as string;
+    const age = parseInt(ageValue);
+    let updatedData: TenantProfile = {
+      age: age ,
+      occupation: this.inquilinoForm.get('occupation')?.value ?? '',
+      gender: this.inquilinoForm.get('gender')?.value as Gender ?? '',
+      activity_schedule: this.inquilinoForm.get('activity_schedule')?.value as ActivitySchedule ?? '',
+      cleanliness_level: this.inquilinoForm.get('cleanliness_level')?.value as CleanlinessLevel ?? '',
+      pets: this.inquilinoForm.get('pets')?.value ?? false,
+      smoker: this.inquilinoForm.get('smoker')?.value ?? false,
+      visit_frequency: this.inquilinoForm.get('visit_frequency')?.value ?? '',
+      common_space_usage: this.inquilinoForm.get('common_space_usage')?.value as CommonSpaceUsage ?? '',
+      hobbies: this.inquilinoForm.get('hobbies')?.value ?? '',
+      socializing_frequency: this.inquilinoForm.get('socializing_frequency')?.value as SocializingFrequency ?? '',
+      living_enviroment: this.inquilinoForm.get('living_enviroment')?.value as unknown as LivingEnvironment ?? '',
+      presentation: this.inquilinoForm.get('presentation')?.value ?? ''
+    }
+    await this.userService.updateInquilino(
+      updatedData
+    )
+    this.router.navigate(['']);
+    
+  }
+}

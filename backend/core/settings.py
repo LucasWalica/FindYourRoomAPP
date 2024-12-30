@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 
-env = environ.Env(debug=(bool, False))
+env = environ.Env(debug=(bool, True))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR, '.ENV'))
@@ -50,6 +50,10 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",  
+    "http://127.0.0.1:4200",
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.core.exceptions import ValidationError
+from .models import Inquilino
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -30,4 +31,33 @@ class UserSerializer(serializers.ModelSerializer):
         )
         return user
 
+class InquilinoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Inquilino
+        fields = [
+            'fkUser', 'age', 'occupation', 'gender', 'activity_schedule', 'cleanliness_level',
+            'pets', 'smoker', 'visit_frequency', 'common_space_usage', 'hobbies', 
+            'socializing_frequency', 'living_environment', 'presentation'
+        ]
+        read_only_fields = ['fkUser']
+
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        if not user.is_authenticated:
+            raise ValidationError("El usuario especificado no existe.")
+        validated_data['fkUser'] = user
+        inquilino = Inquilino.objects.create(**validated_data)
+        return inquilino
+
+    def update(self, instance, validated_data):
+        user = self.context['request'].user
+        if not User.objects.filter(id=user.id).exists():
+            raise serializers.ValidationError({"fkUser": "El usuario autenticado no es válido."})
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.fkUser = user
+        instance.save()
+        return instance
+    
     
