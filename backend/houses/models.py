@@ -4,7 +4,6 @@ from enum import Enum
 from .utils import get_coordinates_from_address
 
 
-
 class houseType(Enum):
     APARTMENT = "Apartment"
     HOUSE = "House"
@@ -16,7 +15,7 @@ class houseType(Enum):
 class House(models.Model):
     fkCreator = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/houses/')
     desc = models.TextField()
     m2 = models.IntegerField()
     house_type = models.CharField(
@@ -47,7 +46,7 @@ class Room(models.Model):
     fkHouse = models.ForeignKey(House, on_delete=models.CASCADE)
     m2 = models.IntegerField()
     desc = models.TextField()
-    image = models.ImageField(upload_to='images/')  
+    image = models.ImageField(upload_to='images/rooms/')  
     price = models.FloatField()
     isOcupied = models.BooleanField(default=False)
     occupiedBy = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)

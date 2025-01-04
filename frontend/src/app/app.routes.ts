@@ -18,7 +18,7 @@ export const routes: Routes = [
     {path:'createTenantProfile', component:CreateInquilinoFormComponent},
     {path:'updateInquilinoForm', component:UpdateInquilinoFormComponent},
     {path:'updateHouse', component:UpdateHouseFormComponent},
-    {path:'postHouse', component:PostHouseFormComponent},
+    {path:'addHouse', component: PostHouseFormComponent},
     {path:'houseDetail', component:HouseDetailComponent},
     {path:'houses', component:HouseListComponent}
 ];

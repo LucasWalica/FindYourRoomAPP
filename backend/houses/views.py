@@ -9,18 +9,25 @@ from .models import House, Room
 from rest_framework.authentication import TokenAuthentication 
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ValidationError
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from rest_framework import status
+
 
 class HouseCreateView(generics.CreateAPIView):
-    permission_classes =  [IsAuthenticated]
+    parser_classes = [JSONParser]
+    permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
     queryset = House.objects.all()
     serializer_class = HouseSerializer
 
-    def perform_create(self, serializer):
-        # Pasar el usuario autenticado al serializador
-        serializer.save(fkCreator=self.request.user)
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
+
 # if occupied not posible to delete
 class HouseDeleteView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
