@@ -1,0 +1,31 @@
+<div class="m-4 p-2 bg-green3 text-green1 rounded-md">
+    <app-nav-bar></app-nav-bar>
+    <div>
+        <div *ngFor="let house of this.houses">
+
+            <div>{{house.name}}</div>
+            <div>{{house.desc}}</div>
+            <div class="flex flex-row justify-center gap-2">
+                <div>{{house.ciudad}}</div>
+                <div>{{house.calle}}</div>
+                <div>{{house.barrio}}</div>
+                <div>{{house.portal}}</div>
+            </div>
+            <div>{{house.direccion}}</div>
+            <div>{{house.house_type}}</div>
+            <img src="{{house.image}}">
+            <div>{{house.m2}} m2</div>
+            <div>{{house.price}}</div>
+            <div>
+                {{house.rooms}}
+            </div>
+            <div *ngFor="let room of house.rooms_data">
+                <p>{{ room.desc }}</p>
+                <p>{{ room.price }}</p>
+                <img src="{{room.image}}">
+            </div>
+        </div>
+        
+    </div>
+    <app-footer></app-footer>
+</div>

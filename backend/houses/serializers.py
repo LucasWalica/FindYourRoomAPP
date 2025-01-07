@@ -51,9 +51,25 @@ class RoomSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = ['fkHouse', 'm2', 'desc', 'image', 'price', 'isOcupied', 'occupiedBy']
+        fields = ['id','fkHouse', 'm2', 'desc', 'image', 'price', 'isOcupied', 'occupiedBy']
         read_only_fields = ['fkHouse', 'occupiedBy']
 
+    def to_representation(self, instance):
+        # Obtener la representación básica del objeto Room
+        representation = super().to_representation(instance)
+        
+        # Convertir la imagen a base64 si existe
+        if instance.image:
+            try:
+                with instance.image.open('rb') as image_file:
+                    encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
+                    representation['image'] = f"data:image/{instance.image.name.split('.')[-1]};base64,{encoded_image}"
+            except Exception as e:
+                print(f"Error procesando la imagen de la habitación {instance.id}: {e}")
+                representation['image'] = None  # Si hay un error, devolver None
+        
+        return representation
+    
     def create(self, validated_data):
         # Extraer y eliminar temporalmente la imagen de los datos validados
         image_data = validated_data.pop('image', None)
@@ -78,23 +94,34 @@ class HouseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = House
-        fields = ['fkCreator', 'name', 'image', 
+        fields = ['id','fkCreator', 'name', 'image', 
                   'desc', 'm2', 'house_type', 'rooms', 
                   'ciudad', 'barrio', 'calle', 'portal', 
                   'direccion', 'price', 'rooms_data']
         read_only_fields = ['fkCreator']
+    
+    
 
     def to_representation(self, instance):
-        # Obtener la representación estándar del modelo
+        
         representation = super().to_representation(instance)
 
-        # Añadir manualmente las habitaciones relacionadas
+        if instance.image:
+            try:
+                with instance.image.open('rb') as image_file:
+                    encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
+                    representation['image'] = f"data:image/{instance.image.name.split('.')[-1]};base64,{encoded_image}"
+            except Exception as e:
+                print(f"Error procesando la imagen de la casa {instance.id}: {e}")
+                representation['image'] = None
+
         rooms = Room.objects.filter(fkHouse=instance)
         representation['rooms_data'] = RoomSerializer(rooms, many=True).data
-
+        
         return representation
+
+
     def create(self, validated_data):
-        # Extraer y eliminar temporalmente la imagen de los datos validados
         image_data = validated_data.pop('image', None)
         rooms_data = validated_data.pop('rooms_data', [])
         user = self.context['request'].user
@@ -115,18 +142,16 @@ class HouseSerializer(serializers.ModelSerializer):
             image = ContentFile(base64.b64decode(imgstr), name=f"house_{house.id}.{ext}")
             house.image = image
             house.save()  # Guardar el modelo con la imagen asignada
-
+        
+        
+        print("Rooms data:", rooms_data)
         # Crear habitaciones relacionadas
         for room_data in rooms_data:
-            room_data['fkHouse'] = house
-            RoomSerializer.create(RoomSerializer(context=self.context), validated_data=room_data)
+            room_serializer = RoomSerializer(data=room_data, context=self.context)
+            if room_serializer.is_valid(raise_exception=True):
+                room_serializer.save(fkHouse=house)  # Asignar la relación con la casa
 
         return house
-
-
-
-        
-
 
 class RoomOccupiedBySerializer(serializers.ModelSerializer):
     class Meta:

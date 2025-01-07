@@ -32,6 +32,7 @@ class House(models.Model):
     latitud = models.FloatField(null=True, blank=True)
     longitud = models.FloatField(null=True, blank=True)
     price = models.FloatField()
+    # add owner
 
     def save(self, *args, **kwargs):
         if self.direccion: 

@@ -13,6 +13,17 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework import status
 
 
+class HouseOwnerListView(generics.ListAPIView):
+    parser_classes = [JSONParser]
+    permission_classes = [IsAuthenticated]
+    queryset = House.objects.all()
+    serializer_class = HouseSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        return House.objects.filter(fkCreator=user)
+
+
 class HouseCreateView(generics.CreateAPIView):
     parser_classes = [JSONParser]
     permission_classes = [IsAuthenticated]

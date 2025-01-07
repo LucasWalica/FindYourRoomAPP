@@ -9,6 +9,8 @@ import { HouseListComponent } from './components/housing/house-list/house-list.c
 import { HouseDetailComponent } from './components/housing/house-detail/house-detail.component';
 import { PostHouseFormComponent } from './components/housing/post-house-form/post-house-form.component';
 import { UpdateHouseFormComponent } from './components/housing/update-house-form/update-house-form.component';
+import { OwnerHouseListComponent } from './components/housing/owner-house-list/owner-house-list.component';
+
 
 export const routes: Routes = [
     {path:'home', component:HomePageComponent},
@@ -20,5 +22,6 @@ export const routes: Routes = [
     {path:'updateHouse', component:UpdateHouseFormComponent},
     {path:'addHouse', component: PostHouseFormComponent},
     {path:'houseDetail', component:HouseDetailComponent},
-    {path:'houses', component:HouseListComponent}
+    {path:'houses', component:HouseListComponent},
+    {path:'ownerHouses', component:OwnerHouseListComponent}    
 ];

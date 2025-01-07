@@ -125,7 +125,7 @@ export class PostHouseFormComponent {
           }
         });
       });
-  
+      console.log(formData);
       // Esperar a que todas las imágenes se conviertan a base64 antes de enviar
       Promise.all(imagePromises).then(() => {
         this.houseService.postHouse(formData);
