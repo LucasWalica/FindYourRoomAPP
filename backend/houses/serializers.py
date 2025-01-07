@@ -10,19 +10,26 @@ import base64
 class HouseUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = House
-        fields = ['name', 'image',' desc', 'm2', 'rooms', 'price']
+        fields = ['name', 'image',' desc', 'm2', 'price']
     
     def update(self, instance, validated_data):
+        print("Datos recibidos en el serializador:", validated_data)
         user = self.context['request'].user
-        if not user.is_authenticated:
-            raise ValidationError("El usuario debe estar autenticado para actualizar una casa.")
+        print("Usuario autenticado:", user)
         
         if instance.fkCreator != user:
             raise ValidationError("No puedes actualizar una casa que no te pertenece.")
-        
+
+        # Decodificar imagen base64
+        image_data = validated_data.pop('image', None)
+        if image_data:
+            format, imgstr = image_data.split(';base64,') 
+            ext = format.split('/')[-1]
+            instance.image.save(f"updated.{ext}", ContentFile(base64.b64decode(imgstr)), save=False)
+
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
-        
+
         instance.save()
         return instance
     

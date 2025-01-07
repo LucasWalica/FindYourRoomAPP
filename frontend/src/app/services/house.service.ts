@@ -7,7 +7,14 @@ import { Router } from '@angular/router';
 })
 export class HouseService {
 
+
+  houseDetail:house={} as house;
+  setHouseData(house:house){
+    this.houseDetail =house;
+  }
+
   constructor(private router:Router) { }
+
 
   async postHouse(formData:any): Promise<any> {
     const url = 'http://localhost:8000/api/houses/house/create/';
@@ -63,8 +70,57 @@ export class HouseService {
     }
   }
   
-  updateHouse(){}
+  async updateHouse(id:number, formData:any){
+    const url = `http://localhost:8000/api/houses/house/update/${id}/`;
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+        },
+        body:JSON.stringify(formData)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+  
+      const result = await response.json();
+  
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error('Error al enviar los datos:', error);
+      throw error;
+    }
+  }
 
-  deleteHouse(){}
+  async deleteHouse(id:number){
+    const url = `http://localhost:8000/api/houses/house/delete/${id}/`;
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+  
+      const result = await response.json();
+  
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error('Error al enviar los datos:', error);
+      throw error;
+    }
+  }
   
 }

@@ -13,6 +13,9 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework import status
 
 
+
+
+#done
 class HouseOwnerListView(generics.ListAPIView):
     parser_classes = [JSONParser]
     permission_classes = [IsAuthenticated]
@@ -23,7 +26,7 @@ class HouseOwnerListView(generics.ListAPIView):
         user = self.request.user
         return House.objects.filter(fkCreator=user)
 
-
+#done
 class HouseCreateView(generics.CreateAPIView):
     parser_classes = [JSONParser]
     permission_classes = [IsAuthenticated]
@@ -39,17 +42,19 @@ class HouseCreateView(generics.CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# if occupied not posible to delete
+# iworks
 class HouseDeleteView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
     queryset = House.objects.all()
     serializer_class = HouseSerializer
-
+    lookup_field = 'id'
+    
     def perform_destroy(self, instance):
         if instance.room_set.filter(isOcupied=True).exists():
             raise ValidationError("No se puede eliminar una casa con habitaciones ocupadas.")
         instance.delete()
+
 
 class HouseDetailView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
@@ -59,6 +64,7 @@ class HouseDetailView(generics.RetrieveAPIView):
     lookup_field = 'id'
 
 
+# done
 class HouseUpdateView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
@@ -66,30 +72,13 @@ class HouseUpdateView(generics.UpdateAPIView):
     serializer_class = HouseUpdateSerializer
 
     def get_object(self):
+        print("ID recibido:", self.kwargs['id'])
         obj = get_object_or_404(House, id=self.kwargs['id'])
         if obj.fkCreator != self.request.user:
             raise ValidationError("No puedes actualizar una casa")
+        return obj
     
-class RoomCreateView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]
-    queryset = Room.objects.all()
-    serializer_class = RoomSerializer
-    
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        room = serializer.save()
-        return Response({
-            "message": "habitación creada exitosamente",
-            "house_id": room.id,
-        }, status=201)
 
-class RoomDetailView(generics.RetrieveAPIView):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]
-    queryset = Room.objects.all()
-    serializer_class = RoomSerializer
 
 # create specific serializer for this class
 class RoomUpdateView(generics.UpdateAPIView):
@@ -102,6 +91,9 @@ class RoomUpdateView(generics.UpdateAPIView):
         obj = get_object_or_404(Room, id=self.kwargs['id'])
         if obj.fkHouse.fkCreator != self.request.user:
             raise ValidationError("No puedes actualizar la habitacion")
+
+
+
 # view for occupant update
 class RoomUpdateOcupant(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]

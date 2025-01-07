@@ -4,6 +4,7 @@ import { NavBarComponent } from "../../reusable/nav-bar/nav-bar.component";
 import { HouseService } from '../../../services/house.service';
 import { house } from '../../models/house.models';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-owner-house-list',
@@ -16,7 +17,7 @@ export class OwnerHouseListComponent implements OnInit{
 
   houses:house[] = {} as house[];
 
-  constructor(private houseService:HouseService){}
+  constructor(private houseService:HouseService, private router:Router){}
     
   async ngOnInit() {
     try {
@@ -38,6 +39,16 @@ export class OwnerHouseListComponent implements OnInit{
       } catch (error) {
         console.error('Error al cargar las casas:', error);
       }
+    }
+
+    goToUpdateHouse(house:house){
+      this.houseService.setHouseData(house);
+      this.router.navigate(['updateHouse'])
+    }
+
+    goToDeleteHouse(house:house){
+      this.houseService.setHouseData(house);
+      this.router.navigate(['deleteHouse'])
     }
   }
 

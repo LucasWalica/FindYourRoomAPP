@@ -2,7 +2,11 @@
     <app-nav-bar></app-nav-bar>
     <div>
         <div *ngFor="let house of this.houses">
-
+            <!-- update and remove actions-->
+            <div class="flex flex-row justify-center gap-2">   
+                <button (click)="goToUpdateHouse(house)" >Update</button>
+                <button (click)="goToDeleteHouse(house)">Delete</button>
+            </div>
             <div>{{house.name}}</div>
             <div>{{house.desc}}</div>
             <div class="flex flex-row justify-center gap-2">
@@ -28,4 +32,7 @@
         
     </div>
     <app-footer></app-footer>
+
+    
 </div>
+
