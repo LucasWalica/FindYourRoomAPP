@@ -14,7 +14,12 @@ from rest_framework import status
 
 
 
-
+class HouseList(generics.ListAPIView):
+    parser_classes = [JSONParser]
+    permission_classes = [IsAuthenticated]
+    queryset = House.objects.all()
+    serializer_class = HouseSerializer
+    
 #done
 class HouseOwnerListView(generics.ListAPIView):
     parser_classes = [JSONParser]
@@ -64,8 +69,9 @@ class HouseDetailView(generics.RetrieveAPIView):
     lookup_field = 'id'
 
 
-# done
+
 class HouseUpdateView(generics.UpdateAPIView):
+    parser_classes = [MultiPartParser, FormParser]
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
     queryset = House.objects.all()
@@ -82,18 +88,26 @@ class HouseUpdateView(generics.UpdateAPIView):
 
 # create specific serializer for this class
 class RoomUpdateView(generics.UpdateAPIView):
+    parser_classes = [MultiPartParser, FormParser]
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
     queryset = Room.objects.all()
     serializer_class = RoomUpdateSerializer
-
+   
+    
     def get_object(self):
         obj = get_object_or_404(Room, id=self.kwargs['id'])
         if obj.fkHouse.fkCreator != self.request.user:
-            raise ValidationError("No puedes actualizar la habitacion")
+            raise ValidationError("No puedes actualizar la habitación de una casa que no te pertenece.")        
+        return obj
+    
+
+   
+    
 
 
-
+   
+        
 # view for occupant update
 class RoomUpdateOcupant(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
@@ -109,3 +123,5 @@ class RoomUpdateOcupant(generics.UpdateAPIView):
         else:
             print(f"Objeto encontrado: {obj}")
         return obj
+    
+    

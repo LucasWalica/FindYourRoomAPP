@@ -7,10 +7,11 @@ import { CreateInquilinoFormComponent } from './components/auth/create-inquilino
 import { UpdateInquilinoFormComponent } from './components/auth/update-inquilino-form/update-inquilino-form.component';
 import { HouseListComponent } from './components/housing/house-list/house-list.component';
 import { HouseDetailComponent } from './components/housing/house-detail/house-detail.component';
-import { PostHouseFormComponent } from './components/housing/post-house-form/post-house-form.component';
-import { UpdateHouseFormComponent } from './components/housing/update-house-form/update-house-form.component';
-import { OwnerHouseListComponent } from './components/housing/owner-house-list/owner-house-list.component';
-import { DeleteHouseFormComponent } from './components/housing/delete-house-form/delete-house-form.component';
+import { PostHouseFormComponent } from './components/housing/owner/post-house-form/post-house-form.component';
+import { UpdateHouseFormComponent } from './components/housing/owner/update-house-form/update-house-form.component';
+import { OwnerHouseListComponent } from './components/housing/owner/owner-house-list/owner-house-list.component';
+import { DeleteHouseFormComponent } from './components/housing/owner/delete-house-form/delete-house-form.component';
+import { RoomUpdateFormComponent } from './components/housing/owner/room-update-form/room-update-form.component';
 
 
 export const routes: Routes = [
@@ -25,6 +26,6 @@ export const routes: Routes = [
     {path:'houseDetail', component:HouseDetailComponent},
     {path:'houses', component:HouseListComponent},
     {path:'ownerHouses', component:OwnerHouseListComponent},
-    {path:'updateHouse', component:UpdateHouseFormComponent},
-    {path:'deleteHouse', component:DeleteHouseFormComponent}
+    {path:'deleteHouse', component:DeleteHouseFormComponent},
+    {path:'updateRoom', component:RoomUpdateFormComponent}
 ];

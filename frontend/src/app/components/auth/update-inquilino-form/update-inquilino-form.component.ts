@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavBarComponent } from '../../reusable/nav-bar/nav-bar.component';
 import { FooterComponent } from '../../reusable/footer/footer.component';
 import { CommonModule } from '@angular/common';
@@ -18,7 +18,8 @@ import { UserService } from '../../../services/user.service';
   templateUrl: './update-inquilino-form.component.html',
   styleUrl: './update-inquilino-form.component.css'
 })
-export class UpdateInquilinoFormComponent {
+export class UpdateInquilinoFormComponent implements OnInit {
+
 
   constructor(private router:Router, private userService:UserService){}
    // enums 
@@ -29,22 +30,26 @@ export class UpdateInquilinoFormComponent {
    livingEnviroment=LivingEnvironment;
    socializingFrequency=SocializingFrequency;
    visitFrequency=VisitFrequency
+  tenantProfile:TenantProfile = {} as TenantProfile;
 
 
+  ngOnInit(): void {
+    this.tenantProfile = this.userService.tenanProfile
+  }
     inquilinoForm = new FormGroup({
        age: new FormControl('', Validators.required),
-       occupation: new FormControl('', Validators.required),
-       gender: new FormControl('', Validators.required),
-       activity_schedule: new FormControl('', Validators.required),
-       cleanliness_level: new FormControl('', Validators.required),
-       pets: new FormControl(false),
-       smoker: new FormControl(false, Validators.required),
-       visit_frequency: new FormControl('', Validators.required),
-       common_space_usage: new FormControl('', Validators.required),
-       hobbies: new FormControl('', Validators.required),
-       socializing_frequency: new FormControl('', Validators.required),
-       living_environment: new FormControl('', Validators.required),
-       presentation: new FormControl('', Validators.required)
+       occupation: new FormControl(this.tenantProfile.occupation, Validators.required),
+       gender: new FormControl(this.tenantProfile.gender, Validators.required),
+       activity_schedule: new FormControl(this.tenantProfile.activity_schedule, Validators.required),
+       cleanliness_level: new FormControl(this.tenantProfile.cleanliness_level, Validators.required),
+       pets: new FormControl(this.tenantProfile.pets),
+       smoker: new FormControl(this.tenantProfile.smoker, Validators.required),
+       visit_frequency: new FormControl(this.tenantProfile.visit_frequency, Validators.required),
+       common_space_usage: new FormControl(this.tenantProfile.common_space_usage, Validators.required),
+       hobbies: new FormControl(this.tenantProfile.hobbies, Validators.required),
+       socializing_frequency: new FormControl(this.tenantProfile.socializing_frequency, Validators.required),
+       living_environment: new FormControl(this.tenantProfile.living_enviroment, Validators.required),
+       presentation: new FormControl(this.tenantProfile.presentation, Validators.required)
      });
 
       

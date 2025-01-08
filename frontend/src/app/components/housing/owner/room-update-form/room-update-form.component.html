@@ -1,0 +1,69 @@
+<div class="m-4 p-2 bg-green3 text-green1 rounded-md">
+    <app-nav-bar/>
+    <form [formGroup]="roomUpdateForm" (ngSubmit)="onSubmit()" class="flex flex-col justify-center text-center">
+        
+        <!--m2-->
+        <div class="flex flex-col items-center justify-center">
+            <label>M2</label>
+            <input
+                class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
+                type="number"
+                formControlName="m2"
+                placeholder="{{this.roomData.m2}}"/>
+            <div *ngIf="roomUpdateForm.get('m2')?.invalid && roomUpdateForm.get('m2')?.touched">
+                <small class="text-red-500">M2 is required.</small>
+            </div>
+
+        </div>
+       
+        <!--desc-->
+        <div class="flex flex-col items-center justify-center">
+        <label>Description</label>
+        <input
+            class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
+            type="text"
+            formControlName="desc"
+            placeholder="{{this.roomData.desc}}"/>    
+        <div *ngIf="roomUpdateForm.get('desc')?.invalid && roomUpdateForm.get('desc')?.touched">
+            <small class="text-red-500">Description is required.</small>
+        </div>
+       </div>
+
+       <!--image-->
+       <div class="flex flex-col items-center justify-center">
+        <label>Image</label>
+        <input
+            class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
+            type="file"
+            formControlName="image"
+            (change)="onFileChange($event, 'image')"/>
+        <div *ngIf="roomUpdateForm.get('image')?.invalid && roomUpdateForm.get('image')?.touched">
+            <small class="text-red-500">Image is required.</small>
+        </div>
+       </div>
+
+       <!--price-->
+       <div class="flex flex-col items-center justify-center">
+        <label>Price</label>
+        <input
+            class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
+            type="number"
+            formControlName="price"
+            placeholder="{{this.roomData.price}}"/>
+        <div *ngIf="roomUpdateForm.get('price')?.invalid && roomUpdateForm.get('price')?.touched">
+            <small class="text-red-500">Price is required.</small>
+        </div>
+       </div>
+        
+       <!-- Botón de envío -->
+      <div class="flex flex-col items-center justify-center m-4">
+        <button
+          type="submit"
+          class="bg-magenta1 text-green1 rounded-md border-magenta1 border-2 hover:text-green3 hover:bg-magenta2 duration-150 text-xl shadow-md shadow-brown"
+        >
+          Confirm
+        </button>
+      </div>
+    </form>
+    <app-footer/>
+</div>

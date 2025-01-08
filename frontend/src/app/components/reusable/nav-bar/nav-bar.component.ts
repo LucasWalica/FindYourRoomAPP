@@ -22,6 +22,9 @@ export class NavBarComponent {
   goToPostHouse(){
     this.router.navigate(['addHouse'])
   }
+  goToOwnerHouseList(){
+    this.router.navigate(['ownerHouses'])
+  }
   goToNotificacions(){
 
   }

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NavBarComponent } from '../../reusable/nav-bar/nav-bar.component';
-import { FooterComponent } from '../../reusable/footer/footer.component';
+import { NavBarComponent } from '../../../reusable/nav-bar/nav-bar.component';
 import { CommonModule } from '@angular/common';
-import { HouseService } from '../../../services/house.service';
-import { houseType } from '../../models/house.models';
+import { houseType } from '../../../models/house.models';
+import { HouseService } from '../../../../services/house.service';
 import { ReactiveFormsModule, Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { house } from '../../models/house.models';
+import { house } from '../../../models/house.models';
+import { FooterComponent } from '../../../reusable/footer/footer.component';
 @Component({
   selector: 'app-update-house-form',
   standalone: true,
@@ -27,7 +27,7 @@ export class UpdateHouseFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private houseService:HouseService, private router:Router) {
     this.postHouseForm = this.fb.group({
       name: [this.houseService.houseDetail.name, Validators.required],
-      image: [this.houseService.houseDetail.image, Validators.required],
+      image: [''],
       desc: [this.houseService.houseDetail.desc, Validators.required],
       m2: [this.houseService.houseDetail.m2, [Validators.required, Validators.min(1)]],
       price: [this.houseService.houseDetail.price, [Validators.required, Validators.min(0)]],
@@ -44,22 +44,21 @@ export class UpdateHouseFormComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string; 
-        this.postHouseForm.get(controlName)?.setValue(base64String);
-      };
-      reader.readAsDataURL(file); 
+      this.postHouseForm.get(controlName)?.setValue(file); // Agregar el archivo directamente al formulario
     }
   }
 
   onSubmit(): void {
     if (this.postHouseForm.valid) {
-      const formData = this.postHouseForm.value;
-    
-      // Convertir las imágenes de las habitaciones a base64
-     
+      const formData = new FormData();
 
+      // Aquí agregamos cada campo del formulario al FormData
+      formData.append('name', this.postHouseForm.get('name')?.value);
+      formData.append('desc', this.postHouseForm.get('desc')?.value);
+      formData.append('m2', this.postHouseForm.get('m2')?.value);
+      formData.append('price', this.postHouseForm.get('price')?.value);
+      formData.append('image', this.postHouseForm.get('image')?.value); // Imagen en base64
+      
       console.log(formData);
       if(this.houseService.houseDetail.id){
         this.houseService.updateHouse(this.houseService.houseDetail.id ,formData);

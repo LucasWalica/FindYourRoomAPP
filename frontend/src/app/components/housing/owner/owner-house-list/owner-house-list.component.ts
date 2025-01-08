@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FooterComponent } from "../../reusable/footer/footer.component";
-import { NavBarComponent } from "../../reusable/nav-bar/nav-bar.component";
-import { HouseService } from '../../../services/house.service';
-import { house } from '../../models/house.models';
+import { FooterComponent } from "../../../reusable/footer/footer.component";
+import { NavBarComponent } from "../../../reusable/nav-bar/nav-bar.component";
+import { HouseService } from '../../../../services/house.service';
+import { house, rooms } from '../../../models/house.models';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -41,6 +41,14 @@ export class OwnerHouseListComponent implements OnInit{
       }
     }
 
+    goToUpdateRoom(room:rooms){
+      this.houseService.setRoomData(room);
+      this.router.navigate(['updateRoom'])
+    }
+    goToDetailView(house:house){
+      this.houseService.setHouseData(house);
+      this.router.navigate(['houseDetail'])
+    }
     goToUpdateHouse(house:house){
       this.houseService.setHouseData(house);
       this.router.navigate(['updateHouse'])

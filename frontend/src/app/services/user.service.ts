@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { TenantProfile } from '../components/models/tenantProfile.models';
 
 @Injectable({
@@ -8,7 +8,7 @@ export class UserService {
 
   constructor() { }
   token :String | null = {} as String;
-  
+  tenanProfile:TenantProfile = {} as TenantProfile;
 
   postInquilino(age:string, occupation:string, gender:string, activity_schedule:string,
     cleanliness_level:string, pets:boolean, smoker:boolean, visit_frequency:string, 
@@ -60,6 +60,7 @@ export class UserService {
         return response.json(); 
     })
     .then((data: TenantProfile) => {
+        this.tenanProfile = data
         console.log(data);
         return data;
     })

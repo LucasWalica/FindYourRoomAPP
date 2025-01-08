@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FooterComponent } from '../../reusable/footer/footer.component';
-import { NavBarComponent } from '../../reusable/nav-bar/nav-bar.component';
-import { houseType } from '../../models/house.models';
-import { HouseService } from '../../../services/house.service';
-
+import { FooterComponent } from '../../../reusable/footer/footer.component';
+import { NavBarComponent } from '../../../reusable/nav-bar/nav-bar.component';
+import { houseType } from '../../../models/house.models';
+import { HouseService } from '../../../../services/house.service';
 @Component({
   selector: 'app-post-house-form',
   standalone: true,

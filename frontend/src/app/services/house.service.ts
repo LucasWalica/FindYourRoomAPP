@@ -7,10 +7,13 @@ import { Router } from '@angular/router';
 })
 export class HouseService {
 
-
+  roomDetail:rooms = {} as rooms;
   houseDetail:house={} as house;
   setHouseData(house:house){
     this.houseDetail =house;
+  }
+  setRoomData(room:rooms){
+    this.roomDetail=room;
   }
 
   constructor(private router:Router) { }
@@ -69,6 +72,33 @@ export class HouseService {
       throw error;
     }
   }
+
+
+  async getHouseList(): Promise<house[]> {
+    const url = 'http://localhost:8000/api/houses/houses/';
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+  
+      const result = await response.json();
+  
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error('Error al enviar los datos:', error);
+      throw error;
+    }
+  }
   
   async updateHouse(id:number, formData:any){
     const url = `http://localhost:8000/api/houses/house/update/${id}/`;
@@ -77,10 +107,35 @@ export class HouseService {
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Token ${token}`,
         },
-        body:JSON.stringify(formData)
+        body:formData
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+  
+      const result = await response.json();
+  
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error('Error al enviar los datos:', error);
+      throw error;
+    }
+  }
+
+  async updateRoom(id:number, formData:any){
+    const url = `http://localhost:8000/api/houses/room/update/${id}/`;
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+        body:formData
       });
   
       if (!response.ok) {

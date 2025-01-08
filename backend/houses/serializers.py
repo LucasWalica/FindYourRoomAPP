@@ -3,53 +3,47 @@ from rest_framework import serializers
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 import base64    
-
-        
+import uuid
+import re
 
 
 class HouseUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = House
-        fields = ['name', 'image',' desc', 'm2', 'price']
-    
-    def update(self, instance, validated_data):
-        print("Datos recibidos en el serializador:", validated_data)
-        user = self.context['request'].user
-        print("Usuario autenticado:", user)
+        fields = ['name', 'image','desc', 'm2', 'price']
         
-        if instance.fkCreator != user:
-            raise ValidationError("No puedes actualizar una casa que no te pertenece.")
-
-        # Decodificar imagen base64
+    def update(self, instance, validated_data):
+       
         image_data = validated_data.pop('image', None)
         if image_data:
-            format, imgstr = image_data.split(';base64,') 
-            ext = format.split('/')[-1]
-            instance.image.save(f"updated.{ext}", ContentFile(base64.b64decode(imgstr)), save=False)
-
+            instance.image = image_data  # Django se encarga de manejar la imagen como archivo
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
-
         instance.save()
         return instance
-    
+
+
 class RoomUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = ['m2', 'desc', 'image', 'price']
 
+
     def update(self, instance, validated_data):
         user = self.context['request'].user
-        if not user.is_authenticated:
-            raise ValidationError("El usuario debe estar autenticado para actualizar una habitación.")
-        
-        fkHouse = validated_data.get('fkHouse', instance.fkHouse)
-        if fkHouse.fkCreator != user:
-            raise ValidationError("No puedes actualizar una habitación en una casa que no te pertenece.")
-        
+        # Verifica si el usuario tiene permiso para modificar la habitación
+        if instance.fkHouse.fkCreator != user:
+            raise ValidationError("No puedes actualizar la habitación de una casa que no te pertenece.")
+        # Extrae la imagen si existe
+        image_data = validated_data.pop('image', None)
+        if image_data:
+            instance.image = image_data
+        else:
+            pass
+        # Actualiza los otros campos del modelo
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
-        
+
         instance.save()
         return instance
 

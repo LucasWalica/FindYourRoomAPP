@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavBarComponent } from '../../reusable/nav-bar/nav-bar.component';
-import { FooterComponent } from '../../reusable/footer/footer.component';
+import { NavBarComponent } from '../../../reusable/nav-bar/nav-bar.component';
+import { FooterComponent } from '../../../reusable/footer/footer.component';
 import { CommonModule } from '@angular/common';
-import { house } from '../../models/house.models';
+import { house } from '../../../models/house.models';
 import { Router } from '@angular/router';
-import { HouseService } from '../../../services/house.service';
+import { HouseService } from '../../../../services/house.service';
 
 @Component({
   selector: 'app-delete-house-form',
