@@ -23,14 +23,16 @@
         </div>
 
 
-        <!-- Imagen de la casa -->
+         <!-- Imagen de la casa -->
         <div class="flex justify-center mb-6">
-            <img src="{{ house.image }}" alt="{{ house.name }}" class="rounded-lg shadow-md max-w-full h-auto border-2 border-green1" />
+            <img src="{{ house.image }}" alt="{{ house.name }}" class="rounded-lg shadow-md max-w-full max-h-[80vh] object-contain border-2 border-green1" />
         </div>
+
     </div>
 
-    <!-- Lista de cuartos -->
-    <div>
+    @if(house.rooms){
+        <!-- Lista de cuartos -->
+        <div>
         <h2 class="text-xl font-semibold text-green2 text-center mb-4">Rooms</h2>
         <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @for (room of this.house.rooms_data; track room) {
@@ -49,6 +51,7 @@
             }
         </div>
     </div>
+    }
 
     <app-footer />
 </div>
