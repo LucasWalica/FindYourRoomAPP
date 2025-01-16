@@ -1,4 +1,61 @@
-<div class="m-4 p-2 bg-green3 text-green1 rounded-md">
-    <app-nav-bar/>
-    <app-footer/>
+<div class="m-4 p-4 bg-green3 text-green1 rounded-md shadow-md">
+    <app-nav-bar />
+    
+    <!-- Formulario de búsqueda -->
+    <div class="my-4">
+        <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="flex justify-center items-center gap-4">
+            <input 
+                type="text" 
+                placeholder="Search houses..." 
+                class="rounded-md p-2 text-center border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+                formControlName="search">
+            <button 
+                type="submit" 
+                class="bg-green1 text-green3 px-4 py-2 rounded-md shadow-md hover:bg-green2 hover:text-green1 transition duration-300">
+                Search
+            </button>
+        </form>
+    </div>
+
+    <!-- Lista de casas -->
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (house of houses; track house) {
+            <div class="bg-green3 rounded-lg shadow-md p-4 border-2 border-green1 hover:shadow-lg transition duration-300">
+                <!-- Nombre de la casa -->
+                <h1 class="text-lg font-bold text-green2 mb-2">{{ house.name }}</h1>
+                
+                <!-- Descripción -->
+                <p class="text-sm text-gray-700 mb-4">{{ house.desc }}</p>
+                
+                <!-- Tipo de casa -->
+                <p class="text-xs font-medium text-green3 bg-green1 rounded-full px-2 inline-block mb-4">
+                    {{ house.house_type }}
+                </p>
+
+                <!-- Información de ubicación y tamaño -->
+                <div class="grid grid-cols-2 text-sm text-gray-600 gap-2">
+                    <div><strong>City:</strong> {{ house.ciudad }}</div>
+                    <div><strong>Neighborhood:</strong> {{ house.barrio }}</div>
+                    <div><strong>Street:</strong> {{ house.calle }}</div>
+                    <div><strong>Portal:</strong> {{ house.portal }}</div>
+                    <div class="col-span-2"><strong>Size:</strong> {{ house.m2 }} m²</div>
+                </div>
+                
+                <!-- Botón de detalles -->
+                <div class="mt-4 flex justify-center">
+                    <button 
+                        class="sm:w-1/4  bg-magenta1 text-green1 
+                rounded-md border-magenta1 border-2 
+                hover:text-green3 hover:bg-magenta2 duration-150
+                text-xl shadow-md shadow-brown"
+                        (click)="goToHouseDetails(house)">
+                        House Details
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <app-footer />
 </div>
+

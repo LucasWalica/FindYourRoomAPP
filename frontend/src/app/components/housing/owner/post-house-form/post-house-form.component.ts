@@ -27,7 +27,6 @@ export class PostHouseFormComponent {
       barrio: ['', Validators.required],
       calle: ['', Validators.required],
       portal: [0, Validators.required],
-      direccion: ['', Validators.required],
       price: [0, [Validators.required, Validators.min(0)]],
       rooms_data: this.fb.array([]), 
     });
@@ -78,7 +77,6 @@ export class PostHouseFormComponent {
       reader.readAsDataURL(file);
     }
   }
-
 
   // Actualizar dinámicamente los campos de habitaciones
   private updateRoomFields(count: number): void {

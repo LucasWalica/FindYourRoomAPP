@@ -1,7 +1,54 @@
-<div class="m-4 p-2 bg-green3 text-green1 rounded-md">
-    <app-nav-bar/>
-    <div>
-        house detail
+<div class="m-4 p-4 bg-green3 text-green1 rounded-md shadow-md">
+    <app-nav-bar />
+
+    <!-- Información general de la casa -->
+    <div class="my-6">
+        <h1 class="text-center text-2xl font-bold text-green2 mb-4">{{ house.name }}</h1>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2">
+            <!-- Ubicación -->
+            <div class="flex flex-wrap sm:flex-col sm:text-center justify-center gap-6 mb-6 text-sm text-gray-700">
+                <div><strong>City:</strong> {{ house.ciudad }}</div>
+                <div><strong>Street:</strong> {{ house.calle }}</div>
+                <div><strong>Neighborhood:</strong> {{ house.barrio }}</div>
+                <div><strong>Portal:</strong> {{ house.portal }}</div>
+                <div><strong>Size:</strong> {{ house.m2 }} m²</div>
+                <div><strong>Price:</strong> ${{ house.price }}</div>
+            </div>
+            
+            <!-- Mapa -->
+            <div class="mb-6">
+                <app-house-map-component [houseData]="house"></app-house-map-component>
+            </div>
+        </div>
+
+
+        <!-- Imagen de la casa -->
+        <div class="flex justify-center mb-6">
+            <img src="{{ house.image }}" alt="{{ house.name }}" class="rounded-lg shadow-md max-w-full h-auto border-2 border-green1" />
+        </div>
     </div>
-    <app-footer/>
+
+    <!-- Lista de cuartos -->
+    <div>
+        <h2 class="text-xl font-semibold text-green2 text-center mb-4">Rooms</h2>
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @for (room of this.house.rooms_data; track room) {
+                <div class="bg-green3 rounded-lg shadow-md p-4 border-2 border-green1 hover:shadow-lg transition duration-300">
+                    <!-- Información del cuarto -->
+                    <h3 class="text-lg font-bold text-green2 mb-2">Room</h3>
+                    <p class="text-sm text-gray-700 mb-2"><strong>Description:</strong> {{ room.desc }}</p>
+                    <p class="text-sm text-gray-700 mb-2"><strong>Price:</strong> ${{ room.price }}</p>
+                    <p class="text-sm text-gray-700 mb-4"><strong>Size:</strong> {{ room.m2 }} m²</p>
+                    
+                    <!-- Imagen del cuarto -->
+                    <div class="flex justify-center">
+                        <img src="{{ room.image }}" alt="Room Image" class="rounded-lg shadow-md max-w-full h-auto border-2 border-green1" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <app-footer />
 </div>

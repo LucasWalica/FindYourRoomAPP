@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import ValidationError
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework import status
+from django.db.models import Q 
 
 
 
@@ -19,7 +20,32 @@ class HouseList(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     queryset = House.objects.all()
     serializer_class = HouseSerializer
+
+
+class HouseListBySearch(generics.ListAPIView):
+    parser_classes = [JSONParser]
+    permission_classes = [IsAuthenticated]
+    queryset = House.objects.all()
+    serializer_class = HouseSerializer    
     
+    def get_queryset(self):
+        search_term = self.request.query_params.get('search', None)  
+
+        queryset = House.objects.all()
+        if search_term:
+            queryset = queryset.filter(
+                Q(name__icontains=search_term) |
+                Q(desc__icontains=search_term) |
+                Q(ciudad__icontains=search_term) | 
+                Q(barrio__icontains=search_term) | 
+                Q(calle__icontains=search_term)
+            )
+        
+        return queryset
+   
+
+
+
 #done
 class HouseOwnerListView(generics.ListAPIView):
     parser_classes = [JSONParser]

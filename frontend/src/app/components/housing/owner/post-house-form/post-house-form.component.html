@@ -1,238 +1,166 @@
-<div class="m-4 p-2 bg-green3 text-green1 rounded-md">
+<div class="m-4 p-4 bg-green3 text-green1 rounded-md shadow-md">
   <app-nav-bar></app-nav-bar>
-  <form [formGroup]="postHouseForm" (ngSubmit)="onSubmit()" class="flex flex-col justify-center text-center">
-  
+  <form 
+    [formGroup]="postHouseForm" 
+    (ngSubmit)="onSubmit()" 
+    class="flex flex-col justify-center items-center gap-6"
+  >
+    <!-- Título del formulario -->
+    <h1 class="text-2xl font-bold text-green2 mb-4">Post a New House</h1>
+
     <!-- Nombre -->
-    <div class="flex flex-col items-center justify-center">
-      <label>Name:</label>
+    <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <label class="font-semibold text-green2">Name:</label>
       <input
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
         type="text"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
         formControlName="name"
-        placeholder="Name"
+        placeholder="Enter house name"
       />
-      <div *ngIf="postHouseForm.get('name')?.invalid && postHouseForm.get('name')?.touched">
-        <small class="text-red-500">Name is required.</small>
-      </div>
+      <small *ngIf="postHouseForm.get('name')?.invalid && postHouseForm.get('name')?.touched" class="text-red-500">
+        Name is required.
+      </small>
     </div>
-  
+
     <!-- Imagen principal -->
-    <div class="flex flex-col items-center justify-center">
-      <label>Image:</label>
+    <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <label class="font-semibold text-green2">Main Image:</label>
       <input
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
         type="file"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
         (change)="onFileChange($event, 'image')"
       />
-      <div *ngIf="postHouseForm.get('image')?.invalid && postHouseForm.get('image')?.touched">
-        <small class="text-red-500">Image is required.</small>
-      </div>
+      <small *ngIf="postHouseForm.get('image')?.invalid && postHouseForm.get('image')?.touched" class="text-red-500">
+        Image is required.
+      </small>
     </div>
-  
+
     <!-- Descripción -->
-    <div class="flex flex-col items-center justify-center">
-      <label>Description:</label>
+    <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <label class="font-semibold text-green2">Description:</label>
       <textarea
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
+        class="rounded-md p-4 h-32 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2 resize-none"
         formControlName="desc"
-        placeholder="Brief description"
+        placeholder="Provide a brief description"
       ></textarea>
-      <div *ngIf="postHouseForm.get('desc')?.invalid && postHouseForm.get('desc')?.touched">
-        <small class="text-red-500">Description is required.</small>
-      </div>
+      <small *ngIf="postHouseForm.get('desc')?.invalid && postHouseForm.get('desc')?.touched" class="text-red-500">
+        Description is required.
+      </small>
     </div>
-  
-    <!-- Tamaño en metros cuadrados -->
-    <div class="flex flex-col items-center justify-center">
-      <label>Size (m²):</label>
+
+    <!-- Tamaño -->
+    <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <label class="font-semibold text-green2">Size (m²):</label>
       <input
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
         type="number"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
         formControlName="m2"
-        placeholder="Total size in m²"
+        placeholder="Enter size in m²"
       />
-      <div *ngIf="postHouseForm.get('m2')?.invalid && postHouseForm.get('m2')?.touched">
-        <small class="text-red-500" *ngIf="postHouseForm.get('m2')?.errors?.['required']">Size is required.</small>
-        <small class="text-red-500" *ngIf="postHouseForm.get('m2')?.errors?.['min']">Size must be greater than 0.</small>
-      </div>
+      <small *ngIf="postHouseForm.get('m2')?.invalid && postHouseForm.get('m2')?.touched" class="text-red-500">
+        Size is required.
+      </small>
     </div>
-  
+
     <!-- Tipo de casa -->
-    <div class="flex flex-col items-center justify-center">
-      <label>House type:</label>
+    <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <label class="font-semibold text-green2">House Type:</label>
       <select
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
         formControlName="house_type"
       >
         <option *ngFor="let type of houseTypes | keyvalue" [value]="type.value">
           {{ type.value }}
         </option>
       </select>
-      <div *ngIf="postHouseForm.get('house_type')?.invalid && postHouseForm.get('house_type')?.touched">
-        <small class="text-red-500">House type is required.</small>
+      <small *ngIf="postHouseForm.get('house_type')?.invalid && postHouseForm.get('house_type')?.touched" class="text-red-500">
+        House type is required.
+      </small>
+    </div>
+
+    <!-- Más campos (rooms, city, etc.) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full sm:w-3/4 lg:w-1/2">
+      <div class="flex flex-col">
+        <label class="font-semibold text-green2">Rooms:</label>
+        <input
+          type="number"
+          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+          formControlName="rooms"
+          placeholder="Number of rooms"
+        />
+        <small *ngIf="postHouseForm.get('rooms')?.invalid && postHouseForm.get('rooms')?.touched" class="text-red-500">
+          Rooms are required.
+        </small>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-semibold text-green2">City:</label>
+        <input
+          type="text"
+          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+          formControlName="ciudad"
+          placeholder="City"
+        />
+        <small *ngIf="postHouseForm.get('ciudad')?.invalid && postHouseForm.get('ciudad')?.touched" class="text-red-500">
+          City is required.
+        </small>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-semibold text-green2">Neighborhood:</label>
+        <input
+          type="text"
+          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+          formControlName="barrio"
+          placeholder="Neighborhood"
+        />
+        <small *ngIf="postHouseForm.get('barrio')?.invalid && postHouseForm.get('barrio')?.touched" class="text-red-500">
+          Neighborhood is required.
+        </small>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-semibold text-green2">Street:</label>
+        <input
+          type="text"
+          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+          formControlName="calle"
+          placeholder="Street"
+        />
+        <small *ngIf="postHouseForm.get('calle')?.invalid && postHouseForm.get('calle')?.touched" class="text-red-500">
+          Street is required.
+        </small>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-semibold text-green2">Portal:</label>
+        <input
+          type="number"
+          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+          formControlName="portal"
+          placeholder="Portal"
+        />
+        <small *ngIf="postHouseForm.get('portal')?.invalid && postHouseForm.get('portal')?.touched" class="text-red-500">
+          Portal is required.
+        </small>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-semibold text-green2">Price:</label>
+        <input
+          type="number"
+          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+          formControlName="price"
+          placeholder="Price"
+        />
+        <small *ngIf="postHouseForm.get('price')?.invalid && postHouseForm.get('price')?.touched" class="text-red-500">
+          Price is required.
+        </small>
       </div>
     </div>
-  
-    <!-- Número de habitaciones -->
-    <div class="flex flex-col items-center justify-center">
-      <label>Rooms:</label>
-      <input
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
-        type="number"
-        formControlName="rooms"
-        placeholder="Number of rooms"
-      />
-      <div *ngIf="postHouseForm.get('rooms')?.invalid && postHouseForm.get('rooms')?.touched">
-        <small class="text-red-500">Number of rooms is required.</small>
-        <small class="text-red-500" *ngIf="postHouseForm.get('rooms')?.errors?.['min']">Rooms must be at least 0.</small>
-      </div>
-    </div>
-  
-    <!-- Ciudad -->
-    <div class="flex flex-col items-center justify-center">
-      <label>City:</label>
-      <input
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
-        type="text"
-        formControlName="ciudad"
-        placeholder="City"
-      />
-      <div *ngIf="postHouseForm.get('ciudad')?.invalid && postHouseForm.get('ciudad')?.touched">
-        <small class="text-red-500">City is required.</small>
-      </div>
-    </div>
-  
-    <!-- Barrio -->
-    <div class="flex flex-col items-center justify-center">
-      <label>Neighborhood:</label>
-      <input
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
-        type="text"
-        formControlName="barrio"
-        placeholder="Neighborhood"
-      />
-      <div *ngIf="postHouseForm.get('barrio')?.invalid && postHouseForm.get('barrio')?.touched">
-        <small class="text-red-500">Neighborhood is required.</small>
-      </div>
-    </div>
-  
-    <!-- Calle -->
-    <div class="flex flex-col items-center justify-center">
-      <label>Street:</label>
-      <input
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
-        type="text"
-        formControlName="calle"
-        placeholder="Street"
-      />
-      <div *ngIf="postHouseForm.get('calle')?.invalid && postHouseForm.get('calle')?.touched">
-        <small class="text-red-500">Street is required.</small>
-      </div>
-    </div>
-  
-    <!-- Portal -->
-    <div class="flex flex-col items-center justify-center">
-      <label>Portal:</label>
-      <input
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
-        type="number"
-        formControlName="portal"
-        placeholder="Portal"
-      />
-      <div *ngIf="postHouseForm.get('portal')?.invalid && postHouseForm.get('portal')?.touched">
-        <small class="text-red-500">Portal is required.</small>
-      </div>
-    </div>
-  
-    <!-- Dirección -->
-    <div class="flex flex-col items-center justify-center">
-      <label>Address:</label>
-      <input
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
-        type="text"
-        formControlName="direccion"
-        placeholder="Address"
-      />
-      <div *ngIf="postHouseForm.get('direccion')?.invalid && postHouseForm.get('direccion')?.touched">
-        <small class="text-red-500">Address is required.</small>
-      </div>
-    </div>
-  
-    <!-- Precio -->
-    <div class="flex flex-col items-center justify-center">
-      <label>Price:</label>
-      <input
-        class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
-        type="number"
-        formControlName="price"
-        placeholder="Price"
-      />
-      <div *ngIf="postHouseForm.get('price')?.invalid && postHouseForm.get('price')?.touched">
-        <small class="text-red-500">Price is required.</small>
-      </div>
-    </div>
-  
-    <!-- Detalles de las habitaciones -->
-    <div formArrayName="rooms_data">
-      <div class="flex flex-col justify-center items-center align-middle">
-        <div class="border-2 border-green2 w-1/2 m-2 rounded-md" *ngFor="let room of roomsData.controls; let i = index" [formGroupName]="i">
-          <div class="flex flex-col items-center justify-center">
-            <label>Room {{ i + 1 }} Size (m²):</label>
-            <input
-              class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
-              type="number"
-              formControlName="m2"
-            />
-            <div *ngIf="room.get('m2')?.invalid && room.get('m2')?.touched">
-              <small class="text-red-500">Size is required.</small>
-            </div>
-          </div>
-  
-          <div class="flex flex-col items-center justify-center">
-            <label>Room {{ i + 1 }} Description:</label>
-            <input
-              class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
-              type="text"
-              formControlName="desc"
-            />
-            <div *ngIf="room.get('desc')?.invalid && room.get('desc')?.touched">
-              <small class="text-red-500">Description is required.</small>
-            </div>
-          </div>
-  
-          <div class="flex flex-col items-center justify-center">
-            <label>Room {{ i + 1 }} Image:</label>
-            <input
-              class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
-              type="file"
-              (change)="onRoomImageChange($event, i)"
-            />
-          </div>
-  
-          <div class="flex flex-col items-center justify-center">
-            <label>Room {{ i + 1 }} Price:</label>
-            <input
-              class="text-green3 text-center rounded-md m-2 w-1/3 md:w-1/6"
-              type="number"
-              formControlName="price"
-            />
-            <div *ngIf="room.get('price')?.invalid && room.get('price')?.touched">
-              <small class="text-red-500">Price is required.</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  
+
     <!-- Botón de envío -->
-    <div class="flex flex-col items-center justify-center m-4">
-      <button
-        type="submit"
-        class="bg-magenta1 text-green1 rounded-md border-magenta1 border-2 hover:text-green3 hover:bg-magenta2 duration-150 text-xl shadow-md shadow-brown"
-      >
-        Confirm
-      </button>
-    </div>
+    <button
+      type="submit"
+      class="bg-magenta1 text-green1 font-bold py-2 px-6 rounded-md border-2 border-magenta1 hover:bg-magenta2 hover:text-green3 transition duration-300 mt-6 m-2"
+    >
+      Submit
+    </button>
   </form>
   <app-footer></app-footer>
 </div>

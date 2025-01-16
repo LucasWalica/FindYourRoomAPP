@@ -10,9 +10,10 @@ export interface house{
     barrio:string,
     calle:string,
     portal:number,
-    direccion:string,
     price:number, 
-    rooms_data:rooms[]
+    rooms_data:rooms[],
+    latitud:number,
+    longitud:number
 }
 
 export interface rooms{

@@ -4,22 +4,29 @@ import { FooterComponent } from '../../reusable/footer/footer.component';
 import { Router } from '@angular/router';
 import { HouseService } from '../../../services/house.service';
 import { house } from '../../models/house.models';
+import { ReactiveFormsModule, Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-house-list',
   standalone: true,
   imports: [
     NavBarComponent,
-    FooterComponent
+    FooterComponent,
+    ReactiveFormsModule
   ],
   templateUrl: './house-list.component.html',
   styleUrl: './house-list.component.css'
 })
 export class HouseListComponent implements OnInit{
 
-
+  searchForm:FormGroup;
   houses:house[] = [];
-  constructor(private router:Router, private houseService:HouseService){}
+  constructor(private router:Router, private houseService:HouseService, private fb:FormBuilder){
+    this.searchForm = this.fb.group({
+      search: ['']
+    })
+  }
+  // charging all the data from the server is not efficient
   async ngOnInit() {
     try {
       this.houses = await this.houseService.getHouseList();
@@ -40,4 +47,15 @@ export class HouseListComponent implements OnInit{
       }
     }
 
+
+    async onSubmit(){
+      const searchData = this.searchForm.get('search')?.value??'';
+      this.houses = await this.houseService.getHouseListBySearch(searchData);
+        
+    }
+
+    goToHouseDetails(house:house){
+      this.houseService.setHouseData(house);
+      this.router.navigate(['houseDetail']);
+    }
 }

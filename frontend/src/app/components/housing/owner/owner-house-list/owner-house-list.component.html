@@ -1,40 +1,67 @@
-<div class="m-4 p-2 bg-green3 text-green1 rounded-md">
+<div class="m-4 p-4 bg-green3 text-green1 rounded-md shadow-md">
     <app-nav-bar></app-nav-bar>
-    <div>
-        <h1 class="text-2xl text-center">Admin Panel</h1>
-        <div *ngFor="let house of this.houses" class="text-center flex flex-col p-2">
-            <div class="grid grid-cols-3 lg:flex lg:flex-row border-green2 border-2 rounded-md m-1 p-2 gap-4 justify-center">
-            <div>{{house.name}}</div>
-            <div>{{house.desc}}</div>
-            <div>{{house.direccion}}</div>
-            <div>{{house.house_type}}</div>
-            <div>{{house.m2}} m2</div>
-            <div>Price: {{house.price}}</div>
-            <div><h1 class="text-xl"> Rooms: {{house.rooms}}</h1></div>
-                 <!-- update and remove actions-->
-                 <div class="flex flex-row justify-center gap-2">   
-                    <button (click)="goToUpdateHouse(house)">Update</button>
-                    <button (click)="goToDeleteHouse(house)">Delete</button>
-                </div>
-            <div>
-                <button (click)="goToDetailView(house)">View House Details</button>
-            </div>
-        </div>
-        <div class="flex justify-center">
-            <div class="flex flex-col w-5/6 md:w-3/4">
-                <div *ngFor="let room of house.rooms_data" class="flex flex-row border-2 border-green2 rounded-md m-1 gap-4 p-2 text-center justify-center align-middle items-center">
-                    <p>{{ room.desc }}</p>
-                    <p>{{room.m2}}m2</p>
-                    <p>Price: {{ room.price }}</p>
-                    <button (click)="goToUpdateRoom(room)">Update Room</button>
-                </div>
-            </div>
-        </div>
-    </div>
-        
-    </div>
-    <app-footer></app-footer>
 
-    
+    <!-- Título principal -->
+    <h1 class="text-2xl font-bold text-center text-green2 mb-6">Admin Panel</h1>
+
+    <!-- Lista de casas -->
+    <div *ngFor="let house of this.houses" class="mb-6">
+        <!-- Tarjeta de cada casa -->
+        <div class="bg-green3 rounded-lg shadow-md p-4 border-2 border-green2 hover:shadow-lg transition duration-300">
+            <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                <p><strong>Name:</strong> {{ house.name }}</p>
+                <p><strong>Description:</strong> {{ house.desc }}</p>
+                <p><strong>Type:</strong> {{ house.house_type }}</p>
+                <p><strong>Size:</strong> {{ house.m2 }} m²</p>
+                <p><strong>Price:</strong> ${{ house.price }}</p>
+                <p><strong>Rooms:</strong> {{ house.rooms }}</p>
+            </div>
+
+            <!-- Acciones principales -->
+            <div class="flex flex-wrap justify-center gap-4 mt-4">
+                <button 
+                    (click)="goToUpdateHouse(house)" 
+                    class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+                    Update
+                </button>
+                <button 
+                    (click)="goToDeleteHouse(house)" 
+                    class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">
+                    Delete
+                </button>
+                <button 
+                    (click)="goToDetailView(house)" 
+                    class="bg-green1 text-green3 px-4 py-2 rounded-md border-2 border-green1 hover:bg-green2 hover:text-green1 transition duration-300">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+        @if (house.rooms) {
+            <!-- Lista de cuartos -->
+        <div class="flex justify-center m-2">
+                <h2 class="text-xl font-semibold text-green2 mb-4 text-center m-2">Rooms</h2>
+            <div *ngFor="let room of house.rooms_data" 
+            class="w-3/5 bg-gray-50 rounded-lg shadow-md p-4 border-2 border-green2 hover:shadow-lg transition duration-300 mb-4">
+                <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                    <p><strong>Description:</strong> {{ room.desc }}</p>
+                    <p><strong>Size:</strong> {{ room.m2 }} m²</p>
+                    <p><strong>Price:</strong> ${{ room.price }}</p>
+                </div>
+
+                <!-- Botón de acción para el cuarto -->
+                <div class="flex justify-center mt-4">
+                    <button 
+                        (click)="goToUpdateRoom(room)" 
+                        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+                        Update Room
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <app-footer></app-footer>
 </div>
 

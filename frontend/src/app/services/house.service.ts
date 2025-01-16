@@ -99,6 +99,31 @@ export class HouseService {
       throw error;
     }
   }
+
+  async getHouseListBySearch(search:string){
+    const url = `http://127.0.0.1:8000/api/houses/houses/search/?search=${search}`
+    try{
+      const token = localStorage.getItem('token');
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+  
+      const result = await response.json();
+  
+      console.log(result);
+      return result;
+    }catch (error) {
+      console.error('Error al enviar los datos:', error);
+      throw error;
+    }
+  }
   
   async updateHouse(id:number, formData:any){
     const url = `http://localhost:8000/api/houses/house/update/${id}/`;

@@ -28,15 +28,14 @@ class House(models.Model):
     barrio = models.CharField(max_length=40)
     calle = models.CharField(max_length=50)
     portal = models.IntegerField(blank=False, null=False)
-    direccion = models.CharField(max_length=50)
     latitud = models.FloatField(null=True, blank=True)
     longitud = models.FloatField(null=True, blank=True)
     price = models.FloatField()
     # add owner
 
     def save(self, *args, **kwargs):
-        if self.direccion: 
-            self.latitud, self.longitud = get_coordinates_from_address(self.direccion)
+        direccion = self.ciudad + " " + self.barrio + " " + self.calle + " "+ str(self.portal)
+        self.latitud, self.longitud = get_coordinates_from_address(direccion)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -54,3 +53,6 @@ class Room(models.Model):
 
     def __str__(self):
         return f"ID: {self.id} - house PK:{self.fkHouse}"
+
+
+# maybe add rules to houses?
