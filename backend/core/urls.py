@@ -7,4 +7,3 @@ urlpatterns = [
     path('api/users/', include('users.urls')),
     path('api/houses/', include('houses.urls')),
 ]
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -21,6 +21,9 @@
                 <app-house-map-component [houseData]="house"></app-house-map-component>
             </div>
         </div>
+        <div class="flex justify-center text-center">
+            <button (click)="goToChatWithOwner(house.creator)">Chat with owner</button>
+        </div>
 
 
          <!-- Imagen de la casa -->

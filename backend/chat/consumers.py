@@ -1,15 +1,27 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
-
 from django.contrib.auth import get_user_model
-
+from channels.auth import login
+from django.core.exceptions import PermissionDenied
+from channels.exceptions import DenyConnection
 User = get_user_model()
+
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        # Los IDs de los usuarios se pueden pasar como parte de la URL o del frontend
+        # Obtén IDs de la URL
         user1_id = int(self.scope['url_route']['kwargs']['user1_id'])
         user2_id = int(self.scope['url_route']['kwargs']['user2_id'])
+
+        # Verifica si el usuario conectado está autenticado
+        user = self.scope["user"]
+        if user.is_anonymous or (user.id not in [user1_id, user2_id]):
+            # Rechaza la conexión si no está autorizado
+            raise PermissionDenied("No tienes permiso para unirte a esta sala.")
+
+        other_user_id = user2_id if user.id == user1_id else user1_id
+        if not await self.user_exists(other_user_id):
+            raise DenyConnection("El otro usuario no existe.")
         
         # Genera el nombre único de la sala
         self.room_name = f"{min(user1_id, user2_id)}_{max(user1_id, user2_id)}"
@@ -69,7 +81,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def save_message(self, sender, receiver, message):
         from .models import Message
-        Message.objects.create(sender=sender, receiver=receiver)
+        Message.objects.create(sender=sender, receiver=receiver, message=message)
 
     @database_sync_to_async
     def get_user(self, username):

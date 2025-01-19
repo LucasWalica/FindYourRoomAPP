@@ -1,4 +1,5 @@
 export interface house{
+    creator:number,
     id:number|null,
     name:string,
     image:File | string, 

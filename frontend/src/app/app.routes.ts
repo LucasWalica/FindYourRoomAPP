@@ -12,7 +12,8 @@ import { UpdateHouseFormComponent } from './components/housing/owner/update-hous
 import { OwnerHouseListComponent } from './components/housing/owner/owner-house-list/owner-house-list.component';
 import { DeleteHouseFormComponent } from './components/housing/owner/delete-house-form/delete-house-form.component';
 import { RoomUpdateFormComponent } from './components/housing/owner/room-update-form/room-update-form.component';
-
+import { UserUserChatComponent } from './components/chat/user-user-chat/user-user-chat.component';
+import { InboxChatComponent } from './components/chat/inbox-chat/inbox-chat.component';
 
 export const routes: Routes = [
     {path:'home', component:HomePageComponent},
@@ -27,5 +28,7 @@ export const routes: Routes = [
     {path:'houses', component:HouseListComponent},
     {path:'ownerHouses', component:OwnerHouseListComponent},
     {path:'deleteHouse', component:DeleteHouseFormComponent},
-    {path:'updateRoom', component:RoomUpdateFormComponent}
+    {path:'updateRoom', component:RoomUpdateFormComponent},
+    {path:'chats', component:InboxChatComponent},
+    {path:'chat', component:UserUserChatComponent}
 ];

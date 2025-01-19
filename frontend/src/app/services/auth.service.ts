@@ -77,6 +77,9 @@ export class AuthService {
             localStorage.setItem('inquilino_id', responseBody.inquilino_id);
             console.log(localStorage.getItem('inquilino_id'));
           }
+          if(responseBody.user.id){
+            localStorage.setItem('userID', responseBody.user.id)
+          }
           this.router.navigate(['home']);
         }
       })

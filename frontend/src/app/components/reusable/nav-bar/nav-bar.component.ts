@@ -25,8 +25,8 @@ export class NavBarComponent {
   goToOwnerHouseList(){
     this.router.navigate(['ownerHouses'])
   }
-  goToNotificacions(){
-
+  goToChat(){
+    this.router.navigate(['chats'])
   }
   home(){
     this.router.navigate(['home'])
