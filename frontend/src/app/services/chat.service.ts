@@ -8,7 +8,6 @@ export class ChatService {
 
   constructor(private router:Router) {}
 
-
   // maybe add logic to reconect if error occurs and add authentication methods and redirections
   private socket!:WebSocket;
   chatUser2:number = {} as number;
