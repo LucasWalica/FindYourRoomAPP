@@ -1,5 +1,5 @@
 export interface house{
-    creator:number,
+    fkCreator:number,
     id:number|null,
     name:string,
     image:File | string, 

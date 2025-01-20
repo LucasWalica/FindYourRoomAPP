@@ -32,6 +32,7 @@ export class HouseDetailComponent implements OnInit{
   
   goToChatWithOwner(ownerID:number){
     this.chatService.chatUser2=ownerID;
+    console.log(ownerID);
     this.router.navigate(['chat'])
   }
 
