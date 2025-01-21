@@ -68,35 +68,66 @@ export class ChatService {
 
 
 
-    getMessagesFromDB(user2_id:number): Promise<any[]>  {
-      this.token = localStorage.getItem('token');
-      let inquilino_id = localStorage.getItem('inquilino_id');
-      if (!this.token || !inquilino_id) {
-          console.error('Token o Inquilino ID no encontrados.');
-          return Promise.reject('Token o Inquilino ID no encontrados.');
-      }
-      return fetch(`http://127.0.0.1:8000/api/chat/messages/${user2_id}/`, {
-          method: 'GET',
-          headers: {
-              'Authorization': `Token ${this.token}`, 
-              'Content-Type': 'application/json'
-          },
-      })
+  getMessagesFromDB(user2_id:number): Promise<any[]>  {
+    this.token = localStorage.getItem('token');
+    let inquilino_id = localStorage.getItem('inquilino_id');
+    if (!this.token || !inquilino_id) {
+        console.error('Token o Inquilino ID no encontrados.');
+        return Promise.reject('Token o Inquilino ID no encontrados.');
+    }
+    return fetch(`http://127.0.0.1:8000/api/chat/messages/${user2_id}/`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Token ${this.token}`, 
+          'Content-Type': 'application/json'
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        return response.json(); 
+    })
+    .then((data: any[]) => {
+        console.log(data);
+        return data;
+    })
+    .catch(error => {
+        console.error('Error al obtener el inquilino:', error);
+        throw error;
+    });
+  }
+
+  getInboxMessages(): Promise<any[]> {
+    this.token = localStorage.getItem('token');
+    if (!this.token) {
+      console.error('Token no encontrado.');
+      return Promise.reject('Token no encontrado.');
+    }
+  
+    return fetch(`http://127.0.0.1:8000/api/chat/messages/inbox/`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Token ${this.token}`,
+        'Content-Type': 'application/json',
+      },
+    })
       .then(response => {
-          if (!response.ok) {
-              throw new Error(`Error HTTP: ${response.status}`);
-          }
-          return response.json(); 
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status}`);
+        }
+        return response.json();
       })
       .then((data: any[]) => {
-          console.log(data);
-          return data;
+        console.log('inbox: ', data);
+        return data;
       })
       .catch(error => {
-          console.error('Error al obtener el inquilino:', error);
-          throw error;
+        console.error('Error al obtener los mensajes:', error);
+        throw error;
       });
-    }
+  }
+  
 
   
 }

@@ -3,9 +3,15 @@
     <div class="chat-container">
         <div class="messages">
           <div *ngFor="let message of messages">
-            <p [class.sent]="message.sender === userId" [class.received]="message.sender !== userId">
-              {{ message.message }}
-            </p>
+            @if (message.sender === userId) {
+                <p class="text-right">
+                    {{ message.message }}
+                </p>
+            }@else if (message.sender === chatUser2) {
+                <p class="text-left">
+                    {{ message.message }}
+                </p>
+            }
           </div>
         </div>
         <div class="message-input">

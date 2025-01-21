@@ -1,7 +1,14 @@
 <div class="m-4 p-2 bg-green3 text-green1 rounded-md">
     <app-nav-bar/>
     <div class="bg-green3 m-2 rounded-md">
-        
+        @for (message of this.messages; track message) {
+            <div class="border-2 rounded-md border-green2 p-2
+            text-center m-2 cursor-pointer hover:bg-green1 hover:text-green3"
+             (click)="goToChat(message.sender, message.receiver)">
+                <h1>Name need to be fetched from db</h1>
+                <p>Message: {{message.message}}</p>
+            </div>
+        }
     </div>
     <app-footer/>
 </div>
