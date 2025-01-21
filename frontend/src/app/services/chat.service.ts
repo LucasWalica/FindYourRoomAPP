@@ -19,7 +19,7 @@ export class ChatService {
   connect(chatUser2:number){
     this.chatUser2 = chatUser2;
 
-    const socketUrl = `ws://127.0.0.1:8000/ws/chat/${Math.min(this.chatUser2, this.userId)}/${Math.max(this.chatUser2, this.userId)}/?token=${this.token}`
+    const socketUrl = `ws://127.0.0.1:8000/ws/chat/${Math.min(this.chatUser2, this.userId)}/${Math.max(this.chatUser2, this.userId)}/${this.token}/`
     this.socket = new WebSocket(socketUrl);
 
     this.socket.onopen = () => {
@@ -68,4 +68,35 @@ export class ChatService {
 
 
 
+    getMessagesFromDB(user2_id:number): Promise<any[]>  {
+      this.token = localStorage.getItem('token');
+      let inquilino_id = localStorage.getItem('inquilino_id');
+      if (!this.token || !inquilino_id) {
+          console.error('Token o Inquilino ID no encontrados.');
+          return Promise.reject('Token o Inquilino ID no encontrados.');
+      }
+      return fetch(`http://127.0.0.1:8000/api/chat/messages/${user2_id}/`, {
+          method: 'GET',
+          headers: {
+              'Authorization': `Token ${this.token}`, 
+              'Content-Type': 'application/json'
+          },
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`Error HTTP: ${response.status}`);
+          }
+          return response.json(); 
+      })
+      .then((data: any[]) => {
+          console.log(data);
+          return data;
+      })
+      .catch(error => {
+          console.error('Error al obtener el inquilino:', error);
+          throw error;
+      });
+    }
+
+  
 }
