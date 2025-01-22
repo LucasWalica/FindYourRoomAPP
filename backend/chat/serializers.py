@@ -9,6 +9,15 @@ import re
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    
+    
+    sender_username = serializers.CharField(source='sender.username', read_only=True)
+    receiver_username = serializers.CharField(source='receiver.username', read_only=True)
     class Meta:
         model = Message
-        fields = ['sender', 'receiver', 'message', 'timestamp', 'read']
+        fields = [
+            'sender', 'sala', 
+            'receiver', 'message', 
+            'timestamp', 'read', 
+            'sender_username', 'receiver_username'
+        ]

@@ -38,13 +38,13 @@ export class UserUserChatComponent implements OnInit{
     });
     this.chatService.getMessages().subscribe((message) => {
       this.messages.push(message);
-    })
+    });
+   
   }
 
   sendMessage():void{
     if(this.newMessage.trim()){
       this.chatService.sendMessage(this.userId, this.chatUser2, this.newMessage.trim());
-      this.messages.push({sender:this.userId, message:this.newMessage.trim()})
       this.newMessage= '';
     }
   }

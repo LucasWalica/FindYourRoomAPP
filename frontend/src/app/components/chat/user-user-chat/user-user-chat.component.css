@@ -1,0 +1,44 @@
+/* Contenedor de mensajes con scroll */
+.messages-container {
+    max-height: 70vh; 
+    overflow-y: auto; 
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+  
+  .message {
+    max-width: 70%;
+    word-wrap: break-word;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: flex-start; 
+  }
+  
+  
+  .message.sent {
+    align-self: flex-end; 
+    text-align: right;
+  }
+  
+ 
+  .message.received {
+    align-self: flex-start; 
+    text-align: left;
+  }
+  
+  .messages-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .messages-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  
+  .messages-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  

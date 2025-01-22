@@ -42,4 +42,15 @@ export class InboxChatComponent implements OnInit {
     this.chatService.chatUser2=otherUserID;
     this.router.navigate(['chat'])
   }
+
+  getOtherUsername(message:any){
+    let ownUserID = parseInt(localStorage.getItem('userID')??'0');
+    let provisionalUsername;
+    if(message.receiver===ownUserID){
+      provisionalUsername = message.sender_username;
+    }else{
+      provisionalUsername = message.receiver_username;
+    }
+    return provisionalUsername;
+  }
 }

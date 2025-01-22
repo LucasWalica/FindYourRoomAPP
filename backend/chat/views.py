@@ -4,7 +4,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from .serializers import MessageSerializer
 from .models import Message
-from django.db.models import Q, Subquery
+from django.db.models import Q, Subquery, OuterRef, Max
+from .models import Sala
 # Create your views here.
 
 class MessagesList(generics.ListAPIView):
@@ -22,26 +23,26 @@ class MessagesList(generics.ListAPIView):
             ).order_by('timestamp')
 
 
-# get all conversations that users has 
+
 class InboxViewSerializer(generics.ListAPIView):
     parser_classes = [JSONParser]
     permission_classes = [IsAuthenticated]
-    queryset = Message.objects.all()
     serializer_class = MessageSerializer
 
-# returns the last message from every conversation
     def get_queryset(self):
-        user_id = self.request.user.id 
-       
-        latest_messages = Message.objects.filter(
-            Q(sender_id=user_id) | Q(receiver_id=user_id)
-        ).order_by('sender', 'receiver', '-timestamp')  
+        user_id = self.request.user.id
 
-        
-        unique_conversations = Message.objects.filter(
-            id__in=Subquery(
-                latest_messages.values('id').distinct('sender', 'receiver')
-            )
-        )
+        # Filtrar las salas en las que participa el usuario
+        salas = Sala.objects.filter(
+            Q(user1_id=user_id) | Q(user2_id=user_id)
+        ).values_list('id', flat=True)
 
-        return unique_conversations.order_by('-timestamp')
+        latest_message_ids = Message.objects.filter(
+            sala_id__in=salas
+        ).values('sala_id').annotate(latest_id=Max('id')).values_list('latest_id', flat=True)
+
+        mensajes = Message.objects.filter(
+            id__in=latest_message_ids
+        ).order_by('-timestamp')
+
+        return mensajes

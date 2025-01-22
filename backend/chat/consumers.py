@@ -5,6 +5,8 @@ from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth import get_user_model
 from channels.db import database_sync_to_async
 from rest_framework.exceptions import PermissionDenied
+from .models import Sala
+from django.db.models import Q
 
 User = get_user_model()
 
@@ -13,30 +15,32 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # Extraer user1_id, user2_id y token de la URL
         user1_id = int(self.scope['url_route']['kwargs']['user1_id'])
         user2_id = int(self.scope['url_route']['kwargs']['user2_id'])
-        token = self.scope['url_route']['kwargs']['token']  # El token está en la URL como string
+        token = self.scope['url_route']['kwargs']['token']
 
+        # Autenticar el usuario con el token
         user = await self.authenticate_user(user1_id, token)
         if user is None:
             user = await self.authenticate_user(user2_id, token)
             if user is None:
-                raise AuthenticationFailed("Usuario no autenticado.")  # Si ninguno de los dos usuarios es válido
+                await self.close()  # Cierra la conexión si no se autentica
+                raise AuthenticationFailed("Usuario no autenticado.")
 
         self.scope['user'] = user
 
-        # Verificamos que el usuario está autorizado para conectarse a esta sala (user1_id o user2_id)
+        # Verificar permisos
         if user.id != user1_id and user.id != user2_id:
+            await self.close()
             raise PermissionDenied("No tienes permiso para unirte a esta sala.")
 
-        # Configuramos el nombre de la sala basado en los dos IDs de usuario
+        # Configurar la sala
         self.room_name = f"{min(user1_id, user2_id)}_{max(user1_id, user2_id)}"
         self.room_group_name = f"chat_{self.room_name}"
 
-        # Unimos al grupo WebSocket
+        # Unir al grupo WebSocket
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
         )
-
         await self.accept()
 
     async def disconnect(self, close_code):
@@ -53,13 +57,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
         sender_id = data['sender']
         receiver_id = data['receiver']
 
-        # Obtener usuarios de la base de datos por sus IDs
+        # Obtener usuarios y sala
         sender = await self.get_user(sender_id)
         receiver = await self.get_user(receiver_id)
 
         if sender and receiver:
-            # Guardamos el mensaje en la base de datos
-            await self.save_message(sender, receiver, message)
+            sala = await self.get_or_create_sala(sender, receiver)
+            # Guardar el mensaje en la base de datos
+            await self.save_message(sala, sender, receiver, message)
 
         # Enviar el mensaje al grupo WebSocket
         await self.channel_layer.group_send(
@@ -85,32 +90,46 @@ class ChatConsumer(AsyncWebsocketConsumer):
         }))
 
     @database_sync_to_async
-    def save_message(self, sender, receiver, message):
+    def get_or_create_sala(self, sender, receiver):
+        # Intentamos encontrar una sala existente entre los dos usuarios
+        sala = Sala.objects.filter(
+            Q(user1=sender, user2=receiver) | Q(user1=receiver, user2=sender)
+        ).first()
+
+        # Si no existe, la creamos explícitamente
+        if not sala:
+            sala = Sala.objects.create(user1=sender, user2=receiver)
+        
+        return sala
+
+    @database_sync_to_async
+    def save_message(self, sala, sender, receiver, message):
+        # Guardar un mensaje en la base de datos
         from .models import Message
-        Message.objects.create(sender=sender, receiver=receiver, message=message)
+        return Message.objects.create(sala=sala, sender=sender, receiver=receiver, message=message)
 
     @database_sync_to_async
     def get_user(self, user_id):
-        from django.contrib.auth import get_user_model
+        # Obtener un usuario por su ID
         try:
-            return get_user_model().objects.get(id=user_id)
-        except get_user_model().DoesNotExist:
+            return User.objects.get(id=user_id)
+        except User.DoesNotExist:
             return None
 
     @database_sync_to_async
     def authenticate_user(self, user_id, token):
-        from rest_framework.authentication import TokenAuthentication
+        # Autenticar el usuario con un token
         try:
-            user = get_user_model().objects.get(id=user_id)
-        except get_user_model().DoesNotExist:
-            return None  # El usuario no existe
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return None
 
         token_auth = TokenAuthentication()
         try:
             token_obj = token_auth.get_model().objects.get(key=token)
             if token_obj.user != user:
-                return None  # El token no corresponde al usuario
+                return None
         except token_auth.get_model().DoesNotExist:
-            return None  # El token no existe
+            return None
 
-        return user  # Si todo es correcto, devolvemos el usuario autenticado
+        return user
