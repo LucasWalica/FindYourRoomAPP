@@ -28,6 +28,8 @@ export class PostHouseFormComponent {
       calle: ['', Validators.required],
       portal: [0, Validators.required],
       price: [0, [Validators.required, Validators.min(0)]],
+      smokersAllowed:[false, [Validators.required]],
+      petsAllowed:[false, [Validators.required]],
       rooms_data: this.fb.array([]), 
     });
 
@@ -116,9 +118,9 @@ export class PostHouseFormComponent {
               resolve(room);
             };
             reader.onerror = (error) => reject(error);
-            reader.readAsDataURL(room.image);  // Llamar a readAsDataURL solo si es un archivo
+            reader.readAsDataURL(room.image);  
           } else {
-            resolve(room);  // Si no hay imagen, resolver la promesa
+            resolve(room);  
           }
         });
       });

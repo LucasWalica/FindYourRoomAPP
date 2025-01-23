@@ -18,7 +18,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './user-user-chat.component.css'
 })
 export class UserUserChatComponent implements OnInit{
-
   messages: any[] = [];
   chatUser2:number = {} as number;
   newMessage:string = '';
@@ -42,6 +41,8 @@ export class UserUserChatComponent implements OnInit{
    
   }
 
+  
+
   sendMessage():void{
     if(this.newMessage.trim()){
       this.chatService.sendMessage(this.userId, this.chatUser2, this.newMessage.trim());
@@ -52,4 +53,6 @@ export class UserUserChatComponent implements OnInit{
   ngOnDestroy():void{
     this.chatService.disconnect();
   }
+
+
 }

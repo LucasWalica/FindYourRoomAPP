@@ -31,6 +31,8 @@ class House(models.Model):
     latitud = models.FloatField(null=True, blank=True)
     longitud = models.FloatField(null=True, blank=True)
     price = models.FloatField()
+    petsAllowed = models.BooleanField(default=False)
+    smokersAllowed = models.BooleanField(default=False)
     # add owner
 
     def save(self, *args, **kwargs):

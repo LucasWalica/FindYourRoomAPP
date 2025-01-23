@@ -1,6 +1,6 @@
 export interface house{
     fkCreator:number,
-    id:number|null,
+    id:number,
     name:string,
     image:File | string, 
     desc:string,
@@ -14,15 +14,19 @@ export interface house{
     price:number, 
     rooms_data:rooms[],
     latitud:number,
-    longitud:number
+    longitud:number,
+    petsAllowed:boolean,
+    smokersAllowed:boolean,
+    house_requests:any|null
 }
 
 export interface rooms{
-    id:number|null,
+    id:number,
     m2:number, 
     desc:string,
     image:File | string,
     price:number,
+    room_requests:any|null
 }
 
 

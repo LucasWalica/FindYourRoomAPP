@@ -3,14 +3,13 @@ from rest_framework import serializers
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 import base64    
-import uuid
-import re
+from houseOrdersTasks.serializers import HouseRequestSerializer, RoomRequestSerializer
 
 
 class HouseUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = House
-        fields = ['name', 'image','desc', 'm2', 'price']
+        fields = ['name', 'image','desc', 'm2', 'price', 'petsAllowed', 'smokersAllowed']
         
     def update(self, instance, validated_data):
        
@@ -65,10 +64,11 @@ class RoomUpdateSerializer(serializers.ModelSerializer):
 
 class RoomSerializer(serializers.ModelSerializer):
     image = serializers.CharField(required=True)
+    room_requests = RoomRequestSerializer(many=True, read_only=True)
 
     class Meta:
         model = Room
-        fields = ['id','fkHouse', 'm2', 'desc', 'image', 'price', 'isOcupied', 'occupiedBy']
+        fields = ['id','fkHouse', 'm2', 'desc', 'image', 'price', 'isOcupied', 'occupiedBy', 'room_requests']
         read_only_fields = ['fkHouse', 'occupiedBy']
 
     def to_representation(self, instance):
@@ -107,13 +107,14 @@ class RoomSerializer(serializers.ModelSerializer):
 class HouseSerializer(serializers.ModelSerializer):
     image = serializers.CharField(required=True)
     rooms_data = RoomSerializer(many=True, required=False)
-
+    house_requests = HouseRequestSerializer(many=True, read_only=True)
     class Meta:
         model = House
         fields = ['id','fkCreator', 'name', 'image', 
                   'desc', 'm2', 'house_type', 'rooms', 
                   'ciudad', 'barrio', 'calle', 'portal', 
-                   'price', 'rooms_data', 'latitud', 'longitud']
+                   'price', 'rooms_data', 'latitud', 'longitud', 
+                   'petsAllowed', 'smokersAllowed', 'house_requests']
         read_only_fields = ['fkCreator']
     
     def to_representation(self, instance):    

@@ -19,7 +19,7 @@ export class UserService {
     const body = JSON.stringify({
         age, occupation, gender, activity_schedule, cleanliness_level, pets,
         smoker, visit_frequency, common_space_usage, hobbies, socializing_frequency, 
-        living_environment, presentation 
+        living_environment, presentation
     })
     let token = localStorage.getItem('token');
     fetch('http://127.0.0.1:8000/api/users/inquilino/create/', {

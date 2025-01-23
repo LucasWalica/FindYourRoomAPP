@@ -78,80 +78,131 @@
       </small>
     </div>
 
-    <!-- Más campos (rooms, city, etc.) -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full sm:w-3/4 lg:w-1/2">
+    <!-- Ciudad -->
+    <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <label class="font-semibold text-green2">City:</label>
+      <input
+        type="text"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        formControlName="ciudad"
+        placeholder="Enter city name"
+      />
+      <small *ngIf="postHouseForm.get('ciudad')?.invalid && postHouseForm.get('ciudad')?.touched" class="text-red-500">
+        City is required.
+      </small>
+    </div>
+
+    <!-- Barrio -->
+    <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <label class="font-semibold text-green2">Neighborhood:</label>
+      <input
+        type="text"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        formControlName="barrio"
+        placeholder="Enter neighborhood name"
+      />
+      <small *ngIf="postHouseForm.get('barrio')?.invalid && postHouseForm.get('barrio')?.touched" class="text-red-500">
+        Neighborhood is required.
+      </small>
+    </div>
+
+    <!-- Calle -->
+    <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <label class="font-semibold text-green2">Street:</label>
+      <input
+        type="text"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        formControlName="calle"
+        placeholder="Enter street name"
+      />
+      <small *ngIf="postHouseForm.get('calle')?.invalid && postHouseForm.get('calle')?.touched" class="text-red-500">
+        Street is required.
+      </small>
+    </div>
+
+    <!-- Portal -->
+    <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <label class="font-semibold text-green2">Portal:</label>
+      <input
+        type="number"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        formControlName="portal"
+        placeholder="Enter portal number"
+      />
+      <small *ngIf="postHouseForm.get('portal')?.invalid && postHouseForm.get('portal')?.touched" class="text-red-500">
+        Portal is required.
+      </small>
+    </div>
+
+    <!-- Precio -->
+    <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <label class="font-semibold text-green2">Price:</label>
+      <input
+        type="number"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        formControlName="price"
+        placeholder="Enter price"
+      />
+      <small *ngIf="postHouseForm.get('price')?.invalid && postHouseForm.get('price')?.touched" class="text-red-500">
+        Price is required.
+      </small>
+    </div>
+
+    <!-- Smokers Allowed -->
+    <div class="flex flex-row content-center justify-center gap-4 w-full sm:w-3/4 lg:w-1/2">
       <div class="flex flex-col">
-        <label class="font-semibold text-green2">Rooms:</label>
+        <label class="font-semibold text-green2">Smokers Allowed:</label>
         <input
-          type="number"
+          type="checkbox"
           class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
-          formControlName="rooms"
-          placeholder="Number of rooms"
+          formControlName="smokersAllowed"
         />
-        <small *ngIf="postHouseForm.get('rooms')?.invalid && postHouseForm.get('rooms')?.touched" class="text-red-500">
-          Rooms are required.
-        </small>
       </div>
+      <!-- Pets Allowed -->
       <div class="flex flex-col">
-        <label class="font-semibold text-green2">City:</label>
+        <label class="font-semibold text-green2">Pets Allowed:</label>
         <input
-          type="text"
+          type="checkbox"
           class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
-          formControlName="ciudad"
-          placeholder="City"
+          formControlName="petsAllowed"
         />
-        <small *ngIf="postHouseForm.get('ciudad')?.invalid && postHouseForm.get('ciudad')?.touched" class="text-red-500">
-          City is required.
-        </small>
       </div>
-      <div class="flex flex-col">
-        <label class="font-semibold text-green2">Neighborhood:</label>
-        <input
-          type="text"
-          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
-          formControlName="barrio"
-          placeholder="Neighborhood"
-        />
-        <small *ngIf="postHouseForm.get('barrio')?.invalid && postHouseForm.get('barrio')?.touched" class="text-red-500">
-          Neighborhood is required.
-        </small>
-      </div>
-      <div class="flex flex-col">
-        <label class="font-semibold text-green2">Street:</label>
-        <input
-          type="text"
-          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
-          formControlName="calle"
-          placeholder="Street"
-        />
-        <small *ngIf="postHouseForm.get('calle')?.invalid && postHouseForm.get('calle')?.touched" class="text-red-500">
-          Street is required.
-        </small>
-      </div>
-      <div class="flex flex-col">
-        <label class="font-semibold text-green2">Portal:</label>
-        <input
-          type="number"
-          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
-          formControlName="portal"
-          placeholder="Portal"
-        />
-        <small *ngIf="postHouseForm.get('portal')?.invalid && postHouseForm.get('portal')?.touched" class="text-red-500">
-          Portal is required.
-        </small>
-      </div>
-      <div class="flex flex-col">
-        <label class="font-semibold text-green2">Price:</label>
-        <input
-          type="number"
-          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
-          formControlName="price"
-          placeholder="Price"
-        />
-        <small *ngIf="postHouseForm.get('price')?.invalid && postHouseForm.get('price')?.touched" class="text-red-500">
-          Price is required.
-        </small>
-      </div>
+    </div>
+
+    <!-- Número de habitaciones -->
+    <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <label class="font-semibold text-green2">Number of Rooms:</label>
+      <input
+        type="number"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        formControlName="rooms"
+        placeholder="Enter number of rooms"
+      />
+    </div>
+
+    <!-- Formularios dinámicos para habitaciones -->
+    <div *ngFor="let room of roomsData.controls; let i = index" class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
+      <h2 class="text-xl font-bold text-green2 mb-2">Room {{ i + 1 }}</h2>
+      <label class="font-semibold text-green2">Room Size (m²):</label>
+      <input
+        type="number"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        [formControlName]="'m2'"
+        placeholder="Enter size in m²"
+      />
+      <label class="font-semibold text-green2">Room Description:</label>
+      <input
+        type="text"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        [formControlName]="'desc'"
+        placeholder="Enter room description"
+      />
+      <label class="font-semibold text-green2">Room Image:</label>
+      <input
+        type="file"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        (change)="onRoomImageChange($event, i)"
+      />
     </div>
 
     <!-- Botón de envío -->

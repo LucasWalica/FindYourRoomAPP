@@ -31,6 +31,8 @@ export class UpdateHouseFormComponent implements OnInit {
       desc: [this.houseService.houseDetail.desc, Validators.required],
       m2: [this.houseService.houseDetail.m2, [Validators.required, Validators.min(1)]],
       price: [this.houseService.houseDetail.price, [Validators.required, Validators.min(0)]],
+      smokersAllowed: [this.houseService.houseDetail.smokersAllowed, [Validators.required]],
+      petsAllowed :[this.houseService.houseDetail.petsAllowed, [Validators.required]]
     });
   }
   ngOnInit(): void {

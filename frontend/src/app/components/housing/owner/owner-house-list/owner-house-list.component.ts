@@ -5,6 +5,7 @@ import { HouseService } from '../../../../services/house.service';
 import { house, rooms } from '../../../models/house.models';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { HousingRequestsService } from '../../../../services/housing-requests.service';
 
 @Component({
   selector: 'app-owner-house-list',
@@ -16,12 +17,18 @@ import { Router } from '@angular/router';
 export class OwnerHouseListComponent implements OnInit{
 
   houses:house[] = {} as house[];
+  showHouseRequests:boolean = false;
+  showRoomRequests:boolean = false;
 
-  constructor(private houseService:HouseService, private router:Router){}
+  constructor(private houseService:HouseService, private router:Router, private housingRequestService:HousingRequestsService){}
     
   async ngOnInit() {
+    this.chargeHousedata();  
+  }
+    
+
+  async chargeHousedata(){
     try {
-      // Obtener la lista de casas
       this.houses = await this.houseService.getOwnerHouseList();
         // Convertir las imágenes de File en URLs para mostrarlas
       this.houses.forEach((house) => {
@@ -34,13 +41,11 @@ export class OwnerHouseListComponent implements OnInit{
           }
         });
       });
-  
         console.log('Casas obtenidas:', this.houses);
       } catch (error) {
         console.error('Error al cargar las casas:', error);
       }
     }
-
     goToUpdateRoom(room:rooms){
       this.houseService.setRoomData(room);
       this.router.navigate(['updateRoom'])
@@ -57,6 +62,15 @@ export class OwnerHouseListComponent implements OnInit{
     goToDeleteHouse(house:house){
       this.houseService.setHouseData(house);
       this.router.navigate(['deleteHouse'])
+    }
+
+    showRoomRequestsfunc(roomID:number){
+      this.housingRequestService.getRoomRequestList(roomID);
+      this.showRoomRequests=true;
+    }
+    showHouseRequestsfunc(houseID:number){
+      this.housingRequestService.getHouseRequestList(houseID);
+      this.showHouseRequests=true;
     }
   }
 

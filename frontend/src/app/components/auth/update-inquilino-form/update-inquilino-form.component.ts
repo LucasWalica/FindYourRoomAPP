@@ -50,7 +50,7 @@ export class UpdateInquilinoFormComponent implements OnInit {
        socializing_frequency: new FormControl(this.tenantProfile.socializing_frequency, Validators.required),
        living_environment: new FormControl(this.tenantProfile.living_enviroment, Validators.required),
        presentation: new FormControl(this.tenantProfile.presentation, Validators.required)
-     });
+      });
 
       
   async enviar(event:Event){
@@ -70,7 +70,7 @@ export class UpdateInquilinoFormComponent implements OnInit {
       hobbies: this.inquilinoForm.get('hobbies')?.value ?? '',
       socializing_frequency: this.inquilinoForm.get('socializing_frequency')?.value as SocializingFrequency ?? '',
       living_enviroment: this.inquilinoForm.get('living_enviroment')?.value as unknown as LivingEnvironment ?? '',
-      presentation: this.inquilinoForm.get('presentation')?.value ?? ''
+      presentation: this.inquilinoForm.get('presentation')?.value ?? '',
     }
     await this.userService.updateInquilino(
       updatedData

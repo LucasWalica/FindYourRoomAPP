@@ -17,6 +17,10 @@ class Inquilino(models.Model):
     socializing_frequency = models.CharField(max_length=50, null=True, blank=True)
     living_environment = models.CharField(max_length=50, null=True, blank=True)
     presentation = models.TextField(max_length=1024, null=True, blank=True)
+    
+    instagram_profile = models.CharField(max_length=300, null=True, blank=True)
+    facebook_profile = models.CharField(max_length=300, null=True, blank=True)
+    linkedin_profile = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return f"{self.pk} - {self.fkUser.username}"

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'chat',
     'houses',
     'users',
+    'houseOrdersTasks'
 ]
 
 ASGI_APPLICATION = "core.asgi.application"

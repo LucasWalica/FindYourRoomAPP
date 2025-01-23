@@ -29,6 +29,9 @@
                     class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">
                     Delete
                 </button>
+                @if (house.house_requests) {
+                    <div>Hay requests</div>
+                }
                 <button 
                     (click)="goToDetailView(house)" 
                     class="bg-green1 text-green3 px-4 py-2 rounded-md border-2 border-green1 hover:bg-green2 hover:text-green1 transition duration-300">
@@ -56,6 +59,9 @@
                         class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
                         Update Room
                     </button>
+                    @if (room.room_requests) {
+                        <div>Hay requests</div>
+                    }
                 </div>
             </div>
         </div>
@@ -64,4 +70,5 @@
 
     <app-footer></app-footer>
 </div>
+
 

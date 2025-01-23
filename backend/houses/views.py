@@ -12,7 +12,8 @@ from django.core.exceptions import ValidationError
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework import status
 from django.db.models import Q 
-
+from django.db.models import Prefetch
+from houseOrdersTasks.models import HouseRequest, RoomRequest
 
 
 class HouseList(generics.ListAPIView):
@@ -44,9 +45,6 @@ class HouseListBySearch(generics.ListAPIView):
         return queryset
    
 
-
-
-#done
 class HouseOwnerListView(generics.ListAPIView):
     parser_classes = [JSONParser]
     permission_classes = [IsAuthenticated]
@@ -55,7 +53,20 @@ class HouseOwnerListView(generics.ListAPIView):
     
     def get_queryset(self):
         user = self.request.user
-        return House.objects.filter(fkCreator=user)
+        # Pre-cargar house_requests
+        house_requests_qs = HouseRequest.objects.all()
+
+        queryset = House.objects.filter(fkCreator=user).prefetch_related(
+            Prefetch('house_requests', queryset=house_requests_qs, to_attr='related_house_requests')  # Cambié el nombre aquí
+        )
+        # Pre-cargar room_requests por separado
+        room_requests_qs = RoomRequest.objects.all()
+        queryset = queryset.prefetch_related(
+            Prefetch('rooms__room_requests', queryset=room_requests_qs, to_attr='related_room_requests')  # Cambié el nombre aquí
+        )
+
+        return queryset
+
 
 #done
 class HouseCreateView(generics.CreateAPIView):
