@@ -20,6 +20,7 @@ import { OtherTenantProfileComponent } from "../other-tenant-profile/other-tenan
 export class OwnerHouseListComponent implements OnInit{
 
   tenantProfilesRequesting:TenantProfile[] = {} as TenantProfile[];
+  provHouseId:number = {} as number;
   houses:house[] = {} as house[];
   showHouseRequests:boolean = false;
   showRoomRequests:boolean = false;
@@ -71,7 +72,21 @@ export class OwnerHouseListComponent implements OnInit{
 
 
 
+    closeHouseRequests(){
+      this.showHouseRequests=false;
+    }
+    closeRoomRequests(){
+      this.showRoomRequests=false;
+    }
 
+    updateHouseRequest(houseID:number, booleanData:boolean){
+      this.housingRequestService.updateHouseRequest(houseID,JSON.stringify({accepted:booleanData}))
+      this.closeHouseRequests();
+    }
+    updateRoomRequest(roomID:number, booleanData:boolean){
+      this.housingRequestService.updateRoomRequest(roomID, JSON.stringify({accepted:booleanData}))
+      this.closeRoomRequests();
+    }
 
     // horriblemente ineficiente
     async showRoomRequestsfunc(roomID:number){
@@ -90,6 +105,7 @@ export class OwnerHouseListComponent implements OnInit{
      // horriblemente ineficiente
      // casa obtenida del array de casas, tenant profile needed to be fetched
      async showHouseRequestsfunc(houseID: number): Promise<void> {
+      this.provHouseId = houseID;
       this.tenantProfilesRequesting = [] as TenantProfile[];
       let fkData:any[] = await this.housingRequestService.getHouseRequestList(houseID);
       for(let i=0; i<fkData.length; i++){

@@ -54,7 +54,7 @@ class HouseRequestList(generics.ListAPIView):
 class HouseRequestUpdate(generics.UpdateAPIView):
     parser_classes = [JSONParser]
     permission_classes = [IsAuthenticated]
-    queryset = RoomRequest.objects.all()
+    queryset = HouseRequest.objects.all()
     serializer_class = HouseRequestSerializer
 
     def get_object(self):
