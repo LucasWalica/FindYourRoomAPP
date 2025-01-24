@@ -1,9 +1,7 @@
-<div class="m-4 p-4 bg-green3 text-green1 rounded-md shadow-md">
+<div class="m-4 p-4 bg-green3 text-green1 rounded-md shadow-md absolute w-full">
     <app-nav-bar></app-nav-bar>
-
     <!-- Título principal -->
     <h1 class="text-2xl font-bold text-center text-green2 mb-6">Admin Panel</h1>
-
     <!-- Lista de casas -->
     <div *ngFor="let house of this.houses" class="mb-6">
         <!-- Tarjeta de cada casa -->
@@ -29,8 +27,10 @@
                     class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">
                     Delete
                 </button>
-                @if (house.house_requests) {
-                    <div>Hay requests</div>
+                @if (house.house_requests && house.house_requests.length > 0) {
+                    <button (click)="showHouseRequestsfunc(house.id)">
+                        Show House Requests
+                    </button>
                 }
                 <button 
                     (click)="goToDetailView(house)" 
@@ -39,7 +39,6 @@
                 </button>
             </div>
         </div>
-
         @if (house.rooms) {
             <!-- Lista de cuartos -->
         <div class="flex justify-center m-2">
@@ -59,16 +58,38 @@
                         class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
                         Update Room
                     </button>
-                    @if (room.room_requests) {
-                        <div>Hay requests</div>
+                    @if (room.room_requests && room.room_requests.length>0) {
+                        <button (click)="this.showRoomRequestsfunc(room.id)">
+                            Show Room Requests
+                        </button>
                     }
                 </div>
             </div>
         </div>
         }
     </div>
-
     <app-footer></app-footer>
 </div>
 
+@if (this.showHouseRequests) {
+    <div class="bg-green3 relative mt-0 ">
+      <div>People requesting this house: </div>
+      @for (tenant of this.tenantProfilesRequesting; track tenant) {
+        <div>
+            <app-other-tenant-profile [inquilinoProfile]="tenant" ></app-other-tenant-profile>
+        </div> 
+    }
+    </div>
+}
 
+
+@if (this.showRoomRequests) {
+    <div class="bg-green3 relative mt-0 ">
+       <div>People requesting this room:</div>
+       @for (tenant of this.tenantProfilesRequesting; track tenant) {
+        <div>
+            <app-other-tenant-profile [inquilinoProfile]="tenant" ></app-other-tenant-profile>
+        </div>        
+    }
+    </div>
+}

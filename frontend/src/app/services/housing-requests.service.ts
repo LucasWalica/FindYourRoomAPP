@@ -114,7 +114,7 @@ export class HousingRequestsService {
     }
   }
   async getRoomRequestList(RoomID:number){
-    const url = `http://localhost:8000/api/houseOrderTasks/roomRequestList/${RoomID}/`;
+    const url = `http://localhost:8000/api/houseOrderTasks/RoomRequestList/${RoomID}/`;
     let token = localStorage.getItem('token'); 
     try{
       const response = await fetch(url, {
@@ -130,8 +130,6 @@ export class HousingRequestsService {
       }
   
       const result = await response.json();
-  
-      console.log("resultado de request list room: ",result);
       return result;
     } catch (error) {
       console.error('Error al enviar los datos:', error);

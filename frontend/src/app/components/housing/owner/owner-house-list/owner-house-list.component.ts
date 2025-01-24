@@ -6,26 +6,31 @@ import { house, rooms } from '../../../models/house.models';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HousingRequestsService } from '../../../../services/housing-requests.service';
+import { UserService } from '../../../../services/user.service';
+import { TenantProfile } from '../../../models/tenantProfile.models';
+import { OtherTenantProfileComponent } from "../other-tenant-profile/other-tenant-profile.component";
 
 @Component({
   selector: 'app-owner-house-list',
   standalone: true,
-  imports: [FooterComponent, NavBarComponent, CommonModule],
+  imports: [FooterComponent, NavBarComponent, CommonModule, OtherTenantProfileComponent],
   templateUrl: './owner-house-list.component.html',
   styleUrl: './owner-house-list.component.css'
 })
 export class OwnerHouseListComponent implements OnInit{
 
+  tenantProfilesRequesting:TenantProfile[] = {} as TenantProfile[];
   houses:house[] = {} as house[];
   showHouseRequests:boolean = false;
   showRoomRequests:boolean = false;
 
-  constructor(private houseService:HouseService, private router:Router, private housingRequestService:HousingRequestsService){}
+  constructor(private houseService:HouseService, private router:Router, 
+    private housingRequestService:HousingRequestsService,
+    private tenantService:UserService){}
     
   async ngOnInit() {
     this.chargeHousedata();  
   }
-    
 
   async chargeHousedata(){
     try {
@@ -64,13 +69,33 @@ export class OwnerHouseListComponent implements OnInit{
       this.router.navigate(['deleteHouse'])
     }
 
-    showRoomRequestsfunc(roomID:number){
-      this.housingRequestService.getRoomRequestList(roomID);
+
+
+
+
+    // horriblemente ineficiente
+    async showRoomRequestsfunc(roomID:number){
+      this.tenantProfilesRequesting = [] as TenantProfile[];
+      let fkData:any[] = await this.housingRequestService.getRoomRequestList(roomID);
+      for(let i=0; i<fkData.length; i++){
+        this.tenantProfilesRequesting.push(await this.tenantService.getInquilinoByID(fkData[i].fkTenant));
+      }
+      this.showHouseRequests=false;
       this.showRoomRequests=true;
     }
-    showHouseRequestsfunc(houseID:number){
-      this.housingRequestService.getHouseRequestList(houseID);
-      this.showHouseRequests=true;
-    }
-  }
 
+
+
+    // works
+     // horriblemente ineficiente
+     // casa obtenida del array de casas, tenant profile needed to be fetched
+     async showHouseRequestsfunc(houseID: number): Promise<void> {
+      this.tenantProfilesRequesting = [] as TenantProfile[];
+      let fkData:any[] = await this.housingRequestService.getHouseRequestList(houseID);
+      for(let i=0; i<fkData.length; i++){
+        this.tenantProfilesRequesting.push(await this.tenantService.getInquilinoByID(fkData[i].fkTenant));
+      }
+      this.showRoomRequests = false;
+      this.showHouseRequests = true;
+    }    
+  }

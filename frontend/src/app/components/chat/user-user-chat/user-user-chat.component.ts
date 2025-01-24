@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, } from '@angular/core';
 import { NavBarComponent } from '../../reusable/nav-bar/nav-bar.component';
 import { FooterComponent } from '../../reusable/footer/footer.component';
 import { Router } from '@angular/router';
@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './user-user-chat.component.css'
 })
 export class UserUserChatComponent implements OnInit{
+  @ViewChild('scrollAnchor') scrollAnchor!: ElementRef;
   messages: any[] = [];
   chatUser2:number = {} as number;
   newMessage:string = '';
@@ -41,18 +42,22 @@ export class UserUserChatComponent implements OnInit{
    
   }
 
-  
+  scrollToBottom(): void {
+    if (this.scrollAnchor) {
+      setTimeout(() => {
+        this.scrollAnchor.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
+    }
+  }
 
   sendMessage():void{
     if(this.newMessage.trim()){
       this.chatService.sendMessage(this.userId, this.chatUser2, this.newMessage.trim());
       this.newMessage= '';
+      this.scrollToBottom();
     }
   }
-
   ngOnDestroy():void{
     this.chatService.disconnect();
   }
-
-
 }

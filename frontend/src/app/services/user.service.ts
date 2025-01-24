@@ -39,6 +39,36 @@ export class UserService {
     
   }
 
+  getInquilinoByID(inquilinoID:number):Promise<TenantProfile>{
+    this.token = localStorage.getItem('token');
+    if (!this.token) {
+        console.error('Token no encontrados.');
+        return Promise.reject('Token no encontrados.');
+    }
+    return fetch(`http://127.0.0.1:8000/api/users/inquilino/detail/${inquilinoID}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${this.token}`, 
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        return response.json(); 
+    })
+    .then((data: TenantProfile) => {
+        this.tenanProfile = data
+        console.log(data);
+        return data;
+    })
+    .catch(error => {
+        console.error('Error al obtener el inquilino:', error);
+        throw error;
+    });
+  }
+
   getInquilino(): Promise<TenantProfile> {
     this.token = localStorage.getItem('token');
     let inquilino_id = localStorage.getItem('inquilino_id');

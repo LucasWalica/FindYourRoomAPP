@@ -17,7 +17,7 @@ export interface house{
     longitud:number,
     petsAllowed:boolean,
     smokersAllowed:boolean,
-    house_requests:any|null
+    house_requests:any[]|null
 }
 
 export interface rooms{
@@ -26,7 +26,7 @@ export interface rooms{
     desc:string,
     image:File | string,
     price:number,
-    room_requests:any|null
+    room_requests:any[]|null
 }
 
 

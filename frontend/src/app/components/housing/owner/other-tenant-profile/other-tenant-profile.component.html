@@ -1,0 +1,93 @@
+<!--presentation-->
+<div class="text-center flex justify-center m-2">
+    @if (this.inquilinoProfile?.presentation) {
+        <div class="flex flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md gap-2 "> 
+            <p class=" p-2 text-magenta2">Presentation:</p>
+            <div class="p-2 text-center text-magenta1">{{this.inquilinoProfile?.presentation}}</div>
+        </div>
+    }
+</div>
+<!--Age gender-->
+<div class="flex flex-row justify-center">
+    @if (this.inquilinoProfile?.age) {    
+        <div class="flex flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md m-1"> 
+            <p class=" p-2 text-magenta2">Age:</p>
+            <div class="p-2 text-center text-magenta1">{{this.inquilinoProfile?.age}}</div>
+        </div>
+    }
+    @if (this.inquilinoProfile?.gender) {
+        <div class="flex flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md m-1"> 
+            <p class=" p-2 text-magenta2">Gender:</p>
+            <div class="p-2 text-center text-magenta1">{{this.inquilinoProfile?.gender}}</div>
+        </div>
+    }
+</div>
+<!--hobbies ocuppation schedule-->
+<div class="flex flex-col sm:flex-row text-center justify-center m-2">
+    @if (this.inquilinoProfile?.hobbies) {
+        <div class="flex flex-col md:flex-row  border-2 border-green2 shadow-sm shadow-brown rounded-md m-1"> 
+            <p class=" p-2 text-magenta2">Hobbies:</p>
+            <div class="p-2 text-center text-magenta1">{{this.inquilinoProfile?.hobbies}}</div>
+        </div>
+    }
+    @if (this.inquilinoProfile?.occupation) {
+        <div class="flex flex-col md:flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md m-1"> 
+            <p class=" p-2 text-magenta2">Ocuppation:</p>
+            <div class="p-2 text-center text-magenta1">{{this.inquilinoProfile?.occupation}}</div>
+        </div>
+    }
+    @if (this.inquilinoProfile?.activity_schedule) {
+        <div class="flex flex-col md:flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md m-1"> 
+            <p class=" p-2 text-magenta2">Schedule:</p>
+            <div class="p-2 text-center text-magenta1">{{this.inquilinoProfile?.activity_schedule}}</div>
+        </div>
+    }
+</div>
+<!--cleaninless  smoker and pets-->
+<div class="flex flex-col sm:flex-row text-center justify-center m-2 gap-1">
+    @if (this.inquilinoProfile?.cleanliness_level) {
+        <div class="flex flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md"> 
+            <p class=" p-2 text-magenta2">Cleaninless:</p>
+            <div class="p-2 text-center text-magenta1">{{this.inquilinoProfile?.cleanliness_level}}</div>
+        </div>
+    }
+    <!--inquilino profile tends to be false, so just show when true-->
+    @if (this.inquilinoProfile?.pets && this.inquilinoProfile?.cleanliness_level) {
+    <div class="flex flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md"> 
+        <p class=" p-2 text-magenta2">Pets:</p>
+        <div class="p-2 text-center text-magenta1">Yes</div>
+    </div>
+    }
+    @if (this.inquilinoProfile?.smoker) {
+    <!--inquilino profile tends to be false, so just show when true-->
+    <div class="flex flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md"> 
+        <p class=" p-2 text-magenta2">Smoker:</p>
+            <div class="p-2 text-center text-magenta1">Yes</div>
+    </div>
+    }
+</div>
+<!--common space ussage and socializing frequency-->
+<div class="flex flex-row justify-center">
+    @if (this.inquilinoProfile?.common_space_usage) {
+        <div class="flex flex-col sm:flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md"> 
+            <p class=" p-2 text-magenta2 text-center">Common Space Usage:</p>
+            <div class="p-2 text-center text-magenta1">{{this.inquilinoProfile?.common_space_usage}}</div>
+        </div>
+    }
+    @if (this.inquilinoProfile?.socializing_frequency) {
+        <div class="flex flex-col sm:flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md"> 
+            <p class=" p-2 text-magenta2 text-center">Socializing frequency:</p>
+            <div class="p-2 text-center text-magenta1">{{this.inquilinoProfile?.socializing_frequency}}</div>
+        </div>
+    }
+</div>
+<!--Living enviroment-->
+@if (this.inquilinoProfile?.living_enviroment) {
+    <div class="flex justify-center flex-row m-2">
+        <div class="flex flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md gap-2"> 
+            <p class=" p-2 text-magenta2">Living enviroment:</p>
+            <div class="p-2 text-center text-magenta1">{{this.inquilinoProfile?.living_enviroment}}</div>
+        </div>
+    </div>
+}
+
