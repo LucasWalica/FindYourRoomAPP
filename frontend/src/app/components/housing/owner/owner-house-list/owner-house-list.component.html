@@ -87,40 +87,58 @@
                     </button>
                 </div>
             </div>
-            @for (tenant of this.tenantProfilesRequesting; track tenant) {
+            <div *ngFor="let tenant of tenantProfilesRequesting; let index = index" >
                 <div class="border-2 border-black rounded-md m-2">
                     <app-other-tenant-profile [inquilinoProfile]="tenant"></app-other-tenant-profile>
                     <div class="grid grid-cols-2 gap-4 p-4">
                         <button class="bg-green1 text-green3 hover:bg-green3 hover:text-green1
-                        rounded-md p-2" (click)="this.updateHouseRequest(this.provHouseId, true)">
-                            Accept
-                        </button>
-                        <button class="bg-magenta2 text-green3 hover:bg-magenta1 hover:text-magenta2
-                        rounded-md p-2" (click)="this.updateHouseRequest(this.provHouseId, false)">
+                        rounded-md p-2" (click)="this.updateHouseRequest(index, true)">
+                        Accept
+                    </button>
+                    <button class="bg-magenta2 text-green3 hover:bg-magenta1 hover:text-magenta2
+                        rounded-md p-2" (click)="this.updateHouseRequest(index, false)">
                             Decline
                         </button>
                     </div>
                 </div> 
-            }
+            </div>
         </div>
     </div>
 }
 
 
-<!--Let it as the final part just copy and pase the topside-->
 @if (this.showRoomRequests) {
-    <div class="bg-green3 relative mt-0 ">
-       <div>People requesting this room:</div>
-       <div class="flex">
-            <button class="border-2 rounded-md bg-magenta2 text-green3 p-2 m-2
-            hover:bg-magenta1 duration-200" (click)="closeHouseRequests()">
-            X
-            </button>
+    <div class="relative mt-0 flex justify-center">
+        <div class="bg-green2 w-auto lg:w-1/2 rounded-md mt-10">
+            <div class="flex flex-row align-middle items-center justify-between">
+                <div class="flex-1 text-center">
+                    <h1 class="text-2xl">
+                        People requesting this Room: 
+                    </h1>
+                </div>
+                <div class="">                    
+                    <button class="border-2 rounded-md bg-magenta2 text-green3 p-2 m-2
+                    hover:bg-magenta1 duration-200" (click)="closeRoomRequests()">
+                        X
+                    </button>
+                </div>
+            </div>
+            <div *ngFor="let tenant of tenantProfilesRequesting; let index = index">
+
+                <div class="border-2 border-black rounded-md m-2">
+                    <app-other-tenant-profile [inquilinoProfile]="tenant"></app-other-tenant-profile>
+                    <div class="grid grid-cols-2 gap-4 p-4">
+                        <button class="bg-green1 text-green3 hover:bg-green3 hover:text-green1
+                        rounded-md p-2" (click)="this.updateRoomRequest(index, true)">
+                            Accept
+                        </button>
+                        <button class="bg-magenta2 text-green3 hover:bg-magenta1 hover:text-magenta2
+                        rounded-md p-2" (click)="this.updateRoomRequest(index, false)">
+                            Decline
+                        </button>
+                    </div>
+                </div> 
+            </div>
         </div>
-       @for (tenant of this.tenantProfilesRequesting; track tenant) {
-        <div>
-            <app-other-tenant-profile [inquilinoProfile]="tenant" ></app-other-tenant-profile>
-        </div>        
-    }
     </div>
 }

@@ -8,7 +8,7 @@ from .models import RoomRequest, HouseRequest
 @receiver(post_save, sender=RoomRequest)
 def handle_room_request(sender, instance, **kwargs):
     if instance.accepted is not None:  
-        owner = instance.fkHouse.fkCreator
+        owner = instance.fkRoom.fkHouse.fkCreator
         tenant = instance.fkTenant.fkUser
 
         sala = get_or_create_sala(owner, tenant)
@@ -18,7 +18,7 @@ def handle_room_request(sender, instance, **kwargs):
                 sala=sala,
                 sender=owner,
                 receiver=tenant,
-               message=f"Congratulations! Your request has been accepted. Welcome to the {instance.fkHouse.name}. We look forward to having you as a tenant!"
+               message=f"Congratulations! Your request has been accepted. Welcome to the {instance.fkRoom.fkHouse.name}. We look forward to having you as a tenant!"
             )
         else:
             # Enviar mensaje de rechazo

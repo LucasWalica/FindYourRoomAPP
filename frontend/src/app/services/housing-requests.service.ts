@@ -61,7 +61,7 @@ export class HousingRequestsService {
     }
   }
 
-  async updateHouseRequest(houseRequestID:number, formData:any){
+  async updateHouseRequest(houseRequestID:number, accepted:any){
     const url = `http://localhost:8000/api/houseOrderTasks/houseRequestUpdate/${houseRequestID}/`;
     let token = localStorage.getItem('token'); 
     try {
@@ -69,8 +69,9 @@ export class HousingRequestsService {
         method: 'PUT',
         headers: {
           Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
         },
-        body:formData
+        body:accepted
       });
   
       if (!response.ok) {
@@ -136,7 +137,7 @@ export class HousingRequestsService {
       throw error;
     }
   }
-  async updateRoomRequest(roomRequestID:number, formData:any){
+  async updateRoomRequest(roomRequestID:number, accepted:any){
     const url = `http://localhost:8000/api/houseOrderTasks/RoomRequestUpdate/${roomRequestID}/`;
     let token = localStorage.getItem('token'); 
     try {
@@ -144,8 +145,9 @@ export class HousingRequestsService {
         method: 'PUT',
         headers: {
           Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
         },
-        body:formData
+        body:accepted
       });
   
       if (!response.ok) {

@@ -6,8 +6,9 @@ class RoomRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoomRequest
         fields = [
-            'fkRoom', 'fkTenant', 'accepted'
+            'pk','fkRoom', 'fkTenant', 'accepted'
         ]
+        read_only_fields = ['fkRoom', 'fkTenant', 'pk']
 
     def validate(self, data):
         # Verificar si ya existe un HouseRequest para la misma casa y el mismo tenant
@@ -25,8 +26,9 @@ class HouseRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = HouseRequest
         fields = [
-            'fkHouse', 'fkTenant', 'accepted'
+            'pk','fkHouse', 'fkTenant', 'accepted'
         ]
+        read_only_fields = ['fkHouse', 'fkTenant', 'pk']
 
     def validate(self, data):
         # Verificar si ya existe un HouseRequest para la misma casa y el mismo tenant

@@ -5,6 +5,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from .serializers import RoomRequestSerializer, HouseRequestSerializer
 from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
 # Create your views here.
 
 
@@ -29,6 +30,18 @@ class RoomRequestUpdate(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = RoomRequest.objects.all()
     serializer_class = RoomRequestSerializer
+
+    def update(self, request, *args, **kwargs):
+        pk = self.kwargs['pk']
+        room_request = get_object_or_404(RoomRequest, pk=pk)
+        accepted = request.data.get('accepted')
+        if accepted is None:
+            return Response({'error': 'El campo "accepted" es obligatorio.'}, status=400)
+
+        room_request.accepted = accepted
+        room_request.save()
+
+        return Response({'id': room_request.pk, 'accepted': room_request.accepted})
 
     def get_object(self):
         pk = self.kwargs['pk']
@@ -56,6 +69,18 @@ class HouseRequestUpdate(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = HouseRequest.objects.all()
     serializer_class = HouseRequestSerializer
+
+    def update(self, request, *args, **kwargs):
+        pk = self.kwargs['pk']
+        house_request = get_object_or_404(HouseRequest, pk=pk)
+        accepted = request.data.get('accepted')
+        if accepted is None:
+            return Response({'error': 'El campo "accepted" es obligatorio.'}, status=400)
+
+        house_request.accepted = accepted
+        house_request.save()
+
+        return Response({'id': house_request.pk, 'accepted': house_request.accepted})
 
     def get_object(self):
         pk = self.kwargs['pk']

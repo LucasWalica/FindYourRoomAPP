@@ -17,7 +17,7 @@ export interface house{
     longitud:number,
     petsAllowed:boolean,
     smokersAllowed:boolean,
-    house_requests:any[]|null
+    house_requests:HouseRequests[]|null
 }
 
 export interface rooms{
@@ -26,9 +26,21 @@ export interface rooms{
     desc:string,
     image:File | string,
     price:number,
-    room_requests:any[]|null
+    room_requests:RoomRequests[]|null
 }
 
+export interface HouseRequests{
+    accepted:null,
+    fkHouse:number,
+    fkTenant:number
+    pk:number
+}
+export interface RoomRequests{
+    accepted:null,
+    fkRoom:number,
+    fkTenant:number
+    pk:number
+}
 
 
 export enum houseType{
