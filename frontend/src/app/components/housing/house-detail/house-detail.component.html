@@ -14,12 +14,6 @@
                 <div><strong>Portal:</strong> {{ house.portal }}</div>
                 <div><strong>Size:</strong> {{ house.m2 }} m²</div>
                 <div><strong>Price:</strong> ${{ house.price }}</div>
-                @if (!this.house.smokersAllowed) {
-                    <div ><strong>Smokers allowed: </strong>No</div>
-                }
-                @if (!this.house.petsAllowed){
-                    <div><strong>Pets allowed: </strong>No</div>
-                }
             </div>
             
             <!-- Mapa -->
