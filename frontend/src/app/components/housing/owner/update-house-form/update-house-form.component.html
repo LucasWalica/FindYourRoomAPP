@@ -2,14 +2,14 @@
   <app-nav-bar></app-nav-bar>
   <form [formGroup]="postHouseForm" (ngSubmit)="onSubmit()" class="flex flex-col justify-center items-center gap-6">
     <!-- Título del formulario -->
-    <h1 class="text-2xl font-bold text-green2 mb-4">Edit House Details</h1>
+    <h1 class="text-2xl font-bold text-green1 mb-4">Edit House Details</h1>
 
     <!-- Nombre -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Name:</label>
+      <label class="font-semibold text-green1">Name:</label>
       <input
         type="text"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2 text-green3"
         formControlName="name"
         placeholder="{{ this.houseToUpdate.name }}"
       />
@@ -20,10 +20,10 @@
 
     <!-- Imagen principal -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Main Image:</label>
+      <label class="font-semibold text-green1">Main Image:</label>
       <input
         type="file"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2 text-green3"
         (change)="onFileChange($event, 'image')"
       />
       <small *ngIf="postHouseForm.get('image')?.invalid && postHouseForm.get('image')?.touched" class="text-red-500">
@@ -33,9 +33,9 @@
 
     <!-- Descripción -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Description:</label>
+      <label class="font-semibold text-green1">Description:</label>
       <textarea
-        class="rounded-md p-4 h-32 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2 resize-none"
+        class="rounded-md p-4 h-32 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2 resize-none text-green3"
         formControlName="desc"
         placeholder="{{ this.houseToUpdate.desc }}"
       ></textarea>
@@ -46,10 +46,10 @@
 
     <!-- Tamaño en metros cuadrados -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Size (m²):</label>
+      <label class="font-semibold text-green1">Size (m²):</label>
       <input
         type="number"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2 text-green3"
         formControlName="m2"
         placeholder="{{ this.houseToUpdate.m2 }}"
       />
@@ -61,36 +61,16 @@
 
     <!-- Precio -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Price:</label>
+      <label class="font-semibold text-green1">Price:</label>
       <input
         type="number"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2 text-green3"
         formControlName="price"
         placeholder="{{ this.houseToUpdate.price }}"
       />
       <small *ngIf="postHouseForm.get('price')?.invalid && postHouseForm.get('price')?.touched" class="text-red-500">
         Price is required.
       </small>
-    </div>
-
-    <!-- Smokers and Pets Allowed -->
-    <div class="flex flex-row justify-center w-1/2 sm:w-3/4 lg:w-1/2 gap-4">
-      <div class="flex flex-col">
-        <label class="font-semibold text-green2 mr-2">Smokers Allowed:</label>
-        <input
-          type="checkbox"
-          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
-          formControlName="smokersAllowed"
-        />
-      </div>
-      <div class="flex flex-col">
-        <label class="font-semibold text-green2 mr-2">Pets Allowed:</label>
-        <input
-          type="checkbox"
-          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
-          formControlName="petsAllowed"
-        />
-      </div>
     </div>
 
     <!-- Botón de envío -->

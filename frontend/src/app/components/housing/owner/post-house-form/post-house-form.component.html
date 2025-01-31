@@ -6,14 +6,14 @@
     class="flex flex-col justify-center items-center gap-6"
   >
     <!-- Título del formulario -->
-    <h1 class="text-2xl font-bold text-green2 mb-4">Post a New House</h1>
+    <h1 class="text-2xl font-bold text-green1 mb-4">Post a New House</h1>
 
     <!-- Nombre -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Name:</label>
+      <label class="font-semibold text-green1">Name:</label>
       <input
         type="text"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         formControlName="name"
         placeholder="Enter house name"
       />
@@ -24,10 +24,10 @@
 
     <!-- Imagen principal -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Main Image:</label>
+      <label class="font-semibold text-green1">Main Image:</label>
       <input
         type="file"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         (change)="onFileChange($event, 'image')"
       />
       <small *ngIf="postHouseForm.get('image')?.invalid && postHouseForm.get('image')?.touched" class="text-red-500">
@@ -37,9 +37,9 @@
 
     <!-- Descripción -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Description:</label>
+      <label class="font-semibold text-green1">Description:</label>
       <textarea
-        class="rounded-md p-4 h-32 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2 resize-none"
+        class="rounded-md p-4 h-32 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2 resize-none  text-green3"
         formControlName="desc"
         placeholder="Provide a brief description"
       ></textarea>
@@ -50,10 +50,10 @@
 
     <!-- Tamaño -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Size (m²):</label>
+      <label class="font-semibold text-green1">Size (m²):</label>
       <input
         type="number"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         formControlName="m2"
         placeholder="Enter size in m²"
       />
@@ -64,9 +64,9 @@
 
     <!-- Tipo de casa -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">House Type:</label>
+      <label class="font-semibold text-green1">House Type:</label>
       <select
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         formControlName="house_type"
       >
         <option *ngFor="let type of houseTypes | keyvalue" [value]="type.value">
@@ -80,10 +80,10 @@
 
     <!-- Ciudad -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">City:</label>
+      <label class="font-semibold text-green1">City:</label>
       <input
         type="text"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         formControlName="ciudad"
         placeholder="Enter city name"
       />
@@ -94,10 +94,10 @@
 
     <!-- Barrio -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Neighborhood:</label>
+      <label class="font-semibold text-green1">Neighborhood:</label>
       <input
         type="text"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         formControlName="barrio"
         placeholder="Enter neighborhood name"
       />
@@ -108,10 +108,10 @@
 
     <!-- Calle -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Street:</label>
+      <label class="font-semibold text-green1">Street:</label>
       <input
         type="text"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         formControlName="calle"
         placeholder="Enter street name"
       />
@@ -122,10 +122,10 @@
 
     <!-- Portal -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Portal:</label>
+      <label class="font-semibold text-green1">Portal:</label>
       <input
         type="number"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         formControlName="portal"
         placeholder="Enter portal number"
       />
@@ -136,10 +136,10 @@
 
     <!-- Precio -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Price:</label>
+      <label class="font-semibold text-green1">Price:</label>
       <input
         type="number"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         formControlName="price"
         placeholder="Enter price"
       />
@@ -148,33 +148,12 @@
       </small>
     </div>
 
-    <!-- Smokers Allowed -->
-    <div class="flex flex-row content-center justify-center gap-4 w-full sm:w-3/4 lg:w-1/2">
-      <div class="flex flex-col">
-        <label class="font-semibold text-green2">Smokers Allowed:</label>
-        <input
-          type="checkbox"
-          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
-          formControlName="smokersAllowed"
-        />
-      </div>
-      <!-- Pets Allowed -->
-      <div class="flex flex-col">
-        <label class="font-semibold text-green2">Pets Allowed:</label>
-        <input
-          type="checkbox"
-          class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
-          formControlName="petsAllowed"
-        />
-      </div>
-    </div>
-
     <!-- Número de habitaciones -->
     <div class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <label class="font-semibold text-green2">Number of Rooms:</label>
+      <label class="font-semibold text-green1">Number of Rooms:</label>
       <input
         type="number"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         formControlName="rooms"
         placeholder="Enter number of rooms"
       />
@@ -182,25 +161,25 @@
 
     <!-- Formularios dinámicos para habitaciones -->
     <div *ngFor="let room of roomsData.controls; let i = index" class="flex flex-col w-full sm:w-3/4 lg:w-1/2">
-      <h2 class="text-xl font-bold text-green2 mb-2">Room {{ i + 1 }}</h2>
-      <label class="font-semibold text-green2">Room Size (m²):</label>
+      <h2 class="text-xl font-bold text-green1 mb-2">Room {{ i + 1 }}</h2>
+      <label class="font-semibold text-green1">Room Size (m²):</label>
       <input
         type="number"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         [formControlName]="'m2'"
         placeholder="Enter size in m²"
       />
-      <label class="font-semibold text-green2">Room Description:</label>
+      <label class="font-semibold text-green1">Room Description:</label>
       <input
         type="text"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2 text-green3"
         [formControlName]="'desc'"
         placeholder="Enter room description"
       />
-      <label class="font-semibold text-green2">Room Image:</label>
+      <label class="font-semibold text-green1">Room Image:</label>
       <input
         type="file"
-        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2"
+        class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2  text-green3"
         (change)="onRoomImageChange($event, i)"
       />
     </div>

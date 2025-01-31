@@ -31,8 +31,6 @@ class House(models.Model):
     latitud = models.FloatField(null=True, blank=True)
     longitud = models.FloatField(null=True, blank=True)
     price = models.FloatField()
-    petsAllowed = models.BooleanField(default=False)
-    smokersAllowed = models.BooleanField(default=False)
     # add owner
 
     def save(self, *args, **kwargs):
@@ -50,8 +48,6 @@ class Room(models.Model):
     desc = models.TextField()
     image = models.ImageField(upload_to='images/rooms/')  
     price = models.FloatField()
-    isOcupied = models.BooleanField(default=False)
-    occupiedBy = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
 
     def __str__(self):
         return f"ID: {self.id} - house PK:{self.fkHouse}"

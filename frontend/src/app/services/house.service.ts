@@ -19,7 +19,6 @@ export class HouseService {
   constructor(private router:Router) { }
 
 
-
   async getHouseDetaild(houseID:number):Promise<house>{
     const url = `http://localhost:8000/api/houses/house/${houseID}`;
     try {

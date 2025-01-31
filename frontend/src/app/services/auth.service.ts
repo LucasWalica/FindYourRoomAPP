@@ -98,8 +98,6 @@ export class AuthService {
     this.router.navigate(['']);
   }
 
-
-
   setToken(token:string){
     this.token = token;
     localStorage.setItem('token', token);
@@ -109,8 +107,6 @@ export class AuthService {
     this.token = localStorage.getItem('token');
     return this.token;
   }
-
-
 
   userIsAuthenticated(): boolean {
     const token = this.getToken();

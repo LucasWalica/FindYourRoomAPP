@@ -9,7 +9,7 @@ from houseOrdersTasks.serializers import HouseRequestSerializer, RoomRequestSeri
 class HouseUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = House
-        fields = ['name', 'image','desc', 'm2', 'price', 'petsAllowed', 'smokersAllowed']
+        fields = ['name', 'image','desc', 'm2', 'price']
         
     def update(self, instance, validated_data):
        
@@ -68,7 +68,7 @@ class RoomSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = ['id','fkHouse', 'm2', 'desc', 'image', 'price', 'isOcupied', 'occupiedBy', 'room_requests']
+        fields = ['id','fkHouse', 'm2', 'desc', 'image', 'price', 'room_requests']
         read_only_fields = ['fkHouse', 'occupiedBy']
 
     def to_representation(self, instance):
@@ -114,7 +114,7 @@ class HouseSerializer(serializers.ModelSerializer):
                   'desc', 'm2', 'house_type', 'rooms', 
                   'ciudad', 'barrio', 'calle', 'portal', 
                    'price', 'rooms_data', 'latitud', 'longitud', 
-                   'petsAllowed', 'smokersAllowed', 'house_requests']
+                    'house_requests']
         read_only_fields = ['fkCreator']
     
     def to_representation(self, instance):    
