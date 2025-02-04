@@ -1,6 +1,6 @@
 <div class="m-4 p-4 bg-green3 text-green1 rounded-md shadow-md">
   <app-nav-bar></app-nav-bar>
-  <form [formGroup]="postHouseForm" (ngSubmit)="onSubmit()" class="flex flex-col justify-center items-center gap-6">
+  <form [formGroup]="updateHouseForm" (ngSubmit)="onSubmit()" class="flex flex-col justify-center items-center gap-6">
     <!-- Título del formulario -->
     <h1 class="text-2xl font-bold text-green1 mb-4">Edit House Details</h1>
 
@@ -13,7 +13,7 @@
         formControlName="name"
         placeholder="{{ this.houseToUpdate.name }}"
       />
-      <small *ngIf="postHouseForm.get('name')?.invalid && postHouseForm.get('name')?.touched" class="text-red-500">
+      <small *ngIf="updateHouseForm.get('name')?.invalid && updateHouseForm.get('name')?.touched" class="text-red-500">
         Name is required.
       </small>
     </div>
@@ -26,7 +26,7 @@
         class="rounded-md p-2 border-2 border-green1 focus:outline-none focus:ring-2 focus:ring-green2 text-green3"
         (change)="onFileChange($event, 'image')"
       />
-      <small *ngIf="postHouseForm.get('image')?.invalid && postHouseForm.get('image')?.touched" class="text-red-500">
+      <small *ngIf="updateHouseForm.get('image')?.invalid && updateHouseForm.get('image')?.touched" class="text-red-500">
         Image is required.
       </small>
     </div>
@@ -39,7 +39,7 @@
         formControlName="desc"
         placeholder="{{ this.houseToUpdate.desc }}"
       ></textarea>
-      <small *ngIf="postHouseForm.get('desc')?.invalid && postHouseForm.get('desc')?.touched" class="text-red-500">
+      <small *ngIf="updateHouseForm.get('desc')?.invalid && updateHouseForm.get('desc')?.touched" class="text-red-500">
         Description is required.
       </small>
     </div>
@@ -53,9 +53,9 @@
         formControlName="m2"
         placeholder="{{ this.houseToUpdate.m2 }}"
       />
-      <small *ngIf="postHouseForm.get('m2')?.invalid && postHouseForm.get('m2')?.touched" class="text-red-500">
-        <span *ngIf="postHouseForm.get('m2')?.errors?.['required']">Size is required.</span>
-        <span *ngIf="postHouseForm.get('m2')?.errors?.['min']">Size must be greater than 0.</span>
+      <small *ngIf="updateHouseForm.get('m2')?.invalid && updateHouseForm.get('m2')?.touched" class="text-red-500">
+        <span *ngIf="updateHouseForm.get('m2')?.errors?.['required']">Size is required.</span>
+        <span *ngIf="updateHouseForm.get('m2')?.errors?.['min']">Size must be greater than 0.</span>
       </small>
     </div>
 
@@ -68,7 +68,7 @@
         formControlName="price"
         placeholder="{{ this.houseToUpdate.price }}"
       />
-      <small *ngIf="postHouseForm.get('price')?.invalid && postHouseForm.get('price')?.touched" class="text-red-500">
+      <small *ngIf="updateHouseForm.get('price')?.invalid && updateHouseForm.get('price')?.touched" class="text-red-500">
         Price is required.
       </small>
     </div>

@@ -27,7 +27,7 @@ export class RoomUpdateFormComponent implements OnInit {
     this.roomUpdateForm = this.fb.group({
       m2: [this.houseService.roomDetail.m2, Validators.required],
       desc: [this.houseService.roomDetail.desc, Validators.required],
-      image: [''],
+      image: [this.houseService.roomDetail?.image, ''],
       price: [this.houseService.roomDetail.price, Validators.required]
     });
   }
@@ -55,10 +55,18 @@ export class RoomUpdateFormComponent implements OnInit {
       formData.append('m2', this.roomUpdateForm.get('m2')?.value);
       formData.append('desc', this.roomUpdateForm.get('desc')?.value);
       formData.append('price', this.roomUpdateForm.get('price')?.value);
-      formData.append('image', this.roomUpdateForm.get('image')?.value);
       
-    
-  
+      const imageValue = this.roomUpdateForm.get('image')?.value;
+
+      // Si la imagen es base64, la convertimos a File
+      if (imageValue && imageValue.startsWith('data:image')) {
+        const file = this.convertBase64ToFile(imageValue, 'image.jpg'); // Aquí puedes cambiar el nombre si es necesario
+        formData.append('image', file);
+        console.log("file", file);
+      } else if (imageValue && imageValue.startsWith('http')) {
+        // Si la imagen es una URL, la agregamos directamente
+        formData.append('image', imageValue);
+      }
       console.log(formData);
   
       if (this.roomData.id) {
@@ -67,5 +75,39 @@ export class RoomUpdateFormComponent implements OnInit {
       this.router.navigate(['ownerHouses']);
     }
   }
-}
 
+
+
+
+  convertBase64ToFile(base64: string, filename: string): File {
+    // Verificar si la base64 contiene datos y tiene la forma esperada
+    const arr = base64.split(',');
+  
+    // Asegurarse de que la cadena base64 tiene la estructura correcta
+    if (arr.length < 2) {
+      throw new Error('Invalid base64 format');
+    }
+  
+    // Intentar extraer el tipo MIME de la base64
+    const mimeTypeMatch = arr[0].match(/:(.*?);/);
+    if (!mimeTypeMatch) {
+      throw new Error('Could not extract MIME type from base64 string');
+    }
+  
+    // Si se encontró el tipo MIME, lo extraemos
+    const mimeType = mimeTypeMatch[1];
+  
+    // Decodificar la base64 (sin la parte "data:image/...;base64," inicial)
+    const byteString = atob(arr[1]);
+  
+    // Crear un array de bytes
+    const byteArray = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      byteArray[i] = byteString.charCodeAt(i);
+    }
+  
+    // Crear el archivo (File) a partir del array de bytes
+    const file = new File([byteArray], filename, { type: mimeType });
+    return file;
+  }
+}

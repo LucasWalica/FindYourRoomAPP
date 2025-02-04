@@ -22,17 +22,15 @@ import { FooterComponent } from '../../../reusable/footer/footer.component';
 export class UpdateHouseFormComponent implements OnInit {
 
   houseToUpdate:house={}as house;
-  postHouseForm: FormGroup;
+  updateHouseForm: FormGroup;
   houseTypes = houseType
   constructor(private fb: FormBuilder, private houseService:HouseService, private router:Router) {
-    this.postHouseForm = this.fb.group({
+    this.updateHouseForm = this.fb.group({
       name: [this.houseService.houseDetail.name, Validators.required],
-      image: [''],
+      image: [this.houseService.houseDetail.image, ''],
       desc: [this.houseService.houseDetail.desc, Validators.required],
       m2: [this.houseService.houseDetail.m2, [Validators.required, Validators.min(1)]],
       price: [this.houseService.houseDetail.price, [Validators.required, Validators.min(0)]],
-      smokersAllowed: [this.houseService.houseDetail.smokersAllowed, [Validators.required]],
-      petsAllowed :[this.houseService.houseDetail.petsAllowed, [Validators.required]]
     });
   }
   ngOnInit(): void {
@@ -46,28 +44,80 @@ export class UpdateHouseFormComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      this.postHouseForm.get(controlName)?.setValue(file); // Agregar el archivo directamente al formulario
+      this.updateHouseForm.get(controlName)?.setValue(file); // Agregar el archivo directamente al formulario
     }
   }
-
+  
+  
   onSubmit(): void {
-    if (this.postHouseForm.valid) {
+    if (this.updateHouseForm.valid) {
+      console.log("form valido");
       const formData = new FormData();
 
       // Aquí agregamos cada campo del formulario al FormData
-      formData.append('name', this.postHouseForm.get('name')?.value);
-      formData.append('desc', this.postHouseForm.get('desc')?.value);
-      formData.append('m2', this.postHouseForm.get('m2')?.value);
-      formData.append('price', this.postHouseForm.get('price')?.value);
-      formData.append('image', this.postHouseForm.get('image')?.value); // Imagen en base64
-      
+      formData.append('name', this.updateHouseForm.get('name')?.value);
+      formData.append('desc', this.updateHouseForm.get('desc')?.value);
+      formData.append('m2', this.updateHouseForm.get('m2')?.value);
+      formData.append('price', this.updateHouseForm.get('price')?.value);
+
+      const imageValue = this.updateHouseForm.get('image')?.value;
+
+      // Si la imagen es base64, la convertimos a File
+      if (imageValue && imageValue.startsWith('data:image')) {
+        const file = this.convertBase64ToFile(imageValue, 'image.jpg'); // Aquí puedes cambiar el nombre si es necesario
+        formData.append('image', file);
+        console.log("file", file);
+      } else if (imageValue && imageValue.startsWith('http')) {
+        // Si la imagen es una URL, la agregamos directamente
+        formData.append('image', imageValue);
+      }
+
       console.log(formData);
       if(this.houseService.houseDetail.id){
         this.houseService.updateHouse(this.houseService.houseDetail.id ,formData);
       }
       this.router.navigate(['ownerHouses'])
+    }else{
+      console.log(this.updateHouseForm.errors);
+      Object.keys(this.updateHouseForm.controls).forEach(field => {
+        const control = this.updateHouseForm.get(field);
+        if (control && control.invalid) {
+          console.log(`❌ Error en ${field}:`, control.errors);
+        }
+      });
+    }
+  }
+
+
+  convertBase64ToFile(base64: string, filename: string): File {
+    // Verificar si la base64 contiene datos y tiene la forma esperada
+    const arr = base64.split(',');
+  
+    // Asegurarse de que la cadena base64 tiene la estructura correcta
+    if (arr.length < 2) {
+      throw new Error('Invalid base64 format');
     }
   
+    // Intentar extraer el tipo MIME de la base64
+    const mimeTypeMatch = arr[0].match(/:(.*?);/);
+    if (!mimeTypeMatch) {
+      throw new Error('Could not extract MIME type from base64 string');
+    }
   
+    // Si se encontró el tipo MIME, lo extraemos
+    const mimeType = mimeTypeMatch[1];
+  
+    // Decodificar la base64 (sin la parte "data:image/...;base64," inicial)
+    const byteString = atob(arr[1]);
+  
+    // Crear un array de bytes
+    const byteArray = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      byteArray[i] = byteString.charCodeAt(i);
+    }
+  
+    // Crear el archivo (File) a partir del array de bytes
+    const file = new File([byteArray], filename, { type: mimeType });
+    return file;
   }
 }

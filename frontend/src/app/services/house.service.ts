@@ -9,6 +9,8 @@ export class HouseService {
 
   roomDetail:rooms = {} as rooms;
   houseDetail:house={} as house;
+
+
   setHouseData(house:house){
     this.houseDetail =house;
   }
@@ -17,7 +19,8 @@ export class HouseService {
   }
 
   constructor(private router:Router) { }
-
+  
+  
 
   async getHouseDetaild(houseID:number):Promise<house>{
     const url = `http://localhost:8000/api/houses/house/${houseID}`;
@@ -115,9 +118,10 @@ export class HouseService {
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
+
   
       const result = await response.json();
-  
+
       console.log(result);
       return result;
     } catch (error) {
