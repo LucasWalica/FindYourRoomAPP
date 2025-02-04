@@ -37,8 +37,7 @@ class InquilinoSerializer(serializers.ModelSerializer):
         fields = [
             'fkUser', 'age', 'occupation', 'gender', 'activity_schedule', 'cleanliness_level',
             'pets', 'smoker', 'visit_frequency', 'common_space_usage', 'hobbies', 
-            'socializing_frequency', 'living_environment', 'presentation', 
-            'instagram_profile', 'facebook_profile', 'linkedin_profile'
+            'socializing_frequency', 'living_environment', 'presentation'
         ]
         read_only_fields = ['fkUser']
 
