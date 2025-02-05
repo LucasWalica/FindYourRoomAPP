@@ -52,6 +52,11 @@ CHANNEL_LAYERS = {
     },
 }
 
+# Celery y redis para tareas en segundo plano
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'  # Base de datos diferente
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
