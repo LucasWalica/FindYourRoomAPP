@@ -12,6 +12,7 @@ export interface TenantProfile {
     socializing_frequency: SocializingFrequency;
     living_enviroment:LivingEnvironment;
     presentation:string;
+    desiredCity:string;
 }
 export enum Gender {
     Male = 'Male',

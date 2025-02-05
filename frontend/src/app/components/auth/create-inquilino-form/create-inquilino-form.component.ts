@@ -52,6 +52,7 @@ export class CreateInquilinoFormComponent {
       this.inquilinoForm.get('socializing_frequency')?.value??'',
       this.inquilinoForm.get('living_enviroment')?.value??'',
       this.inquilinoForm.get('presentation')?.value??'',
+      this.inquilinoForm.get('desiredCity')?.value??'',
     )
     this.router.navigate(['']);
     
@@ -72,7 +73,8 @@ export class CreateInquilinoFormComponent {
     hobbies: new FormControl('', Validators.required),
     socializing_frequency: new FormControl('', Validators.required),
     living_environment: new FormControl('', Validators.required),
-    presentation: new FormControl('', Validators.required)
+    presentation: new FormControl('', Validators.required),
+    desiredCity: new FormControl('', Validators.required)
   })
 
 

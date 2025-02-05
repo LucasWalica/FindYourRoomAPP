@@ -6,12 +6,12 @@
         @if (this.inquilinoProfile) {
         <div>
             <app-tenant-profile [inquilinoProfile]="this.inquilinoProfile"/>
-           <div class="flex justify-center m-2">
+            <div class="flex justify-center m-2">
                 <button (click)="this.updateForm()" class="w-1/2 sm:w-1/4  bg-magenta1 text-green1 
                 rounded-md border-magenta1 border-2 
                 hover:text-green3 hover:bg-magenta2 duration-150
                 text-xl shadow-md shadow-brown">Update your Profile?</button>
-           </div>
+            </div>
         </div>
         }@else {
             <div class="m-2 flex flex-col justify-center">

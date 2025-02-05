@@ -13,13 +13,13 @@ export class UserService {
   postInquilino(age:string, occupation:string, gender:string, activity_schedule:string,
     cleanliness_level:string, pets:boolean, smoker:boolean, visit_frequency:string, 
     common_space_usage:string, hobbies:string, socializing_frequency:string, 
-    living_environment:string, presentation:string
+    living_environment:string, presentation:string, desiredCity:string
   ){
 
     const body = JSON.stringify({
         age, occupation, gender, activity_schedule, cleanliness_level, pets,
         smoker, visit_frequency, common_space_usage, hobbies, socializing_frequency, 
-        living_environment, presentation
+        living_environment, presentation, desiredCity
     })
     let token = localStorage.getItem('token');
     fetch('http://127.0.0.1:8000/api/users/inquilino/create/', {

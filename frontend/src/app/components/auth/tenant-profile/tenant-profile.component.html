@@ -5,14 +5,25 @@
         <div class="p-2 text-center text-2xl">{{this.username}}</div>
     </div>
 </div>
-<!--presentation-->
-<div class="text-center flex justify-center m-2">
-    @if (this.inquilinoProfile?.presentation) {
+<div class="flex flex-col md:flex-row justify-center">
+    <!--Dedired city-->
+    <div class="text-center flex justify-center m-2">
+    @if (this.inquilinoProfile?.desiredCity) {
         <div class="flex flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md gap-2 "> 
-            <p class=" p-2 text-magenta2">Presentation:</p>
-            <div class="p-2 text-center">{{this.inquilinoProfile?.presentation}}</div>
+            <p class=" p-2 text-magenta2">Desired City:</p>
+            <div class="p-2 text-center">{{this.inquilinoProfile?.desiredCity}}</div>
         </div>
     }
+    </div>
+    <!--presentation-->
+    <div class="text-center flex justify-center m-2">
+        @if (this.inquilinoProfile?.presentation) {
+            <div class="flex flex-row border-2 border-green2 shadow-sm shadow-brown rounded-md gap-2 "> 
+                <p class=" p-2 text-magenta2">Presentation:</p>
+                <div class="p-2 text-center">{{this.inquilinoProfile?.presentation}}</div>
+            </div>
+        }
+    </div>
 </div>
 <!--Age gender-->
 <div class="flex flex-row justify-center">
@@ -97,4 +108,5 @@
         </div>
     </div>
 }
+
 

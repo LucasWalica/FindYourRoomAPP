@@ -17,7 +17,9 @@ class Inquilino(models.Model):
     socializing_frequency = models.CharField(max_length=50, null=True, blank=True)
     living_environment = models.CharField(max_length=50, null=True, blank=True)
     presentation = models.TextField(max_length=1024, null=True, blank=True)
-    
+    desiredCity = models.CharField(max_length=40, blank=False, null=False)
+
+
     def __str__(self):
         return f"{self.pk} - {self.fkUser.username}"
     

@@ -5,10 +5,18 @@
 
 
     <button (click)="goToChat()" class="hover:text-green2 md:text-xl">Chat</button>
-    <button (click)="goToProfile()"
-    class="hover:text-green2 md:text-xl">
-        Profile
-    </button>
+    <details class="dropdown">
+        <summary class="hover:text-green2 md:text-xl">Social</summary>
+        <ul class="menu absolute dropdown-content bg-green3 rounded-box z-10 w-52 p-2 shadow rounded-md">
+            <li (click)="goToProfile()" class="p-2 m-2">
+                <button class="hover:text-green2">Profile</button>
+            </li>
+            <li class="p-2 m-2">
+                <button class="hover:text-green2">Compatible people</button>
+            </li>
+        </ul>
+    </details>
+    <!--dropdown house admin-->
     <details class="dropdown">
         <summary  class="hover:text-green2 md:text-xl">Housing</summary>
         <ul class="menu absolute dropdown-content bg-green3 rounded-box z-10 w-52 p-2 shadow rounded-md">
@@ -24,6 +32,5 @@
     <button (click)="logout()" class="hover:text-green2 md:text-xl">
         Logout
     </button>
-    
-   
+       
 </div>  

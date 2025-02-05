@@ -29,3 +29,4 @@ class FriendsSerializer(serializers.ModelSerializer):
         if  Friends.objects.filter(fkTenant1=fkTenant1, fkTenant2=fkTenant2).exists():
             raise serializers.ValidationError("Estea solicitud ya existe.")
         return data
+    

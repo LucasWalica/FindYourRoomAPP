@@ -87,3 +87,5 @@ class FriendDelete(generics.DestroyAPIView):
 
         except AttributeError:
             return Response({"detail": "User does not have an associated tenant."}, status=status.HTTP_400_BAD_REQUEST)
+        
+
