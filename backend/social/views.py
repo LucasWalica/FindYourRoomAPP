@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from .models import FriendRequest, Friends
+from .models import FriendRequest, Friends, Matches
 from rest_framework import generics
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
-from .serializer import FriendsSerializer, FriendRequestSerializer
+from .serializer import FriendsSerializer, FriendRequestSerializer, MatchesSerializer
 from users.models import Inquilino
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
@@ -89,3 +89,36 @@ class FriendDelete(generics.DestroyAPIView):
             return Response({"detail": "User does not have an associated tenant."}, status=status.HTTP_400_BAD_REQUEST)
         
 
+
+# returns the matches that a certain users has
+class MatchListView(generics.ListAPIView):
+    parser_classes = [JSONParser]
+    permission_classes = [IsAuthenticated]
+    queryset = Matches.objects.all()
+    serializer_class = MatchesSerializer
+
+    def get_queryset(self):
+        inquilino = Inquilino.objects.filter(fkUser = self.request.user)
+        return Matches.objects.filte(fkTenant1=inquilino) | Friends.objects.filter(fkTenant2=inquilino)
+
+
+
+# test if works, add signal
+class MatchUpdate(generics.UpdateAPIView):
+    parser_classes = [JSONParser]
+    permission_classes = [IsAuthenticated]
+    queryset = FriendRequest.objects.all()
+    serializer_class = FriendRequestSerializer
+
+    def update(self, request, *args, **kwargs):
+        pk = self.kwargs['pk']
+        match = get_object_or_404(Matches, pk=pk)
+        accepted = request.data.get('accepted')
+        if accepted is None:
+            return Response({'error':'El campo "accepted" es obligatorio'})
+        match.accepted = accepted
+        match.save()
+
+    def get_object(self):
+        pk = self.kwargs['pk']
+        return get_object_or_404(Matches, pk=pk)

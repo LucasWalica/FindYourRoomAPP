@@ -1,3 +1,8 @@
 starts the server =>
 
-daphne -b 0.0.0.0 -p 8000 core.asgi:application
+    daphne -b 0.0.0.0 -p 8000 core.asgi:application
+
+
+celery workers: 
+    celery -A core worker --loglevel=info
+    celery -A core beat --loglevel=info

@@ -1,5 +1,6 @@
 import os 
 import environ
+from celery.schedules import crontab
 from pathlib import Path
 
 
@@ -56,6 +57,13 @@ CHANNEL_LAYERS = {
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'  # Base de datos diferente
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULE = {
+    'comparar_inquilinos_cada_hora': {
+        'task': 'social.tasks.evaluar_compatibilidad',
+        'schedule': crontab(minute='*', hour='*'),  
+# cambiar segun estemos en desarrollo o produccion
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

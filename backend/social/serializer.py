@@ -1,10 +1,10 @@
-from .models import FriendRequest, Friends
+from .models import FriendRequest, Friends,Matches
 from rest_framework import serializers
 
 class FriendRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = FriendRequest
-        fields = ['sender', 'receiver']
+        fields = ['id','sender', 'receiver']
 
     def validate(self, data):
         # Verificar si ya existe un HouseRequest para la misma casa y el mismo tenant
@@ -19,7 +19,7 @@ class FriendRequestSerializer(serializers.ModelSerializer):
 class FriendsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Friends
-        fields = ['fkTenant1', 'fkTenant2', 'accepted']
+        fields = ['id','fkTenant1', 'fkTenant2', 'accepted']
     
     def validate(self, data):
         fkTenant1 = data['fkTenant1']
@@ -30,3 +30,10 @@ class FriendsSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Estea solicitud ya existe.")
         return data
     
+
+
+# maybe add methods to improve 
+class MatchesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Matches
+        fields = ['id','fkTenant1', 'fkTenant2', 'accepted']

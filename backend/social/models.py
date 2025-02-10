@@ -17,4 +17,16 @@ class FriendRequest(models.Model):
 
     def __str__(self):
         return f"{self.pk} - {self.sender} - {self.receiver}"
-    
+
+
+
+# celery bg tasks generates data with posible matches
+class Matches(models.Model):
+    fkTenant1 = models.ForeignKey(Inquilino, related_name='posible_match_1', on_delete=models.CASCADE)
+    fkTenant2 = models.ForeignKey(Inquilino, related_name='posible_match_2', on_delete=models.CASCADE)
+    accepted = models.BooleanField(default=False)
+    score = models.IntegerField(blank=False, null=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.pk} - {self.fkTenant1} - {self.fkTenant2}"
