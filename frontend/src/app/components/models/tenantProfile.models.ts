@@ -55,3 +55,23 @@ export enum VisitFrequency {
     Monthly = "Monthly",
     Rarely = "Rarely"
   }
+
+
+
+export interface friends{
+    fkTenant1:number;
+    fkTenant2:number;
+}
+
+export interface friendRequest{
+    sender:number;
+    receiver:number;
+    accepted:boolean;
+}
+
+export interface matches{
+    fkTenant1:number;
+    fkTenant2:number;
+    accepted:boolean;
+    score:number;
+}

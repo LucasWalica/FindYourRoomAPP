@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TenantProfile } from '../../../models/tenantProfile.models';
+import { TenantProfile } from '../../models/tenantProfile.models';
 @Component({
   selector: 'app-other-tenant-profile',
   standalone: true,

@@ -28,10 +28,19 @@ export class NavBarComponent {
   goToChat(){
     this.router.navigate(['chats'])
   }
+  goToMatches(){
+    this.router.navigate(['matchList'])
+  }
+  goToFriends(){
+    this.router.navigate(['friendList'])
+  }
+  
   home(){
     this.router.navigate(['home'])
   }
   logout(){
     this.auth.logout();
   }
+
+
 }

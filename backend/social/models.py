@@ -19,7 +19,6 @@ class FriendRequest(models.Model):
         return f"{self.pk} - {self.sender} - {self.receiver}"
 
 
-
 # celery bg tasks generates data with posible matches
 class Matches(models.Model):
     fkTenant1 = models.ForeignKey(Inquilino, related_name='posible_match_1', on_delete=models.CASCADE)

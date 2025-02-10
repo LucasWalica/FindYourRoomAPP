@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { HousingRequestsService } from '../../../../services/housing-requests.service';
 import { UserService } from '../../../../services/user.service';
 import { TenantProfile } from '../../../models/tenantProfile.models';
-import { OtherTenantProfileComponent } from "../other-tenant-profile/other-tenant-profile.component";
+import { OtherTenantProfileComponent } from "../../../reusable/other-tenant-profile/other-tenant-profile.component";
 
 @Component({
   selector: 'app-owner-house-list',

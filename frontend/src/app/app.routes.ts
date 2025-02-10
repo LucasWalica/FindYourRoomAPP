@@ -14,6 +14,11 @@ import { DeleteHouseFormComponent } from './components/housing/owner/delete-hous
 import { RoomUpdateFormComponent } from './components/housing/owner/room-update-form/room-update-form.component';
 import { UserUserChatComponent } from './components/chat/user-user-chat/user-user-chat.component';
 import { InboxChatComponent } from './components/chat/inbox-chat/inbox-chat.component';
+import { FriendListComponent } from './components/social/friend-list/friend-list.component';
+import { MatchListComponent } from './components/social/match-list/match-list.component';
+import { UpdateMatchComponent } from './components/social/update-match/update-match.component';
+import { UpdateFriendRequestComponent } from './components/social/update-friend-request/update-friend-request.component';
+import { PostFriendRequestComponent } from './components/social/post-friend-request/post-friend-request.component';
 
 export const routes: Routes = [
     {path:'home', component:HomePageComponent},
@@ -30,5 +35,13 @@ export const routes: Routes = [
     {path:'deleteHouse', component:DeleteHouseFormComponent},
     {path:'updateRoom', component:RoomUpdateFormComponent},
     {path:'chats', component:InboxChatComponent},
-    {path:'chat', component:UserUserChatComponent}
+    {path:'chat', component:UserUserChatComponent},
+    
+    {path:'friendList', component:FriendListComponent},
+    
+    {path:'matchList', component:MatchListComponent},
+    {path:'updateMatch', component:UpdateMatchComponent},
+    
+    {path:'updateFriendRequest', component:UpdateFriendRequestComponent},
+    {path:'postFriendRequest', component:PostFriendRequestComponent},
 ];
