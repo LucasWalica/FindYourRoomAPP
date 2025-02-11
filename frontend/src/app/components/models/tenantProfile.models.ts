@@ -59,19 +59,19 @@ export enum VisitFrequency {
 
 
 export interface friends{
-    fkTenant1:number;
-    fkTenant2:number;
+    id:number;
+    friend:TenantProfile;
 }
 
 export interface friendRequest{
-    sender:number;
-    receiver:number;
+    id:number;
+    receiver:TenantProfile;
     accepted:boolean;
 }
 
 export interface matches{
-    fkTenant1:number;
-    fkTenant2:number;
+    id:number;
+    fkTenant:TenantProfile;
     accepted:boolean;
     score:number;
 }

@@ -22,13 +22,14 @@ class PostFriendRequest(generics.CreateAPIView):
 class FriendsRequestList(generics.ListAPIView):
     parser_classes = [JSONParser]
     permission_classes = [IsAuthenticated]
-    queryset = FriendRequest.objects.all()
     serializer_class = FriendRequestSerializer
 
     def get_queryset(self):
-        inquilino = Inquilino.objects.filter(fkUser = self.request.user)
-        return FriendRequest.objects.filter(receiver=inquilino)
-    
+        inquilino = Inquilino.objects.filter(fkUser = self.request.user).first()
+        if inquilino:
+            return FriendRequest.objects.filter(receiver=inquilino)
+        else:
+            return FriendRequest.objects.none()
 
 # test if works, add signal
 class FriendRequestUpdate(generics.UpdateAPIView):
@@ -45,6 +46,7 @@ class FriendRequestUpdate(generics.UpdateAPIView):
             return Response({'error':'El campo "accepted" es obligatorio'})
         friend_request.accepted = accepted
         friend_request.save()
+        return Response({'message': 'Solicitud de amistad actualizada', 'accepted': accepted}, status=status.HTTP_200_OK)
 
     def get_object(self):
         pk = self.kwargs['pk']
@@ -59,24 +61,27 @@ class FriendsLists(generics.ListAPIView):
     serializer_class = FriendsSerializer
 
     def get_queryset(self):
-        inquilino = Inquilino.objects.filter(fkUser = self.request.user)
-        return Friends.objects.filter(fkTenant1=inquilino) | Friends.objects.filter(fkTenant2=inquilino)
+        inquilino = Inquilino.objects.filter(fkUser=self.request.user).first()
+        if inquilino:
+            return Friends.objects.filter(Q(fkTenant1=inquilino) | Q(fkTenant2=inquilino))
+        return Friends.objects.none()
+
     
 class FriendDelete(generics.DestroyAPIView):
     parser_classes = [JSONParser]
     permission_classes = [IsAuthenticated]
     queryset = Friends.objects.all()
     serializer_class = FriendsSerializer
-    lookup_field = 'id'
+    lookup_field = 'pk'
 
-    def delete(self, request, tenant_id, format=None):
+    def delete(self, request, *args, **kwargs):
         try:
+            relation_id = kwargs.get('pk')
             inquilino = request.user.inquilino  # Asumiendo que el usuario tiene un inquilino relacionado
             
             # Buscar la relación de amistad en cualquier dirección
-            friend_relation = Friends.objects.filter(
-                (Q(fkTenant1=inquilino) & Q(fkTenant2__id=tenant_id)) |
-                (Q(fkTenant2=inquilino) & Q(fkTenant1__id=tenant_id))
+            friend_relation = Friends.objects.filter(id=relation_id).filter(
+                    Q(fkTenant1=inquilino) | Q(fkTenant2=inquilino)
             ).first()
 
             if friend_relation:
@@ -98,26 +103,32 @@ class MatchListView(generics.ListAPIView):
     serializer_class = MatchesSerializer
 
     def get_queryset(self):
-        inquilino = Inquilino.objects.filter(fkUser = self.request.user)
-        return Matches.objects.filte(fkTenant1=inquilino) | Friends.objects.filter(fkTenant2=inquilino)
+        inquilino = Inquilino.objects.filter(fkUser=self.request.user).first()
+        if inquilino:
+            return Matches.objects.filter(Q(fkTenant1=inquilino) | Q(fkTenant2=inquilino))
+        return Matches.objects.none()
 
 
 
-# test if works, add signal
+# test if works, add signalMatchesSerializer
 class MatchUpdate(generics.UpdateAPIView):
     parser_classes = [JSONParser]
     permission_classes = [IsAuthenticated]
-    queryset = FriendRequest.objects.all()
-    serializer_class = FriendRequestSerializer
+    queryset = Matches.objects.all()
+    serializer_class = MatchesSerializer
 
     def update(self, request, *args, **kwargs):
+        print("request data:", request.data)
         pk = self.kwargs['pk']
         match = get_object_or_404(Matches, pk=pk)
         accepted = request.data.get('accepted')
         if accepted is None:
-            return Response({'error':'El campo "accepted" es obligatorio'})
+            return Response({'error': 'El campo "accepted" es obligatorio'}, status=status.HTTP_400_BAD_REQUEST)
+        if not isinstance(accepted, bool):
+            return Response({'error': 'El campo "accepted" debe ser un valor booleano'}, status=status.HTTP_400_BAD_REQUEST)
         match.accepted = accepted
         match.save()
+        return Response({'status': 'success', 'message': 'Match actualizado correctamente'}, status=status.HTTP_200_OK)
 
     def get_object(self):
         pk = self.kwargs['pk']

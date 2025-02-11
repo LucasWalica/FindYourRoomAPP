@@ -12,7 +12,7 @@ class Friends(models.Model):
 class FriendRequest(models.Model):
     sender = models.ForeignKey(Inquilino, related_name='sent_requests', on_delete=models.CASCADE)
     receiver = models.ForeignKey(Inquilino, related_name='received_requests', on_delete=models.CASCADE)
-    accepted = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False, null=True)
     timestamp  = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -24,7 +24,7 @@ class Matches(models.Model):
     fkTenant1 = models.ForeignKey(Inquilino, related_name='posible_match_1', on_delete=models.CASCADE)
     fkTenant2 = models.ForeignKey(Inquilino, related_name='posible_match_2', on_delete=models.CASCADE)
     accepted = models.BooleanField(default=False)
-    score = models.IntegerField(blank=False, null=False)
+    score = models.IntegerField(blank=False, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

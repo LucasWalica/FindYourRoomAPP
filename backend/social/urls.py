@@ -15,5 +15,5 @@ urlpatterns = [
     path('friendDelete/<int:pk>/', FriendDelete.as_view()),
     # matches
     path('matchList/', MatchListView.as_view()),
-    path('matchUpdate/<int:pk>/', MatchUpdate.as_view()),
+    path('matchUpdate/<int:pk>/', MatchUpdate.as_view(), name="match-update"),
 ]

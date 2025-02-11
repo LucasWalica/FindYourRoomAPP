@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 })
 export class SocialService {
 
+
   constructor(private router:Router) { }
     // post friend request 
     // maybe add router navigate after testing
@@ -34,8 +35,7 @@ export class SocialService {
   }
   // friend request list 
   async getFriendRequestList(){
-    let inquilino_id = localStorage.getItem('inquilino_id')
-    const url = `http://localhost:8000/api/social/requestList/${inquilino_id}/`;
+    const url = `http://localhost:8000/api/social/requestList/`;
     let token = localStorage.getItem('token');
     try{
       const response = await fetch(url, {
@@ -66,7 +66,7 @@ export class SocialService {
           Authorization: `Token ${token}`,
           'Content-Type': 'application/json',
         },
-        body:accepted
+        body:JSON.stringify({accepted})
       });
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -141,12 +141,20 @@ export class SocialService {
         throw new Error(`Error: ${response.status}`);
       }
       const result = await response.json();
-      return result;
+      let ownID = parseInt(localStorage.getItem('userID')??'0');
+      const filteredResult = result.map((data: any) => {
+        if (data.fkTenant1.fkUser === ownID) {
+          delete data.fkTenant1;  // Eliminar si coincide con el usuario
+        } else if (data.fkTenant2.fkUser === ownID) {
+          delete data.fkTenant2;
+        }
+        return data;
+      });
+      return filteredResult;
     } catch (error) {
       console.error('Error al enviar los datos:', error);
       throw error;
     }
-
   }
 
   async updateMatch(matchID:number, accepted:any){
@@ -159,13 +167,13 @@ export class SocialService {
           Authorization: `Token ${token}`,
           'Content-Type': 'application/json',
         },
-        body:accepted
+        body:JSON.stringify({accepted})
       });
+
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
       const result = await response.json();
-      console.log(result);
       return result;
     } catch (error) {
       console.error('Error al enviar los datos:', error);
