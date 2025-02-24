@@ -1,51 +1,62 @@
-<div class="m-4 p-2 bg-green3 text-green1 rounded-md">
-    <app-nav-bar/>
-<!--Matches-->
-    <div>
-        <h1>Matches:</h1>
-        @for (match of this.matches; track match) {
+<div class="absolute 2-full">
+    <div class="relative w-full m-4 p-2 bg-green3 text-green1 rounded-md">
+            <app-nav-bar/>
+        <!--Matches-->
+        
+        @if (this.matches.length < 1 && this.friendRequestsRAW.length < 1 && this.friends.length <1) {
             <div>
-                <app-other-tenant-profile [inquilinoProfile]="match.fkTenant"></app-other-tenant-profile>
-                <div class="flex flex-row justify-center">
-                    <button (click)="acceptMatch(match.id)">
-                        Accept
-                    </button>
-                    <button (click)="rejectMatch(match.id)" >
-                        Decline
-                    </button>
-                </div>
+                <div class="h-36"></div>
+                <h1 class="text-xl text-center m-2">No Matches for now...</h1>
+                <div class="h-36"></div>
             </div>
-        }       
-    </div>
-<!--Friend requests-->
-    <div>
-        <h1>Friend requests:</h1>
-        @for (request of this.friendRequestsRAW; track request) {
+        }@else{
             <div>
-                <app-other-tenant-profile [inquilinoProfile]="request.sender"></app-other-tenant-profile>
-                <div class="flex flex-row justify-center">
-                    <button (click)="acceptFriendRequest(request.id)">
-                        Accept
-                    </button>
-                    <button (click)="rejectFriendRequest(request.id)">
-                        Decline
-                    </button>
-                </div>
-            </div>
-        }
-    </div>
-<!-- friends-->
-    <div>
-        <h1>Friends: </h1>
-            @for (friend of this.friends; track friend) {
+                <h1>Matches:</h1>
+            @for (match of this.matches; track match) {
                 <div>
-                    <app-other-tenant-profile [inquilinoProfile]="friend.friend"></app-other-tenant-profile>
-                    <div class="flex flex-row justify-center gap-4">
-                        <button (click)="goToChat(friend.friend.fkUser)">Chat</button>
-                        <button (click)="this.deleteFriend(friend.id)">Delete friend</button>
+                    <app-other-tenant-profile [inquilinoProfile]="match.fkTenant"></app-other-tenant-profile>
+                    <div class="flex flex-row justify-center">
+                        <button (click)="acceptMatch(match.id)">
+                            Accept
+                        </button>
+                        <button (click)="rejectMatch(match.id)" >
+                            Decline
+                        </button>
                     </div>
                 </div>
-            }
+            }       
+        </div>
+        <!--Friend requests-->
+        <div>
+                <h1>Friend requests:</h1>
+                @for (request of this.friendRequestsRAW; track request) {
+                    <div>
+                        <app-other-tenant-profile [inquilinoProfile]="request.sender"></app-other-tenant-profile>
+                        <div class="flex flex-row justify-center">
+                            <button (click)="acceptFriendRequest(request.id)">
+                                Accept
+                            </button>
+                            <button (click)="rejectFriendRequest(request.id)">
+                                Decline
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- friends-->
+            <div>
+                <h1>Friends: </h1>
+                @for (friend of this.friends; track friend) {
+                        <div>
+                            <app-other-tenant-profile [inquilinoProfile]="friend.friend"></app-other-tenant-profile>
+                            <div class="flex flex-row justify-center gap-4">
+                                <button (click)="goToChat(friend.friend.fkUser)">Chat</button>
+                                <button (click)="this.deleteFriend(friend.id)">Delete friend</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+        }
+        <app-footer/>
     </div>
-    <app-footer/>
 </div>

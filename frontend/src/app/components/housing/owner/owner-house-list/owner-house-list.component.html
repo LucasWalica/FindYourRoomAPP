@@ -4,10 +4,19 @@
 
     <app-nav-bar></app-nav-bar>
     <!-- Título principal -->
-    <h1 class="text-2xl font-bold text-center text-green1 mb-6">Admin Panel</h1>
+    <h1 class="text-2xl font-bold text-center text-green1 mb-6 mt-2">House Admin Panel</h1>
     <!-- Lista de casas -->
-    <div *ngFor="let house of this.houses" class="mb-6">
-        <!-- Tarjeta de cada casa -->
+     @if (this.houses.length<1) {
+        <div>
+            <div class="h-44"></div>
+            <div class="text-xl text-center">
+                <h1>You didn´t post any houses yet...</h1>
+            </div>
+            <div class="h-44"></div>
+        </div>
+     }@else{
+         <div *ngFor="let house of this.houses" class="mb-6">
+             <!-- Tarjeta de cada casa -->
         <div class="bg-green3 rounded-lg shadow-md p-4 border-2 border-green2 hover:shadow-lg transition duration-300">
             <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                 <p><strong class="text-magenta2">Name:</strong> {{ house.name }}</p>
@@ -26,7 +35,7 @@
                     Update
                 </button>
                 <button 
-                    (click)="goToDeleteHouse(house)" 
+                (click)="goToDeleteHouse(house)" 
                     class="bg-green1 text-green3 px-4 py-2 rounded-md border-2 border-green1 hover:bg-green2 hover:text-green1 transition duration-300">
                     Delete
                 </button>
@@ -74,6 +83,7 @@
         </div>
         }
     </div>
+    }
     <app-footer></app-footer>
     </div>
 </div>

@@ -28,7 +28,7 @@ export class HouseDetailComponent implements OnInit{
     private chatService:ChatService,
     private authService:AuthService, private housingRequest:HousingRequestsService){}
 
-  ngOnInit(): void {
+  async ngOnInit(){
     this.house = this.houseService.houseDetail;
     if(!this.isHouse(this.house)){
       this.router.navigate(['houses']);

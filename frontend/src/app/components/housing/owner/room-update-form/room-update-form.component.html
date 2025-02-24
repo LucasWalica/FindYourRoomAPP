@@ -1,4 +1,5 @@
-<div class="m-4 p-4 bg-green3 text-green1 rounded-md shadow-md">
+<div class="absolute w-full">
+  <div class="relative w-full p-4 bg-green3 text-green1 rounded-md shadow-md">
     <app-nav-bar></app-nav-bar>
     <form [formGroup]="roomUpdateForm" (ngSubmit)="onSubmit()" class="flex flex-col justify-center items-center gap-6">
       <!-- Título del formulario -->
@@ -68,5 +69,5 @@
       </button>
     </form>
     <app-footer></app-footer>
-  </div>
-  
+  </div>  
+</div>

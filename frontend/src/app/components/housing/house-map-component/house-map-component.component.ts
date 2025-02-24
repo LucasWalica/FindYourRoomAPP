@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { house } from '../../models/house.models';
-import { enviroment } from '../../../../env/environ';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-house-map-component',
@@ -14,7 +13,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './house-map-component.component.css'
 })
 export class HouseMapComponentComponent implements OnInit {
-  apiKey = enviroment.googleMapsAPi;
+  
+  constructor(){
+
+  }
+
   @Input() houseData: house = {} as house; 
   center: google.maps.LatLngLiteral = {} as google.maps.LatLngLiteral; 
   markerPosition: google.maps.LatLngLiteral = {} as google.maps.LatLngLiteral; 
