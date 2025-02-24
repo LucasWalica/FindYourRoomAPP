@@ -1,5 +1,6 @@
-<div class="m-4 p-2 bg-green3 text-green1 rounded-md">
-    <app-nav-bar/>
+<div class="absolute w-full">
+    <div class="relative w-full p-2 bg-green3 text-green1 rounded-md">
+        <app-nav-bar/>
     <div class="bg-green3 m-2 rounded-md">
         @for (message of this.messages; track message) {
             <h1>Conversation with: {{this.getOtherUsername(message)}}</h1>
@@ -13,8 +14,9 @@
                     </h1>
                 </div>
                 <p class="text-center align-middle content-center">Message: {{message.message}}</p>
-            </div>
-        }
+                </div>
+            }
+        </div>
+        <app-footer/>
     </div>
-    <app-footer/>
 </div>
