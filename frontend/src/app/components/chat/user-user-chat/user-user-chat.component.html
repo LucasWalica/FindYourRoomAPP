@@ -2,9 +2,9 @@
     <div class="relative w-full p-2 bg-green3 text-green1 rounded-md">
       <app-nav-bar/>
     
-    <div class="chat-container flex flex-col content-center items-center">
+    <div class="chat-container flex flex-col content-center items-center justify-center">
       <!-- Contenedor de mensajes con scroll -->
-      <div class="messages-container bg-green2 rounded-md border-green3 flex flex-col overflow-auto">
+      <div class="mt-4 w-11/12 messages-container bg-green2 rounded-md border-green3 flex flex-col overflow-auto shadow-md shadow-green4">
         <div *ngFor="let message of messages" 
             [ngClass]="{'sent': message.sender === userId, 'received': message.sender !== userId}"
             class="message border-2 rounded-md m-2 p-2 border-green2 bg-green3 shadow-sm">

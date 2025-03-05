@@ -66,6 +66,7 @@ export class UpdateInquilinoFormComponent implements OnInit {
 
 
     let updatedData: TenantProfile = {
+      username : '',
       age: age ,
       occupation: this.inquilinoForm.get('occupation')?.value,
       gender: this.inquilinoForm.get('gender')?.value as Gender ?? '',

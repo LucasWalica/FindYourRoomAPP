@@ -23,6 +23,7 @@ def handle_friend_request(sender, instance, **kwargs):
 
         if instance.accepted:
             print("Accepted:", instance.accepted)
+            #if it doesnt exist
             if not Friends.objects.filter(fkTenant1=tenant1, fkTenant2=tenant2).exists() and \
                not Friends.objects.filter(fkTenant1=tenant2, fkTenant2=tenant1).exists():
                 Friends.objects.get_or_create(fkTenant1=tenant1, fkTenant2=tenant2)
@@ -40,6 +41,8 @@ def handle_friend_request(sender, instance, **kwargs):
                     receiver=user1,
                     message=_("You added {username} as a friend.").format(username=user2.username)
                 )
+                instance.delete()
+            # if it exists
             else:
                 Message.objects.create(
                     sala=sala,
@@ -47,6 +50,8 @@ def handle_friend_request(sender, instance, **kwargs):
                     receiver=user2,
                     message=_("You are already friends with {username}.").format(username=user1.username)
                 )
+            instance.delete()
+        # if match has not been accepted
         else:
             Message.objects.create(
                 sala=sala,
@@ -54,8 +59,7 @@ def handle_friend_request(sender, instance, **kwargs):
                 receiver=user2,
                 message=_("The friend request from {username} has been rejected.").format(username=user1.username)
             )
-        instance.delete()
-        print("instance should be deleted")
+        
 
 
 
@@ -105,4 +109,4 @@ def create_friend_request_on_match(sender, instance, **kwargs):
             )
         instance.delete()
     elif instance.accepted is False:
-        instance.delete()
+        pass

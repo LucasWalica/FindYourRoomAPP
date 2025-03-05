@@ -1,4 +1,5 @@
 export interface TenantProfile {
+    username : string | null | undefined;
     age: number | null | undefined;
     occupation: string;
     gender: Gender;

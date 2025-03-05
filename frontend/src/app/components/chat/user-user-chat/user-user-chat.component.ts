@@ -44,6 +44,7 @@ export class UserUserChatComponent implements OnInit {
 
     this.chatService.getMessages().subscribe((message) => {
       this.messages.push(message);
+      this.scrollToBottom();
     });
   }
 

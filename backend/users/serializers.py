@@ -32,14 +32,15 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class InquilinoSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="fkUser.username", read_only=True)
     class Meta:
         model = Inquilino
         fields = [
-            'fkUser', 'age', 'occupation', 'gender', 'activity_schedule', 'cleanliness_level',
+            'username', 'fkUser', 'age', 'occupation', 'gender', 'activity_schedule', 'cleanliness_level',
             'pets', 'smoker', 'visit_frequency', 'common_space_usage', 'hobbies', 
             'socializing_frequency', 'living_environment', 'presentation', 'desiredCity'
         ]
-        read_only_fields = ['fkUser']
+        read_only_fields = ['fkUser', 'username']
 
 
     def create(self, validated_data):

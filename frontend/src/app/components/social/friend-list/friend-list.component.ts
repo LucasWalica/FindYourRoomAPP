@@ -3,13 +3,12 @@ import { NavBarComponent } from '../../reusable/nav-bar/nav-bar.component';
 import { FooterComponent } from '../../reusable/footer/footer.component';
 import { SocialService } from '../../../services/social.service';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
 import { matches } from '../../models/tenantProfile.models';
 import { OtherTenantProfileComponent } from '../../reusable/other-tenant-profile/other-tenant-profile.component';
 import { friendRequest } from '../../models/tenantProfile.models';
 import { friends } from '../../models/tenantProfile.models';
-import { request } from 'http';
 import { ChatService } from '../../../services/chat.service';
+
 @Component({
   selector: 'app-friend-list',
   standalone: true,
@@ -26,7 +25,6 @@ export class FriendListComponent implements OnInit{
   constructor(
     private socialService:SocialService, 
     private router:Router, 
-    private authService:AuthService, 
     private chatService:ChatService
   ){}
 
@@ -38,9 +36,9 @@ export class FriendListComponent implements OnInit{
     this.friends =  await this.socialService.getFriendList();
     this.friendRequestsRAW = await this.socialService.getFriendRequestList();
     this.matches = await this.socialService.getMatchList();
-    console.log(this.matches);
     this.matches = this.cleanMatches();
     this.friends = this.cleanFriends();
+    console.log("natches: ",this.matches);
     console.log("friendsRAW: ", this.friends);
   }
 
@@ -116,5 +114,4 @@ export class FriendListComponent implements OnInit{
     }
     return provFriends;
   }
-
 }

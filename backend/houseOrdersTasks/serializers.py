@@ -28,7 +28,7 @@ class HouseRequestSerializer(serializers.ModelSerializer):
         fields = [
             'pk','fkHouse', 'fkTenant', 'accepted'
         ]
-        read_only_fields = ['fkHouse', 'fkTenant', 'pk']
+       
 
     def validate(self, data):
         # Verificar si ya existe un HouseRequest para la misma casa y el mismo tenant
