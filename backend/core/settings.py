@@ -4,7 +4,6 @@ from celery.schedules import crontab
 from pathlib import Path
 
 
-
 env = environ.Env(debug=(bool, True))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,7 +53,7 @@ CHANNEL_LAYERS = {
 }
 
 # Celery y redis para tareas en segundo plano
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'  # Base de datos diferente
+CELERY_BROKER_URL = 'redis://redis:6379/1'  # Base de datos diferente
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_BEAT_SCHEDULE = {
@@ -78,10 +77,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",  
-    "http://127.0.0.1:4200",
-]
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -124,7 +121,7 @@ DATABASES = {
         'NAME': 'projectdb',
         'USER': 'projectuser',
         'PASSWORD': 'test',
-        'HOST': '127.0.0.1',  
+        'HOST': 'db',  
         'PORT': '5432',
     }
 }

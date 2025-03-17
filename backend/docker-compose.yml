@@ -2,34 +2,34 @@ version: '3.8'
 
 services:
   db:
-    imave: postgres:14 
+    image: postgres:14 
     restart: always 
     env_file: .env.docker
     volumes:
       - postgres_data:/var/lib/postgresql/data 
     ports:
-      -"5432:5432"
+      - "5432:5432"
 
   redis:
     image: redis:latest 
     restart: always 
     ports:
-      -"6379:6379"
+      - "6379:6379"
   backend:
-    build: ./backend
+    build: .
     restart: always
     depends_on:
       - db
       - redis
     env_file: .env.docker
     volumes:
-      - ./backend:/app
+      - ./:/app
     ports:
-      - "9000:9000"
-    command: ["bash", "/app/docker/entrypoint.sh"]
+      - "8000:8000"
+    command: ["bash", "/app/entrypoint.sh"]
 
   celery_worker:
-    build: ./backend 
+    build: . 
     restart: always
     depends_on:
       - db 
@@ -39,13 +39,13 @@ services:
 
 
   celery_beat:
-    build: ./backend
+    build: .
     restart: always 
     depends_on:
       - db 
       - redis
     env_file: .env.docker 
-    command: ['celery', '-A', 'core', 'bear', '--loglevel=info'] 
+    command: ['celery', '-A', 'core', 'beat', '--loglevel=info'] 
 
 volumes:
   postgres_data:

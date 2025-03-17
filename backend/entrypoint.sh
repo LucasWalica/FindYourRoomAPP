@@ -10,4 +10,4 @@ echo "Base de datos disponible"
 python manage.py migrate 
 python manage.py collectstatic --noinput 
 
-exec daphne -b 0.0.0.0 -p 9000 proyecto.asgi:application
+exec daphne -b 0.0.0.0 -p 8000 core.asgi:application
