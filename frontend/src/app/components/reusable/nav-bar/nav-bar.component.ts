@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { ChatService } from '../../../services/chat.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,9 +10,12 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
-export class NavBarComponent {
+export class NavBarComponent{
 
-  constructor(private router:Router, private auth:AuthService){}
+
+  constructor(private router:Router, private auth:AuthService, private chatService:ChatService){}
+
+  
 
   goToProfile(){
     this.router.navigate(['profile'])

@@ -3,7 +3,9 @@
         <app-nav-bar/>
     <div class="bg-green3 m-2 rounded-md">
         @for (message of this.messages; track message) {
-            <h1>Conversation with: {{this.getOtherUsername(message)}}</h1>
+            <h1 class="bg-green4 rounded-md pl-4 pr-4 p-2 m-2  mt-4">
+                Conversation with:{{this.getOtherUsername(message)}}
+            </h1>
             <div class="border-2 rounded-md border-green2 p-2
                     text-center m-2 cursor-pointer hover:bg-green1 hover:text-green3 flex"
                     (click)="goToChat(message.sender, message.receiver)">

@@ -1,8 +1,8 @@
-<div class="bg-green4h rounded-md p-2
+<div class="bg-green4 rounded-md p-2
             flex flex-row justify-end
             gap-4 shadow-sm shadow-black">
 
-    <button (click)="goToChat()" class="hover:text-green2 md:text-xl">Chat</button>
+    <button id="chat" (click)="goToChat()" class="hover:text-green2 md:text-xl">Chat</button>
     <details class="dropdown">
         <summary class="hover:text-green2 md:text-xl">Social</summary>
         <ul class="menu absolute dropdown-content bg-green3 rounded-box z-10 w-52 p-2 shadow rounded-md">
@@ -10,7 +10,7 @@
                 <button class="hover:text-green2">Profile</button>
             </li>
             <li class="p-2 m-2">
-                <button (click)="goToFriends()" class="hover:text-green2">Social</button>
+                <button (click)="goToFriends()" class="hover:text-green2">Friends and matches</button>
             </li>
         </ul>
     </details>
