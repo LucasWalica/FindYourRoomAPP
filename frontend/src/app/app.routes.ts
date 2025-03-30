@@ -15,6 +15,8 @@ import { RoomUpdateFormComponent } from './components/housing/owner/room-update-
 import { UserUserChatComponent } from './components/chat/user-user-chat/user-user-chat.component';
 import { InboxChatComponent } from './components/chat/inbox-chat/inbox-chat.component';
 import { FriendListComponent } from './components/social/friend-list/friend-list.component';
+import { ConfirmPasswordResetComponent } from './components/auth/passwordReset/confirm-password-reset/confirm-password-reset.component';
+import { RequestPasswordResetComponent } from './components/auth/passwordReset/request-password-reset/request-password-reset.component';
 
 export const routes: Routes = [
     {path:'home', component:HomePageComponent},
@@ -31,8 +33,10 @@ export const routes: Routes = [
     {path:'deleteHouse', component:DeleteHouseFormComponent},
     {path:'updateRoom', component:RoomUpdateFormComponent},
     {path:'chats', component:InboxChatComponent},
-    {path:'chat', component:UserUserChatComponent},
-    
+    {path:'chat', component:UserUserChatComponent},    
     {path:'friendList', component:FriendListComponent},
+
+    {path:'requestPassword', component:RequestPasswordResetComponent},
+    {path:'confirmPassword/:userID/:token', component:ConfirmPasswordResetComponent},
     
 ];

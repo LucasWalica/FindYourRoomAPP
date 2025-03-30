@@ -3,6 +3,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
+
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -29,12 +32,21 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
   })
 
-  enviar(event:Event){
+  async enviar(event:Event){
     event.preventDefault();
-      this.auth.login(
+      const response = await this.auth.login(
         this.loginForm.get('username')?.value??'',
         this.loginForm.get('password')?.value??''
       )
+      if(response === 1 ) {
+        this.Toast.fire({
+        title: "Signed in successfully"
+      });
+    }else if(response === 0){
+      this.ErrorToast.fire({
+        title: "There was an error during your loging"
+      })
+    }
   }
 
   goToHome(){
@@ -43,6 +55,36 @@ export class LoginComponent implements OnInit {
   goToRegister(){
     this.router.navigate(['register'])
   }
+
+  goToRequestPassword() {
+    this.router.navigate(['requestPassword'])
+  }
+
+  Toast = Swal.mixin({
+    toast: true,
+    icon: "success",
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+
+  ErrorToast = Swal.mixin({
+    toast: true,
+    icon: "error",
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  })
 
 
 }

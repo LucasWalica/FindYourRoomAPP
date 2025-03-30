@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.core.exceptions import ValidationError
-from .models import Inquilino
+from .models import Inquilino, PasswordReset
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -61,4 +61,15 @@ class InquilinoSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     
-    
+
+class ResetPasswordRequestSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = PasswordReset
+        fields = ['email']    
+
+
+
+
+class ResetPasswordSerializer(serializers.Serializer):  
+    new_password = serializers.CharField(write_only=True, min_length=8)
+    confirm_password = serializers.CharField(write_only=True, min_length=8)

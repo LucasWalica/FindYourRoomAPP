@@ -43,11 +43,13 @@ export class RegisterComponent implements OnInit {
 
   goToLogin(){
     this.router.navigate(['']);
+  }  
+  
+  goToRequestPassword() {
+    this.router.navigate(['requestPassword'])
   }
-
-
-
 }
+
 
 
 

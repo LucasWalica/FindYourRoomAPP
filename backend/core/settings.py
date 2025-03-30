@@ -174,3 +174,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST_ENV')  
+EMAIL_PORT = env('EMAIL_PORT_ENV')  
+EMAIL_USE_TLS = env('EMAIL_USE_TLS_ENV')  
+EMAIL_HOST_USER = env('EMAIL_HOST_USER_ENV')  
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD_ENV')  
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+PASSWORD_RESET_TIMEOUT_DAYS = 1 

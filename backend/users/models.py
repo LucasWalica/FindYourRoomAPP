@@ -22,6 +22,16 @@ class Inquilino(models.Model):
 
     def __str__(self):
         return f"{self.pk} - {self.fkUser.username}"
+
+
+class PasswordReset(models.Model):
+    email = models.EmailField()
+    token = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+
+    
     
 
 
