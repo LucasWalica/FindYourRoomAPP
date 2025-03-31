@@ -38,23 +38,25 @@ export class CreateInquilinoFormComponent{
   
   async enviar(event:Event){
     event.preventDefault();
-    await this.userService.postInquilino(
-      this.inquilinoForm.get('age')?.value??'',
-      this.inquilinoForm.get('occupation')?.value??'',
-      this.inquilinoForm.get('gender')?.value??'',
-      this.inquilinoForm.get('activity_schedule')?.value??'',
-      this.inquilinoForm.get('cleanliness_level')?.value??'',
-      this.inquilinoForm.get('pets')?.value??false,
-      this.inquilinoForm.get('smoker')?.value??false,
-      this.inquilinoForm.get('visit_frequency')?.value??'',
-      this.inquilinoForm.get('common_space_usage')?.value??'',
-      this.inquilinoForm.get('hobbies')?.value??'',
-      this.inquilinoForm.get('socializing_frequency')?.value??'',
-      this.inquilinoForm.get('living_enviroment')?.value??'',
-      this.inquilinoForm.get('presentation')?.value??'',
-      this.inquilinoForm.get('desiredCity')?.value??'',
-    )
-    this.router.navigate(['']);
+    if(this.inquilinoForm.valid){
+      await this.userService.postInquilino(
+        this.inquilinoForm.get('age')?.value??'',
+        this.inquilinoForm.get('occupation')?.value??'',
+        this.inquilinoForm.get('gender')?.value??'',
+        this.inquilinoForm.get('activity_schedule')?.value??'',
+        this.inquilinoForm.get('cleanliness_level')?.value??'',
+        this.inquilinoForm.get('pets')?.value??false,
+        this.inquilinoForm.get('smoker')?.value??false,
+        this.inquilinoForm.get('visit_frequency')?.value??'',
+        this.inquilinoForm.get('common_space_usage')?.value??'',
+        this.inquilinoForm.get('hobbies')?.value??'',
+        this.inquilinoForm.get('socializing_frequency')?.value??'',
+        this.inquilinoForm.get('living_enviroment')?.value??'',
+        this.inquilinoForm.get('presentation')?.value??'',
+        this.inquilinoForm.get('desiredCity')?.value??'',
+      )
+      this.router.navigate(['']);
+    }
     
   }
 

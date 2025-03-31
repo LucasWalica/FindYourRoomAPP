@@ -113,6 +113,11 @@
                 <div class="flex flex-col items-start col-span-1 md:col-span-2">
                     <label class="text-sm font-medium">Desired City:</label>
                     <input type="text" class="bg-green2 rounded-md border-gray-300 w-full p-2 focus:ring-green-500 placeholder:text-green1" formControlName="desiredCity" placeholder="Specify the city that you want to live in"/>
+                    @if (!this.inquilinoForm.valid && this.inquilinoForm.get('desiredCity')?.touched) {
+                        @if (this.inquilinoForm.get('desiredCity')?.errors?.['required']) {
+                            <div class="text-magenta2 bg-green3">Desired City is mandatory</div>
+                        }
+                    }
                 </div>
             </div>
 
