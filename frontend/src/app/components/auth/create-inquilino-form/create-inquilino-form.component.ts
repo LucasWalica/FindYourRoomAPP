@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { NavBarComponent } from "../../reusable/nav-bar/nav-bar.component";
 import { FooterComponent } from "../../reusable/footer/footer.component";
 import { UserService } from '../../../services/user.service';
@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
   templateUrl: './create-inquilino-form.component.html',
   styleUrl: './create-inquilino-form.component.css'
 })
-export class CreateInquilinoFormComponent {
+export class CreateInquilinoFormComponent{
 
   // enums 
   activitySchedule=ActivitySchedule;

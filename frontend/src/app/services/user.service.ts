@@ -9,9 +9,9 @@ export class UserService {
   constructor() { }
   token :String | null = {} as String;
   tenanProfile:TenantProfile = {} as TenantProfile;
-  url:String = "locahost";
+  url:String = "localhost:8000";
 
-  postInquilino(age:string, occupation:string, gender:string, activity_schedule:string,
+  async postInquilino(age:string, occupation:string, gender:string, activity_schedule:string,
     cleanliness_level:string, pets:boolean, smoker:boolean, visit_frequency:string, 
     common_space_usage:string, hobbies:string, socializing_frequency:string, 
     living_environment:string, presentation:string, desiredCity:string
@@ -23,7 +23,7 @@ export class UserService {
         living_environment, presentation, desiredCity
     })
     let token = localStorage.getItem('token');
-    fetch(`http://${this.url}:8000/api/users/inquilino/create/`, {
+    await fetch(`http://${this.url}/api/users/inquilino/create/`, {
       method: 'POST',
       headers: {
         'Authorization': `Token ${token}`, 
@@ -46,7 +46,7 @@ export class UserService {
         console.error('Token no encontrados.');
         return Promise.reject('Token no encontrados.');
     }
-    return fetch(`http://${this.url}:8000/api/users/inquilino/detail/${inquilinoID}`, {
+    return fetch(`http://${this.url}/api/users/inquilino/detail/${inquilinoID}`, {
         method: 'GET',
         headers: {
             'Authorization': `Token ${this.token}`, 
@@ -77,7 +77,7 @@ export class UserService {
         console.error('Token o Inquilino ID no encontrados.');
         return Promise.reject('Token o Inquilino ID no encontrados.');
     }
-    return fetch(`http://${this.url}:8000/api/users/inquilino/detail/${inquilino_id}`, {
+    return fetch(`http://${this.url}/api/users/inquilino/detail/${inquilino_id}`, {
         method: 'GET',
         headers: {
             'Authorization': `Token ${this.token}`, 
@@ -108,7 +108,7 @@ export class UserService {
         console.error('Token o Inquilino ID no encontrados.');
         return Promise.reject('Token o Inquilino ID no encontrados.');
     }
-    return fetch(`http://${this.url}:8000/api/users/inquilino/update/${inquilino_id}/`, {
+    return fetch(`http://${this.url}/api/users/inquilino/update/${inquilino_id}/`, {
         method: 'PATCH',
         headers: {
             'Authorization': `Token ${this.token}`, 
