@@ -2,18 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { ChatService } from '../../../services/chat.service';
-
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent{
 
-
-  constructor(private router:Router, private auth:AuthService, private chatService:ChatService){}
+ 
+  constructor(
+    private router:Router, 
+    private auth:AuthService,
+    private chatService:ChatService
+  ){}
 
   
 
@@ -31,9 +35,6 @@ export class NavBarComponent{
   }
   goToChat(){
     this.router.navigate(['chats'])
-  }
-  goToMatches(){
-    this.router.navigate(['matchList'])
   }
   goToFriends(){
     this.router.navigate(['friendList'])
