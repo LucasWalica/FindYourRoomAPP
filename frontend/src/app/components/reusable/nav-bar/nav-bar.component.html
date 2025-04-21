@@ -1,31 +1,38 @@
-<div class="flex flex-row justify-center">
+<div class="flex flex-row justify-center ">
     <img src="Favicon.png" height="40" width="41px" class="rounded-md">
     <div class="bg-green4 rounded-md p-2
                 flex flex-row justify-end items-center
-                gap-4 shadow-sm shadow-black">
+                gap-3 shadow-sm shadow-black ">
     
     
     
         <button  id="chat" (click)="goToChat()" class="hover:text-green2 md:text-xl">
             Chat
         </button>
-        <details class="dropdown">
-            <summary class="hover:text-green2 md:text-xl">
-                Social
-            </summary>
-            <ul class="menu absolute dropdown-content bg-green3 rounded-box z-10 w-52 p-2 shadow rounded-md">
-                <li (click)="goToProfile()" class="p-2 m-2">
-                    <button class="hover:text-green2">
-                        Profile
-                    </button>
-                </li>
-                <li class="p-2 m-2">
-                    <button (click)="goToFriends()" class="hover:text-green2">
-                        Friends and matches
-                    </button>
-                </li>
-            </ul>
-        </details>
+        @if (this.inquilino.username) {
+            <details class="dropdown">
+                <summary class="hover:text-green2 md:text-xl">
+                    Social
+                </summary>
+                <ul class="menu absolute dropdown-content bg-green3 rounded-box z-10 w-52 p-2 shadow rounded-md">
+                    <li (click)="goToProfile()" class="p-2 m-2">
+                        <button class="hover:text-green2">
+                            Profile
+                        </button>
+                    </li>
+                    <li class="p-2 m-2">
+                        <button (click)="goToFriends()" class="hover:text-green2">
+                            Friends and matches
+                        </button>
+                    </li>
+                </ul>
+            </details>
+        } @else {
+            <button class="hover:text-green2 md:text-xl" (click)="goToProfile()">
+                Profile
+            </button>
+        }
+
         <!--dropdown house admin-->
         <details class="dropdown">
             <summary  class="hover:text-green2 md:text-xl">Housing</summary>
@@ -39,7 +46,7 @@
         <button (click)="home()" class="hover:text-green2 md:text-xl">
             Home
         </button>
-        <button (click)="logout()" class="bg-magenta1 pl-2 pr-2 p-1  rounded-md 
+        <button (click)="logout()" class="bg-green1 text-green4 pl-2 pr-2 p-1  rounded-md 
         hover:text-magenta2 md:text-xl">
             Logout
         </button>

@@ -4,19 +4,20 @@
     <div class="bg-green3 m-2 rounded-md">
         @if (this.messages.length>0) {
             @for (message of this.messages; track message) {
-                <h1 class="bg-green4 rounded-md pl-4 pr-4 p-2 m-2  mt-4">
-                    Conversation with:{{this.getOtherUsername(message)}}
+                <h1 class="bg-green4 rounded-md pl-4 pr-4 p-2 m-2  mt-4 text-magenta2">
+                    Conversation with: {{this.getOtherUsername(message)}}
                 </h1>
                 <div class="border-2 rounded-md border-green2 p-2
                         text-center m-2 cursor-pointer hover:bg-green1 hover:text-green3 flex"
                         (click)="goToChat(message.sender, message.receiver)">
                         <div>
                             <h1 class="bg-magenta1 text-green1 
-                            rounded-md border-magenta1 border-2 text-xl shadow-md shadow-brown m-2">
+                            rounded-md border-magenta1 border-2 text-xl shadow-md shadow-brown m-2
+                            pl-2 pr-2 p-1">
                             {{getOtherUsername(message)}}
                         </h1>
                     </div>
-                    <p class="text-center align-middle content-center">Message: {{message.message}}</p>
+                    <p class="text-center align-middle content-center"><span class="text-magenta2">Message:</span> {{message.message}}</p>
                     </div>
                 }
             } @else {

@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        @if (!(house.fkCreator === userID)){
+        @if (!(house.fkCreator === userID) && this.inquilinoID>0){
             <div class="flex justify-center text-center m-4 gap-4">
                 <button class="sm:w-1/4  bg-magenta1 text-green1 
                 rounded-md border-magenta1 border-2 
@@ -36,6 +36,15 @@
                 rounded-md border-magenta1 border-2 
                 hover:text-green3 hover:bg-magenta2 duration-150
                 text-xl shadow-md shadow-brown" (click)="requestHouseRenting(house.id)">Request House renting</button>
+            </div>
+        }@else if (!(house.fkCreator === userID)) {
+            <div class="flex justify-center text-center m-4 gap-4">
+                <button class="sm:w-1/4  bg-magenta1 text-green1 
+                    rounded-md border-magenta1 border-2 
+                    hover:text-green3 hover:bg-magenta2 duration-150
+                    text-xl shadow-md shadow-brown" (click)="goToChatWithOwner(house.fkCreator)">
+                    Chat with owner
+                </button>
             </div>
         }
 

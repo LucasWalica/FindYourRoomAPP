@@ -8,6 +8,7 @@ import { HouseMapComponentComponent } from "../house-map-component/house-map-com
 import { ChatService } from '../../../services/chat.service';
 import { AuthService } from '../../../services/auth.service';
 import { HousingRequestsService } from '../../../services/housing-requests.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-house-detail',
@@ -23,10 +24,15 @@ import { HousingRequestsService } from '../../../services/housing-requests.servi
 export class HouseDetailComponent implements OnInit{
 
   userID: number = parseInt(localStorage.getItem('userID')??'0');
+  inquilinoID:number = parseInt(localStorage.getItem('inquilino_id')??'0');
   house:house = {} as house;
-  constructor(private router:Router, private houseService:HouseService, 
+  constructor(
+    private router:Router, 
+    private houseService:HouseService, 
     private chatService:ChatService,
-    private authService:AuthService, private housingRequest:HousingRequestsService){}
+    private authService:AuthService, 
+    private housingRequest:HousingRequestsService,
+  ){}
 
   async ngOnInit(){
     this.house = this.houseService.houseDetail;

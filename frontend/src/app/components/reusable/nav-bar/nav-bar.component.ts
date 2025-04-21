@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { ChatService } from '../../../services/chat.service';
 import { CommonModule } from '@angular/common';
+import { UserService } from 'src/app/services/user.service';
+import { TenantProfile } from '../../models/tenantProfile.models';
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
@@ -10,15 +12,21 @@ import { CommonModule } from '@angular/common';
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
-export class NavBarComponent{
+export class NavBarComponent implements OnInit{
 
- 
+  
+  inquilino:TenantProfile = {} as TenantProfile;
+
   constructor(
     private router:Router, 
     private auth:AuthService,
-    private chatService:ChatService
+    private chatService:ChatService,
+    private userServe:UserService
   ){}
 
+  async ngOnInit() {
+   this.inquilino = await this.userServe.getInquilino();
+  }
   
 
   goToProfile(){
