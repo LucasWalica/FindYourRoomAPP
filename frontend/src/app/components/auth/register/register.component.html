@@ -1,6 +1,6 @@
 
-<div class="flex justify-center align-middle">
-    <div class="mt-28 m-4 p-2 bg-green3 text-green1 rounded-md md:w-1/2">
+<div class="flex  absolute w-full justify-center align-middle">
+    <div class="mt-28 m-4 p-2 bg-green3 relative text-green1 rounded-md md:w-1/2">
         <form [formGroup]="this.registrationForm" (ngSubmit)="enviar($event)" class="m-4 text-center text-green3">
             <div class="m-4">
                 <input formControlName="nickName" class="rounded-md text-center" type="text" placeholder="nickaname"/>
@@ -65,12 +65,6 @@
                 rounded-md border-magenta1 border-2 
                 hover:text-green3 hover:bg-magenta2 duration-150
                 text-xl shadow-md shadow-brown" >Register</button>
-            </div>
-
-            <div>
-                <button (click)="goToRequestPassword()" class="text-center text-magenta2 text-base">
-                    ¿Need a new password?
-                </button>
             </div>
         </form>
     </div>  

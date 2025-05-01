@@ -21,6 +21,7 @@ export class HouseListComponent implements OnInit{
 
   searchForm:FormGroup;
   houses:house[] = [];
+  isLoaded:boolean = false;
   constructor(private router:Router, private houseService:HouseService, private fb:FormBuilder){
     this.searchForm = this.fb.group({
       search: ['']
@@ -30,6 +31,7 @@ export class HouseListComponent implements OnInit{
   async ngOnInit() {
     try {
       this.houses = await this.houseService.getHouseList();
+      console.log("fetching")
       this.houses.forEach((house) => {
         if (house.image instanceof File) {
           house.image = URL.createObjectURL(house.image); 
@@ -39,8 +41,8 @@ export class HouseListComponent implements OnInit{
             room.image = URL.createObjectURL(room.image); 
           }
         });
+        this.isLoaded = true;
       });
-  
         console.log('Casas obtenidas:', this.houses);
       } catch (error) {
         console.error('Error al cargar las casas:', error);

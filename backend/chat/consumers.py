@@ -8,6 +8,9 @@ from rest_framework.exceptions import PermissionDenied
 from .models import Sala
 from django.db.models import Q
 
+
+
+
 User = get_user_model()
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -50,6 +53,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.channel_name
         )
 
+
+
+
     async def receive(self, text_data):
         # Recibir y procesar mensajes del WebSocket
         data = json.loads(text_data)
@@ -63,19 +69,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         if sender and receiver:
             sala = await self.get_or_create_sala(sender, receiver)
+        
             # Guardar el mensaje en la base de datos
             await self.save_message(sala, sender, receiver, message)
-
-        # Enviar el mensaje al grupo WebSocket
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message,
-                'sender': sender_id,
-                'receiver': receiver_id
-            }
-        )
+            print("enviando mensage", flush=True)
+            # Enviar el mensaje al grupo WebSocket
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'chat_message',
+                    'message': message,
+                    'sender': sender_id,
+                    'receiver': receiver_id
+                }
+            )
 
     async def chat_message(self, event):
         # Enviar el mensaje al WebSocket
@@ -133,3 +140,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
             return None
 
         return user
+
+
+

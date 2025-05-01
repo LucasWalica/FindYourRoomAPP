@@ -19,43 +19,45 @@
     </div>
 
     <!-- Lista de casas -->
-    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @for (house of houses; track house) {
-            <div class="bg-green3 rounded-lg shadow-md p-4 border-2 border-green1 hover:shadow-lg transition duration-300 mb-4">
-                <!-- Nombre de la casa -->
-                <h1 class="text-lg font-bold text-green1 mb-2">{{ house.name }}</h1>
-                
-                <!-- Descripción -->
-                <p class="text-sm text-gray-700 mb-4">{{ house.desc }}</p>
-                
-                <!-- Tipo de casa -->
-                <p class="text-xs font-medium text-green3 bg-green1 rounded-full px-2 inline-block mb-4">
-                    {{ house.house_type }}
-                </p>
-
-                <!-- Información de ubicación y tamaño -->
-                <div class="grid grid-cols-2 text-sm text-gray-600 gap-2">
-                    <div><strong>City:</strong> {{ house.ciudad }}</div>
-                    <div><strong>Neighborhood:</strong> {{ house.barrio }}</div>
-                    <div><strong>Street:</strong> {{ house.calle }}</div>
-                    <div><strong>Portal:</strong> {{ house.portal }}</div>
-                    <div class="col-span-2"><strong>Size:</strong> {{ house.m2 }} m²</div>
+     @if (this.isLoaded) {
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @for (house of houses; track house) {
+                <div class="bg-green3 rounded-lg shadow-md p-4 border-2 border-green1 hover:shadow-lg transition duration-300 mb-4">
+                    <!-- Nombre de la casa -->
+                    <h1 class="text-lg font-bold text-green1 mb-2">{{ house.name }}</h1>
+                    
+                    <!-- Descripción -->
+                    <p class="text-sm text-gray-700 mb-4">{{ house.desc }}</p>
+                    
+                    <!-- Tipo de casa -->
+                    <p class="text-xs font-medium text-green3 bg-green1 rounded-full px-2 inline-block mb-4">
+                        {{ house.house_type }}
+                    </p>
+    
+                    <!-- Información de ubicación y tamaño -->
+                    <div class="grid grid-cols-2 text-sm text-gray-600 gap-2">
+                        <div><strong>City:</strong> {{ house.ciudad }}</div>
+                        <div><strong>Neighborhood:</strong> {{ house.barrio }}</div>
+                        <div><strong>Street:</strong> {{ house.calle }}</div>
+                        <div><strong>Portal:</strong> {{ house.portal }}</div>
+                        <div class="col-span-2"><strong>Size:</strong> {{ house.m2 }} m²</div>
+                    </div>
+                    
+                    <!-- Botón de detalles -->
+                    <div class="mt-4 flex justify-center">
+                        <button 
+                            class="sm:w-1/4  bg-magenta1 text-green1 
+                    rounded-md border-magenta1 border-2 
+                    hover:text-green3 hover:bg-magenta2 duration-150
+                    text-xl shadow-md shadow-brown"
+                            (click)="goToHouseDetails(house)">
+                            House Details
+                        </button>
+                    </div>
                 </div>
-                
-                <!-- Botón de detalles -->
-                <div class="mt-4 flex justify-center">
-                    <button 
-                        class="sm:w-1/4  bg-magenta1 text-green1 
-                rounded-md border-magenta1 border-2 
-                hover:text-green3 hover:bg-magenta2 duration-150
-                text-xl shadow-md shadow-brown"
-                        (click)="goToHouseDetails(house)">
-                        House Details
-                    </button>
-                </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
+     }
     <app-footer />
 </div>
 </div>
