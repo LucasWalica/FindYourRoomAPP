@@ -27,7 +27,9 @@ export class OwnerHouseListComponent implements OnInit{
 
   constructor(private houseService:HouseService, private router:Router, 
     private housingRequestService:HousingRequestsService,
-    private tenantService:UserService){}
+    private tenantService:UserService){
+      
+    }
     
   async ngOnInit() {
     this.chargeHousedata();  

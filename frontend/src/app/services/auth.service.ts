@@ -9,7 +9,7 @@ export class AuthService {
   constructor(private router:Router) { }
 
   token:string|null = {} as string;
-  url:string="localhost";
+  url:string="localhost:8000";
   register(username:string,email:string, password:string){
     
     const datosUser=JSON.stringify({
@@ -18,7 +18,7 @@ export class AuthService {
       email:email
     });
     console.log(datosUser)
-    fetch(`http://${this.url}:8000/api/users/register/`, {
+    fetch(`http://${this.url}/api/users/register/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export class AuthService {
     console.log(datosUser);
   
     try {
-      const response = await fetch(`http://${this.url}:8000/api/users/login/`, {
+      const response = await fetch(`http://${this.url}/api/users/login/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export class AuthService {
     console.log(datosUser);
     try {
 
-        fetch(`http://${this.url}:8000/api/users/requestResetPassword/`, {
+        fetch(`http://${this.url}/api/users/requestResetPassword/`, {
           method:'POST',
         headers:{
           'Content-Type':'application/json',
@@ -121,7 +121,7 @@ export class AuthService {
     });
     console.log(datosUser);
     try {
-        const response = await fetch(`http://${this.url}:8000/api/users/resetPassword/${token}/`, {
+        const response = await fetch(`http://${this.url}/api/users/resetPassword/${token}/`, {
           method:'POST',
         headers:{
           'Content-Type':'application/json',

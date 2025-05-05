@@ -20,10 +20,10 @@ export class HouseService {
 
   constructor(private router:Router) { }
   
-  
+  url:String = "localhost:8000";
 
   async getHouseDetaild(houseID:number):Promise<house>{
-    const url = `http://localhost:8000/api/houses/house/${houseID}`;
+    const url = `http://${this.url}/api/houses/house/${houseID}`;
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(url, {
@@ -46,10 +46,10 @@ export class HouseService {
       console.error('Error al enviar los datos:', error);
       throw error;
     }
-  }
+  };
 
   async postHouse(formData:any): Promise<any> {
-    const url = 'http://localhost:8000/api/houses/house/create/';
+    const url = `http://${this.url}/api/houses/house/create/`;
     let formDataJson = JSON.stringify(formData)
     try {
       let token = localStorage.getItem('token');  
@@ -74,10 +74,10 @@ export class HouseService {
       console.error('Error al enviar los datos:', error);
       throw error;
     }
-  }
+  };
 
   async getOwnerHouseList(): Promise<house[]> {
-    const url = 'http://localhost:8000/api/houses/houses/owner';
+    const url = `http://${this.url}/api/houses/houses/owner`;
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(url, {
@@ -89,7 +89,7 @@ export class HouseService {
       });
   
       if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+        throw new Error(`Error get owner house list: ${response.status}`);
       }
   
       const result = await response.json();
@@ -101,10 +101,10 @@ export class HouseService {
       throw error;
     }
   }
-
+;
 
   async getHouseList(): Promise<house[]> {
-    const url = 'http://localhost:8000/api/houses/houses/';
+    const url = `http://${this.url}/api/houses/houses/`;
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(url, {
@@ -114,15 +114,10 @@ export class HouseService {
           Authorization: `Token ${token}`,
         },
       });
-  
       if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+        throw new Error(`Error get house list: ${response.status}`);
       }
-
-  
-      const result = await response.json();
-
-      console.log(result);
+      const result = response.json();
       return result;
     } catch (error) {
       console.error('Error al enviar los datos:', error);
@@ -131,7 +126,7 @@ export class HouseService {
   }
 
   async getHouseListBySearch(search:string){
-    const url = `http://127.0.0.1:8000/api/houses/houses/search/?search=${search}`
+    const url = `http://${this.url}/api/houses/houses/search/?search=${search}`
     try{
       const token = localStorage.getItem('token');
       const response = await fetch(url, {
@@ -153,10 +148,10 @@ export class HouseService {
       console.error('Error al enviar los datos:', error);
       throw error;
     }
-  }
+  };
   
   async updateHouse(id:number, formData:any){
-    const url = `http://localhost:8000/api/houses/house/update/${id}/`;
+    const url = `http://${this.url}/api/houses/house/update/${id}/`;
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(url, {
@@ -179,10 +174,10 @@ export class HouseService {
       console.error('Error al enviar los datos:', error);
       throw error;
     }
-  }
+  };
 
   async updateRoom(id:number, formData:any){
-    const url = `http://localhost:8000/api/houses/room/update/${id}/`;
+    const url = `http://${this.url}/api/houses/room/update/${id}/`;
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(url, {
@@ -205,10 +200,10 @@ export class HouseService {
       console.error('Error al enviar los datos:', error);
       throw error;
     }
-  }
+  };
 
   async deleteHouse(id:number){
-    const url = `http://localhost:8000/api/houses/house/delete/${id}/`;
+    const url = `http://${this.url}/api/houses/house/delete/${id}/`;
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(url, {

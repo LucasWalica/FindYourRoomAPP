@@ -7,11 +7,12 @@ import { Router } from '@angular/router';
 export class SocialService {
 
 
+  url:String = "localhost:8000";
   constructor(private router:Router) { }
     // post friend request 
     // maybe add router navigate after testing
   async postFriendRequest(formData:any){
-    const url = `http://localhost:8000/api/social/friendRequest/`;
+    const url = `http://${this.url}/social/friendRequest/`;
     let formDataJson = JSON.stringify(formData);
     try {
       let token = localStorage.getItem('token');  
@@ -35,7 +36,7 @@ export class SocialService {
   }
   // friend request list 
   async getFriendRequestList(){
-    const url = `http://localhost:8000/api/social/requestList/`;
+    const url = `http://${this.url}/api/social/requestList/`;
     let token = localStorage.getItem('token');
     try{
       const response = await fetch(url, {
@@ -57,7 +58,7 @@ export class SocialService {
   }
     // update friend request 
   async updateFriendRequest(friendRequestID: number, accepted:any){
-    const url = `http://localhost:8000/api/social/requestUpdate/${friendRequestID}/`
+    const url = `http://${this.url}/api/social/requestUpdate/${friendRequestID}/`
     let token = localStorage.getItem('token');
     try {
       const response = await fetch(url, {
@@ -81,7 +82,7 @@ export class SocialService {
   }
     // get friend list 
   async getFriendList(){
-    const url = `http://localhost:8000/api/social/friendList/`;
+    const url = `http://${this.url}/api/social/friendList/`;
     let token = localStorage.getItem('token');
     try{
       const response = await fetch(url, {
@@ -103,7 +104,7 @@ export class SocialService {
   }
     // delete friend
   async deleteFriend(id_relation:number){
-    const url = `http://localhost:8000/api/social/friendDelete/${id_relation}/`
+    const url = `http://${this.url}/api/social/friendDelete/${id_relation}/`
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(url, {
@@ -127,7 +128,7 @@ export class SocialService {
 
   // get match list
   async getMatchList(){
-    const url = `http://localhost:8000/api/social/matchList/`;
+    const url = `http://${this.url}/api/social/matchList/`;
     let token = localStorage.getItem('token');
     try{
       const response = await fetch(url, {
@@ -158,7 +159,7 @@ export class SocialService {
   }
 
   async updateMatch(matchID:number, accepted:any){
-    const url = `http://localhost:8000/api/social/matchUpdate/${matchID}/`
+    const url = `http://${this.url}/api/social/matchUpdate/${matchID}/`
     let token = localStorage.getItem('token');
     try {
       const response = await fetch(url, {

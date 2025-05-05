@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NavBarComponent } from '../../reusable/nav-bar/nav-bar.component';
 import { FooterComponent } from '../../reusable/footer/footer.component';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 import { HouseService } from '../../../services/house.service';
 import { house } from '../../models/house.models';
 import { ReactiveFormsModule, Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-house-list',
@@ -29,9 +30,13 @@ export class HouseListComponent implements OnInit{
   }
   // charging all the data from the server is not efficient
   async ngOnInit() {
+    console.log("ng on init")
+    this.loadHouseData();
+  }
+
+  async loadHouseData(){
     try {
       this.houses = await this.houseService.getHouseList();
-      console.log("fetching")
       this.houses.forEach((house) => {
         if (house.image instanceof File) {
           house.image = URL.createObjectURL(house.image); 
@@ -41,23 +46,21 @@ export class HouseListComponent implements OnInit{
             room.image = URL.createObjectURL(room.image); 
           }
         });
-        this.isLoaded = true;
       });
+        this.isLoaded = true;
         console.log('Casas obtenidas:', this.houses);
       } catch (error) {
         console.error('Error al cargar las casas:', error);
       }
-    }
+  }
 
+  async onSubmit(){
+    const searchData = this.searchForm.get('search')?.value??'';
+    this.houses = await this.houseService.getHouseListBySearch(searchData);      
+  }
 
-    async onSubmit(){
-      const searchData = this.searchForm.get('search')?.value??'';
-      this.houses = await this.houseService.getHouseListBySearch(searchData);
-        
-    }
-
-    goToHouseDetails(house:house){
-      this.houseService.setHouseData(house);
-      this.router.navigate(['houseDetail']);
-    }
+  goToHouseDetails(house:house){
+    this.houseService.setHouseData(house);
+    this.router.navigate(['houseDetail']);
+  }
 }
