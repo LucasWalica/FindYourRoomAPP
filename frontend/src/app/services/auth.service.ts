@@ -10,6 +10,9 @@ export class AuthService {
 
   token:string|null = {} as string;
   url:string="localhost:8000";
+
+
+
   register(username:string,email:string, password:string){
     
     const datosUser=JSON.stringify({
@@ -90,16 +93,12 @@ export class AuthService {
     }
   }
   
-
-
-
   async requestResetPassword(email:string){
     const datosUser=JSON.stringify({
       email:email
     });
     console.log(datosUser);
     try {
-
         fetch(`http://${this.url}/api/users/requestResetPassword/`, {
           method:'POST',
         headers:{

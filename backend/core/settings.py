@@ -76,6 +76,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
 
@@ -189,3 +190,7 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD_ENV')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 PASSWORD_RESET_TIMEOUT_DAYS = 1 
+
+
+
+

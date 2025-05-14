@@ -117,7 +117,7 @@ export class HouseService {
       if (!response.ok) {
         throw new Error(`Error get house list: ${response.status}`);
       }
-      const result = response.json();
+      const result = await response.json();
       return result;
     } catch (error) {
       console.error('Error al enviar los datos:', error);

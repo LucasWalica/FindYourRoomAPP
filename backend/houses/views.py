@@ -21,7 +21,7 @@ class HouseList(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     queryset = House.objects.all()
     serializer_class = HouseSerializer
-
+    
 
 class HouseListBySearch(generics.ListAPIView):
     parser_classes = [JSONParser]
@@ -43,7 +43,7 @@ class HouseListBySearch(generics.ListAPIView):
             )
         
         return queryset
-   
+    
 
 class HouseOwnerListView(generics.ListAPIView):
     parser_classes = [JSONParser]
@@ -66,6 +66,7 @@ class HouseOwnerListView(generics.ListAPIView):
         )
 
         return queryset
+    
 
 
 #done
@@ -82,6 +83,7 @@ class HouseCreateView(generics.CreateAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 # iworks
@@ -104,8 +106,6 @@ class HouseDetailView(generics.RetrieveAPIView):
     queryset = House.objects.all()
     serializer_class = HouseSerializer
     lookup_field = 'id'
-
-
 
 class HouseUpdateView(generics.UpdateAPIView):
     parser_classes = [MultiPartParser, FormParser]

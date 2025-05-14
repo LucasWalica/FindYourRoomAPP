@@ -29,7 +29,7 @@ export class HouseListComponent implements OnInit{
     })
   }
   // charging all the data from the server is not efficient
-  async ngOnInit() {
+  ngOnInit() {
     console.log("ng on init")
     this.loadHouseData();
   }
@@ -37,6 +37,7 @@ export class HouseListComponent implements OnInit{
   async loadHouseData(){
     try {
       this.houses = await this.houseService.getHouseList();
+      console.log(this.houses)
       this.houses.forEach((house) => {
         if (house.image instanceof File) {
           house.image = URL.createObjectURL(house.image); 
