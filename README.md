@@ -1,0 +1,1 @@
+A web application that could help house owners to manage their properties easily and tenants to find compatible companions that want to live in the same city, it has some features that remember a social media platform
