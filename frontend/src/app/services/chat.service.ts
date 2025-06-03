@@ -67,36 +67,37 @@ export class ChatService {
 
 
 
+async getMessagesFromDB(user2_id: number): Promise<any[]> {
+  this.token = localStorage.getItem('token');
 
-  getMessagesFromDB(user2_id:number): Promise<any[]>  {
-    this.token = localStorage.getItem('token');
-    let inquilino_id = localStorage.getItem('inquilino_id');
-    if (!this.token || !inquilino_id) {
-        console.error('Token o Inquilino ID no encontrados.');
-        return Promise.reject('Token o Inquilino ID no encontrados.');
-    }
-    return fetch(`http://${this.url}/api/chat/messages/${user2_id}/`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Token ${this.token}`, 
-          'Content-Type': 'application/json'
-        },
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
-        }
-        return response.json(); 
-    })
-    .then((data: any[]) => {
-        console.log(data);
-        return data;
-    })
-    .catch(error => {
-        console.error('Error al obtener el inquilino:', error);
-        throw error;
-    });
+  if (!this.token) {
+    console.error('Token o Inquilino ID no encontrados.');
+    return Promise.reject('Token o Inquilino ID no encontrados.');
   }
+
+  try {
+    const response = await fetch(`http://${this.url}/api/chat/messages/${user2_id}/`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Token ${this.token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("mensajes: ", data);
+    return data;
+
+  } catch (error) {
+    console.error('Error al obtener los mensajes:', error);
+    throw error;
+  }
+}
+
 
   getInboxMessages(): Promise<any[]> {
     this.token = localStorage.getItem('token');

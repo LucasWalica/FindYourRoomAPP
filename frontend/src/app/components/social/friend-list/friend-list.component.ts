@@ -36,10 +36,12 @@ export class FriendListComponent implements OnInit{
     this.friends =  await this.socialService.getFriendList();
     this.friendRequestsRAW = await this.socialService.getFriendRequestList();
     this.matches = await this.socialService.getMatchList();
-    this.matches = this.cleanMatches();
-    this.friends = this.cleanFriends();
+    console.log(this.friends)
+    this.matches = await this.cleanMatches();
+    this.friendRequestsRAW = await this.cleanFriendRequests();
+    this.friends = await this.cleanFriends();
     console.log("natches: ",this.matches);
-    console.log("friendsRAW: ", this.friends);
+    console.log("friendsRequestsRAW: ", this.friendRequestsRAW  );
   }
 
   async acceptMatch(matchID:number){
@@ -101,12 +103,12 @@ export class FriendListComponent implements OnInit{
   }
 
   cleanFriends() {
+    console.log(localStorage.getItem('userID') ?? '0');
     let provFriends: friends[] = [];
-    
     for (let i = 0; i < this.friends.length; i++) {
       let friendObj: friends = {
         id: this.friends[i].id,
-        friend: this.friends[i].fkTenant1.id !== parseInt(localStorage.getItem('userID') ?? '0') 
+        friend: this.friends[i].fkTenant1.fkUser === parseInt(localStorage.getItem('userID') ?? '0') 
                 ? this.friends[i].fkTenant2 
                 : this.friends[i].fkTenant1
       }

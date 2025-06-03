@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, CSP_NONCE, } from '@angular/core';
 import { NavBarComponent } from '../../reusable/nav-bar/nav-bar.component';
 import { FooterComponent } from '../../reusable/footer/footer.component';
 import { Router } from '@angular/router';
@@ -36,11 +36,13 @@ export class UserUserChatComponent implements OnInit {
     this.chatService.connect(this.chatUser2);
     
     this.chatService.getMessagesFromDB(this.chatUser2).then((messages) => {
-      this.messages = messages;  
+      this.messages = messages;
+      console.log(this.messages)
       setTimeout(() => this.scrollToBottom(), 100); // Se asegura de ejecutarse solo una vez tras cargar los mensajes
     }).catch((error) => {
       console.error('Error al cargar los mensajes:', error);
     });
+    
 
     this.chatService.getMessages().subscribe((message) => {
       this.messages.push(message);
