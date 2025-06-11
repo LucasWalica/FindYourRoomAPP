@@ -141,5 +141,3 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         return user
 
-
-
